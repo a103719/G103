@@ -157,7 +157,7 @@
                 <td>Henrique Araújo</td>
                 <td>41.451106, -8.293168 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
                 <td class="align-middle ps-2">
-                <span class="badge rounded-pill bg-primary">Pendente</span>
+                  <span class="badge rounded-pill bg-primary estado-ocorrencia">Pendente</span>
                 </td>
                 <td>
                   <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes('ocorrencia1')"></iconify-icon>
@@ -221,78 +221,73 @@
     </div>
   
     <!-- Cartão de Detalhes -->
-    <div id="cartao-detalhes" class="card mt-4" style="display: none;">
-      <div class="card-body">
-        <div class="d-flex justify-content-end">
-          <button type="button" class="btn-close" aria-label="Fechar" onclick="fecharDetalhes()"></button>
-        </div>                
-        <div class="row">
+<div id="cartao-detalhes" class="card mt-4" style="display: none;">
+  <div class="card-body">
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn-close" aria-label="Fechar" onclick="fecharDetalhes()"></button>
+    </div>
+    <div class="row">
+      <!-- Coluna esquerda com dados principais -->
+      <div class="col-md-8">
+        <div class="row align-items-start mb-3">
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Designação</label>
+            <p class="mb-1">Estacionamento indevido</p>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Nome do Utilizador</label>
+            <p class="mb-1">Henrique Araújo</p>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Localização</label>
+            <p class="mb-1">41.451106, -8.293168 <iconify-icon icon="mdi:map-marker"></iconify-icon></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Estado</label>
+            <select class="form-select campo-editavel" disabled>
+              <option selected>Pendente</option>
+              <option>Em análise</option>
+              <option>Resolvido</option>
+            </select>
+          </div>
           <div class="col-md-8">
-            <div class="row mb-3">
-              <div class="col-md-4">
-                <label class="form-label fw-semibold">Designação</label>
-                <p>Estacionamento indevido</p>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label fw-semibold">Nome do Utilizador</label>
-                <p>Henrique Araújo</p>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label fw-semibold">Localização</label>
-                <p>41.451106, -8.293168 <iconify-icon icon="mdi:map-marker"></iconify-icon></p>
-              </div>
-            </div>
-  
-            <div class="row mb-3">
-              <div class="col-md-4">
-                <label class="form-label fw-semibold">Estado</label>
-                <select class="form-select">
-                  <option selected>Pendente</option>
-                  <option>Em análise</option>
-                  <option>Resolvido</option>
-                </select>
-              </div>
-              <div class="col-md-8">
-                <label class="form-label fw-semibold">Atribuir Segurança</label>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="seguranca" checked>
-                  <label class="form-check-label">Miguel Henriques</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="seguranca">
-                  <label class="form-check-label">Tiago Pinto</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="seguranca">
-                  <label class="form-check-label">Armindo Santos</label>
-                </div>
-              </div>
-            </div>
-  
-            <div class="mb-3">
-              <label class="form-label fw-semibold">Descrição</label>
-              <textarea class="form-control" rows="2" disabled>Veículo estacionado em lugar reservado a pessoas com deficiência</textarea>
-            </div>
-  
-            <div class="mb-3">
-              <label class="form-label fw-semibold">Observações</label>
-              <textarea class="form-control" rows="2" placeholder="Adicionar observações..."></textarea>
-            </div>
+            <label class="form-label fw-semibold">Atribuir Segurança</label>
+            <div class="form-check"><input class="form-check-input" type="radio" name="seguranca" value="Miguel Henriques" disabled> Miguel Henriques</div>
+            <div class="form-check"><input class="form-check-input" type="radio" name="seguranca" value="Tiago Pinto" disabled> Tiago Pinto</div>
+            <div class="form-check"><input class="form-check-input" type="radio" name="seguranca" value="Armindo Santos" disabled> Armindo Santos</div>
           </div>
-  
-          <div class="col-md-4 d-flex flex-column justify-content-between align-items-center">
-            <div class="border rounded mb-3 d-flex justify-content-center align-items-center" style="width: 100%; height: 200px;">
-              <img src="../assets/images/products/Carro-mal-estacionado.jpg" alt=" " alt="Imagem da Ocorrência" class="img-fluid rounded" style="max-height: 200px;" />
-            </div>
-            <div class="d-flex gap-3">
-              <button class="btn btn-danger px-4">Recusar</button>
-              <button class="btn btn-success px-4">Aprovar</button>
-            </div>
-          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Descrição</label>
+          <textarea class="form-control" rows="2" disabled>Veículo estacionado em lugar reservado a pessoas com deficiência</textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Observações</label>
+          <textarea id="input-observacoes" class="form-control" rows="2" placeholder="Adicionar observações..." disabled></textarea>
+        </div>
+      </div>
+
+      <!-- Coluna direita com imagem e botões -->
+      <div class="col-md-4 d-flex flex-column justify-content-between align-items-end">
+        <div class="mb-3">
+          <img src="../assets/images/products/Carro-mal-estacionado.jpg" alt="Imagem da Ocorrência"
+               class="img-thumbnail" style="max-width: 100%; height: auto; border-radius: 8px;">
+        </div>
+        <div class="d-flex gap-2">
+          <button id="btn-recusar" class="btn btn-danger">Recusar</button>
+          <button id="btn-aprovar" class="btn btn-success">Aprovar</button>
+          <button id="btn-salvar" class="btn btn-primary" disabled>Salvar</button>
         </div>
       </div>
     </div>
   </div>
+</div>
+
   
           <!-- FIM Conteúdo principal -->
 
@@ -309,6 +304,7 @@
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script> 
   <script src="../assets/js/close.js"></script>
   <script src="../assets/js/detalhes.js"></script>
+  <script src="../assets/js/gestao_ocorrencias.js"></script>
 </body>
 
 </html>
