@@ -230,14 +230,29 @@
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Peritos</label>
-                      <select class="form-select" id="select-perito">
-                        <option selected disabled>Selecione um perito</option>
-                        <option value="1">João Paulo</option>
-                        <option value="2">Miguel Henriques</option>
-                        <option value="3">Tiago Pinto</option>
-                        <option value="4">Armindo Santos</option>
-                      </select>
-                    </div>
+                      <div id="checkbox-peritos" class="row">
+                        <div class="col-md-6">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="João Paulo" id="perito1">
+                            <label class="form-check-label" for="perito1">João Paulo</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Miguel Henriques" id="perito2">
+                            <label class="form-check-label" for="perito2">Miguel Henriques</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Tiago Pinto" id="perito3">
+                            <label class="form-check-label" for="perito3">Tiago Pinto</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Armindo Santos" id="perito4">
+                            <label class="form-check-label" for="perito4">Armindo Santos</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>                    
                     <div class="mb-3">
                       <label class="form-label">Materiais</label>
                       <input type="text" class="form-control">
