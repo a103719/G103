@@ -1,0 +1,148 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+/* Container principal */
+.menu-container {
+    width: 100%;
+    max-width: 1450px;
+    padding: 32px;
+    background: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid #D9D9D9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Secção dos links */
+.menu-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Itens do menu */
+.menu-item {
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: #1E1E1E;
+    font-weight: 400;
+}
+
+/* Secção de autenticação */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Botão de Login */
+.login-button {
+    flex: 1;
+    padding: 8px;
+    background: #E3E3E3;
+    border-radius: 8px;
+    border: 1px solid #767676;
+    color: #1E1E1E;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+/* Botão de Registar */
+.register-button {
+    flex: 1;
+    padding: 8px;
+    background: #2C2C2C;
+    border-radius: 8px;
+    border: 1px solid #2C2C2C;
+    color: #F5F5F5;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 50px auto;
+}
+
+.image-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-item1 img {
+    width: 336px; /* Define um tamanho fixo para as imagens */
+    height: 336px;
+    left: 100px;
+    top: 285px;
+    position: absolute;
+    border-radius: 50px; /* Bordas arredondadas opcionais */
+}
+
+.image-item2 img {
+    width: 337px; /* Define um tamanho fixo para as imagens */
+    height: 337px;
+    left: 600px;
+    top: 285px;
+    position: absolute;
+    border-radius: 50px; /* Bordas arredondadas opcionais */
+}
+
+.image-item3 img {
+    width: 336px; /* Define um tamanho fixo para as imagens */
+    height: 336px;
+    left: 1110px;
+    top: 285px;
+    position: absolute;
+    border-radius: 50px; /* Bordas arredondadas opcionais */
+}
+
+.caption {
+    margin-top: 500px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0a0a0a;
+}
+/*Para a "caixa" Tipo de Ocorrência ficar azul*/
+.ocorrencias-container {
+    width: 200px;
+    height: 20px;
+    background-color: #A7D8FF;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.ocorrencias-text {
+    color: #1E1E1E;
+    font-size: 16px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+}
+
+.imagem-canto {
+    position: absolute;  
+    top: 30px;              
+    left: 0;             
+    width: 200px;         
+    height: auto;        
+}

@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registar Ocorrência</title>
+  <link rel="stylesheet" href="registo.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app-container">
+    <a href="#" class="back-btn">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/chevron-left.png" alt="Voltar" />
+    </a>
+    <div class="form-container">
+      <h1>Registar Ocorrência</h1>
+
+      <select class="dropdown">
+        <option>Selecione o Tipo de Ocorrência</option>
+        <option>Buraco na estrada</option>
+        <option>Iluminação pública</option>
+        <option>Outro</option>
+      </select>
+
+      <select class="dropdown">
+        <option>Escolha a Localização</option>
+        <option>Lisboa</option>
+        <option>Porto</option>
+        <option>Coimbra</option>
+      </select>
+
+      <div class="upload-box">
+        <img src="https://img.icons8.com/ios-filled/50/image.png" alt="Upload" />
+        <p>Carregue fotografias para<br>documentar a ocorrência.</p>
+      </div>
+
+      <label for="titulo">Título</label>
+      <div class="input-wrapper">
+        <input type="text" id="titulo" maxlength="180" oninput="atualizarContador()" />
+        <span id="contador">0/180</span>
+      </div>
+
+      <label for="descricao">Descrição</label>
+      <div class="textarea-wrapper">
+        <textarea id="descricao" maxlength="360" placeholder="Descrição da Ocorrência, inclua a matrícula 360 caso seja necessário..." oninput="atualizarContadorDescricao()"></textarea>
+        <span id="contador-desc">0/360</span>
+      </div>
+
+      <button class="submit">📸 Submeter Ocorrência</button>
+    </div>
+  </div>
+
+  <script>
+    function atualizarContador() {
+      const input = document.getElementById("titulo");
+      const contador = document.getElementById("contador");
+      contador.textContent = input.value.length + "/180";
+    }
+
+    function atualizarContadorDescricao() {
+      const textarea = document.getElementById("descricao");
+      const contador = document.getElementById("contador-desc");
+      contador.textContent = textarea.value.length + "/360";
+    }
+  </script>
+</body>
+</html>
