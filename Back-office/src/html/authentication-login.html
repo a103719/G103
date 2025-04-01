@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt">
 
 <head>
   <meta charset="utf-8">
@@ -7,37 +7,52 @@
   <title>EyesEveryWhere</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/_LogoEyes.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body>
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
-    <div
-      class="position-relative overflow-hidden text-bg-light min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="position-relative overflow-hidden text-bg-light min-vh-100 d-flex align-items-center justify-content-center">
       <div class="d-flex align-items-center justify-content-center w-100">
         <div class="row justify-content-center w-100">
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
-              <div class="card-body">
-                <img src="../assets/images/logos/LogoEyes.png" alt="" style="max-width: 100%;"/>
-                </a>
-                <p></p>
+              <div class="card-body text-center">
+                <img src="../assets/images/logos/LogoEyes.png" alt="Logo EyesEveryWhere" style="max-width: 100%;" class="mb-4" />
+
+                <!-- Formulário tradicional -->
                 <form>
-                  <div class="mb-3">
+                  <div class="mb-3 text-start">
                     <label for="exampleInputEmail1" class="form-label">Username</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
-                  <div class="mb-4">
+                  <div class="mb-4 text-start">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1">
                   </div>
-                  <p></p>
-                  <a href="./pag_dashboard.html" class="btn btn-primary w-100 py-8 fs-4 mb-4">Login</a>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <a class="text-primary fw-bold ms-2" href="./authentication-register.html">Criar conta</a>
-                  </div>
+                  <a href="./pag_dashboard.html" class="btn btn-primary w-100 py-2 fs-5 mb-3">Login</a>
                 </form>
+
+                <!-- Login com Google -->
+                <div id="g_id_onload"
+                  data-client_id="TEU_CLIENT_ID_GOOGLE"
+                  data-context="signin"
+                  data-ux_mode="redirect"
+                  data-login_uri="http://localhost:5500/html/pag_dashboard.html" 
+                  data-auto_prompt="false">
+                </div>
+
+                <div class="g_id_signin"
+                  data-type="standard"
+                  data-shape="rectangular"
+                  data-theme="outline"
+                  data-text="signin_with"
+                  data-size="large"
+                  data-logo_alignment="left">
+                </div>
+
               </div>
             </div>
           </div>
@@ -45,9 +60,10 @@
       </div>
     </div>
   </div>
+
+  <!-- Scripts -->
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 
