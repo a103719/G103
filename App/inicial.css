@@ -1,0 +1,144 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.bg-circle1,
+.bg-circle2 {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+  opacity: 0.08;
+}
+
+.bg-circle1 {
+  width: 400px;
+  height: 400px;
+  top: -200px;
+  right: -80px;
+  background: #dce8ff;
+}
+
+.bg-circle2 {
+  width: 350px;
+  height: 350px;
+  bottom: -180px;
+  left: -100px;
+  background: #cfdcff;
+}
+
+.card {
+  width: 100%;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.icon-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.icon {
+  width: 65px;
+  height: 65px;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
+  border-radius: 16px;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 10px 0 16px;
+  color: #222;
+  text-align: center;
+}
+
+.info {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #333;
+  text-align: center;
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0 32px;
+  gap: 4px;
+}
+
+.progress-bar div {
+  height: 12px;
+  width: 48px;
+  border-radius: 100px;
+}
+
+.filled {
+  background-color: #0A77BC;
+}
+
+.empty {
+  background-color: #CBD6FF;
+}
+
+.rounded-left {
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+
+.rounded-right {
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.button {
+  width: 100%;
+  background-color: #0A77BC;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.button span {
+  color: #CBD6FF;
+  margin-right: 6px;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
