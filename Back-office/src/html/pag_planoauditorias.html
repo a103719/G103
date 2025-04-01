@@ -127,171 +127,137 @@
             </nav>
           </header>
           <!--  Header End -->
-            
-
           <!-- Conteúdo principal -->
-            <!-- Lista Planos Auditoria -->
-          <div class="card mt-4 mx-auto" style="max-width: 1250px;">         
+         <!-- Lista Planos Auditoria -->
+          <div class="card mt-4 mx-auto" style="max-width: 1250px;">
             <div class="card-body p-4">
               <div class="d-flex mb-4 justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold">Lista de Planos de Auditorias</h5>
+                <h5 class="mb-0 fw-bold">Lista de Auditorias</h5>
                 <button class="btn btn-outline-primary d-flex align-items-center gap-2">
-                  <iconify-icon icon=lets-icons:filter></iconify-icon>
+                  <iconify-icon icon="lets-icons:filter"></iconify-icon>
                   Filtrar
                 </button>
-                </div>
-                <div class="table-responsive" data-simplebar>
-                  <table class="table table-borderless align-middle text-nowrap">
-                    <thead>
-                      <tr>
-                        <th scope="col">Nome do Plano</th>
-                        <th scope="col">Data</th>
-                        <th scope="col">Perítos Atribuídos</th>
-                      </tr>
-                    </thead>
-                    <tbody id="lista-auditorias">
-                      <tr>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <h6 class="mb-1 fw-bolder">Verificação de Vias de Evacuação</h6>
-                            </div>
-                          </div>
-                        </td>
-                        <td><p class="fs-3 fw-normal mb-0">16/03/2025</p></td>
-                        <td><p class="fs-3 fw-normal mb-0">Miguel Henriques / Tiago Pinto</p></td>
-                        <td>
-                            <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                            <iconify-icon icon="mingcute:delete-3-line" class="nav-small-cap-icon fs-6"></iconify-icon>
-                            <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                            <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6"></iconify-icon>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <h6 class="mb-1 fw-bolder">Auditoria a Estacionamentos Irregulares em Zonas Reservadas</h6>
-                            </div>
-                          </div>
-                        </td>
-                        <td><p class="fs-3 fw-normal mb-0">20/03/2025</p></td>
-                        <td><p class="fs-3 fw-normal mb-0">Tiago Pinto</p></td>
-                        <td>
-                            <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                <iconify-icon icon="mingcute:delete-3-line" class="nav-small-cap-icon fs-6"></iconify-icon>
-                                <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6"></iconify-icon>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <h6 class="mb-1 fw-bolder">Análise de Estacionamento em Locais Proibidos</h6>
-                            </div>
-                          </div>
-                        </td>
-                        <td><p class="fs-3 fw-normal mb-0">25/03/2025</p></td>
-                        <td><p class="fs-3 fw-normal mb-0">Miguel Henriques / Armindo Santos</p></td>
-                        <td>
-                            <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                <iconify-icon icon="mingcute:delete-3-line" class="nav-small-cap-icon fs-6"></iconify-icon>
-                                <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6"></iconify-icon>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <div>
-                              <h6 class="mb-1 fw-bolder">Estudo da Utilização Indevida de Lugares com Dístico Especial</h6>
-                            </div>
-                          </div>
-                        </td>
-                        <td><p class="fs-3 fw-normal mb-0">30/03/2025</p></td>
-                        <td><p class="fs-3 fw-normal mb-0">Miguel Henriques / Tiago Pinto</p></td>
-                        <td>
-                            <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                <iconify-icon icon="mingcute:delete-3-line" class="nav-small-cap-icon fs-6"></iconify-icon>
-                                <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6"></iconify-icon>
-                        </td>
-                      </tr>
+              </div>
+              <div class="table-responsive" data-simplebar>
+                <table class="table table-borderless align-middle text-nowrap">
+                  <thead class="border-bottom">                 
+                    <tr>
+                      <th>Nome do Plano</th>
+                      <th>Ocorrência(s) Relacionadas</th>
+                      <th>Data</th>
+                      <th>Perítos Atribuídos</th>
+                      <th>Estado</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Verificação de Vias de Evacuação</td>
+                      <td>Evacuação de corredores e acessos</td>
+                      <td>16/03/2025</td>
+                      <td>Miguel Henriques / Tiago Pinto</td>
+                      <td><span class="badge bg-success">Criado</span></td>
+                      <td>
+                        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Auditoria a Estacionamentos Irregulares</td>
+                      <td>Estacionamento em lugar reservado</td>
+                      <td>20/03/2025</td>
+                      <td>Tiago Pinto</td>
+                      <td><span class="badge bg-success">Criado</span></td>
+                      <td>
+                        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><em>—</em></td>
+                      <td>Estacionamento em lugar reservado</td>
+                      <td><em>—</em></td>
+                      <td><em>—</em></td>
+                      <td><span class="badge bg-warning text-dark">Por Criar</span></td>
+                      <td>
+                        <a href="#formPlanoAuditoria" title="Criar Plano">
+                          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><em>—</em></td>
+                      <td>Bloqueio da via</td>
+                      <td><em>—</em></td>
+                      <td><em>—</em></td>
+                      <td><span class="badge bg-warning text-dark">Por Criar</span></td>
+                      <td>
+                        <a href="#formPlanoAuditoria" title="Criar Plano">
+                          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+                        </a>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-
           <!-- Formulário para Criar Plano de Auditoria -->
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title fw-semibold mb-4">Criar Plano de Auditoria</h5>
-    <div class="card">
-      <div class="card-body">
-        <form id="formPlanoAuditoria">
-          <!-- Ocorrências Relacionadas -->
-          <div class="mb-3">
-            <label class="form-label">Ocorrências Relacionadas</label>
-            <select class="form-select" id="ocorrencia">
-              <option selected disabled>Escolha uma ocorrência</option>
-              <option value="1">Estacionamento indevido</option>
-              <option value="2">Estacionamento em lugar reservado</option>
-              <option value="3">Bloqueio da via</option>
-            </select>
+          <div class="card position-relative" id="formularioPlano" style="display: none;">
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Fechar" onclick="fecharFormulario()"></button>
+            </div>            
+            <div class="card-body">
+              <h5 class="card-title fw-semibold mb-4">Criar Plano de Auditoria</h5>
+              <div class="card">
+                <div class="card-body">
+                  <form id="formPlanoAuditoria">
+                    <!-- Ocorrências Relacionadas -->
+                    <div class="mb-3">
+                      <label class="form-label">Ocorrências Relacionadas</label>
+                      <select class="form-select" id="ocorrencia">
+                        <option selected disabled>Escolha uma ocorrência</option>
+                        <option value="1">Estacionamento indevido</option>
+                        <option value="2">Estacionamento em lugar reservado</option>
+                        <option value="3">Bloqueio da via</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Nome do Plano</label>
+                      <input type="text" class="form-control" id="input-nome-plano">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Data da Auditoria</label>
+                      <input type="date" class="form-control" id="input-data-auditoria">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Peritos</label>
+                      <select class="form-select" id="select-perito">
+                        <option selected disabled>Selecione um perito</option>
+                        <option value="1">João Paulo</option>
+                        <option value="2">Miguel Henriques</option>
+                        <option value="3">Tiago Pinto</option>
+                        <option value="4">Armindo Santos</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Materiais</label>
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Duração</label>
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Descrição</label>
+                      <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Criar Plano</button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <!-- Nome do Plano -->
-          <div class="mb-3">
-            <label class="form-label">Nome do Plano</label>
-            <input type="text" class="form-control" id="input-nome-plano">
-          </div>
-
-          <!-- Data da Auditoria -->
-          <div class="mb-3">
-            <label class="form-label">Data da Auditoria</label>
-            <input type="date" class="form-control" id="input-data-auditoria">
-          </div>
-
-          <!-- Peritos -->
-          <div class="mb-3">
-            <label class="form-label">Peritos</label>
-            <select class="form-select" id="select-perito">
-              <option selected disabled>Selecione um perito</option>
-              <option value="1">João Paulo</option>
-              <option value="2">Miguel Henriques</option>
-              <option value="3">Tiago Pinto</option>
-              <option value="4">Armindo Santos</option>
-            </select>
-          </div>
-
-          <!-- Materiais -->
-          <div class="mb-3">
-            <label class="form-label">Materiais</label>
-            <input type="text" class="form-control">
-          </div>
-
-          <!-- Duração -->
-          <div class="mb-3">
-            <label class="form-label">Duração</label>
-            <input type="text" class="form-control">
-          </div>
-
-          <!-- Descrição -->
-          <div class="mb-3">
-            <label class="form-label">Descrição</label>
-            <textarea class="form-control" rows="3"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Criar Plano</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-        
-          
+          <!-- Fim Formulário para Criar Plano de Auditoria -->  
+                  
           <!-- FIM Conteúdo principal -->
 
         </div>

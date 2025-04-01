@@ -1,36 +1,81 @@
-document.getElementById("formPlanoAuditoria").addEventListener("submit", function (e) {
-    e.preventDefault(); // Impede o reload da página
-  
-    // Recolher os dados do formulário
-    const nomePlano = document.getElementById("input-nome-plano").value;
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("formPlanoAuditoria");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const nomePlano = document.getElementById("input-nome-plano").value.trim();
     const dataAuditoria = document.getElementById("input-data-auditoria").value;
-    const peritoSelect = document.getElementById("select-perito");
-    const perito = peritoSelect.options[peritoSelect.selectedIndex].text;
-  
+    const ocorrencia = document.getElementById("ocorrencia").selectedOptions[0]?.text;
+    const perito = document.getElementById("select-perito").selectedOptions[0]?.text;
+
+    // Verificar se todos os campos obrigatórios estão preenchidos
+    if (!nomePlano || !dataAuditoria || !ocorrencia || !perito) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
     // Criar nova linha da tabela
     const novaLinha = document.createElement("tr");
     novaLinha.innerHTML = `
+      <td>${nomePlano}</td>
+      <td>${ocorrencia}</td>
+      <td>${dataAuditoria}</td>
+      <td>${perito}</td>
+      <td><span class="badge bg-success">Criado</span></td>
       <td>
-        <div class="d-flex align-items-center">
-          <div>
-            <h6 class="mb-1 fw-bolder">${nomePlano}</h6>
-          </div>
-        </div>
-      </td>
-      <td><p class="fs-3 fw-normal mb-0">${dataAuditoria}</p></td>
-      <td><p class="fs-3 fw-normal mb-0">${perito}</p></td>
-      <td>
-        <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                <iconify-icon icon="mingcute:delete-3-line" class="nav-small-cap-icon fs-6"></iconify-icon>
-                                <class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6"></iconify-icon>
-        </div>
+        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer" title="Editar"></iconify-icon>
       </td>
     `;
-  
-    // Adicionar nova linha à tabela
-    document.getElementById("lista-auditorias").appendChild(novaLinha);
-  
-    // Limpar formulário
-    document.getElementById("formPlanoAuditoria").reset();
+
+    // Adicionar à tabela
+    const tabela = document.querySelector(".table tbody");
+    tabela.appendChild(novaLinha);
+
+    // Limpar o formulário
+    form.reset();
   });
+});
+
+// Mostrar o formulário ao clicar nos ícones de "Criar" ou "Editar"
+function mostrarFormulario() {
+  document.getElementById("formularioPlano").style.display = "block";
+  document.getElementById("input-nome-plano").focus();
+}
+
+// Evento de submissão do formulário
+document.getElementById("formPlanoAuditoria").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const ocorrencia = document.getElementById("ocorrencia").selectedOptions[0].text;
+  const nomePlano = document.getElementById("input-nome-plano").value;
+  const dataAuditoria = document.getElementById("input-data-auditoria").value;
+  const peritoSelect = document.getElementById("select-perito");
+  const perito = peritoSelect.options[peritoSelect.selectedIndex].text;
+
+  // Criar nova linha da tabela
+  const novaLinha = document.createElement("tr");
+  novaLinha.innerHTML = `
+    <td>${nomePlano}</td>
+    <td>${ocorrencia}</td>
+    <td>${dataAuditoria}</td>
+    <td>${perito}</td>
+    <td><span class="badge bg-success">Criado</span></td>
+    <td>
+      <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+    </td>
+  `;
+
+  document.querySelector("tbody").appendChild(novaLinha);
+
+  // Esconde o formulário e limpa-o
+  document.getElementById("formularioPlano").style.display = "none";
+  document.getElementById("formPlanoAuditoria").reset();
+});
+
+function fecharFormulario() {
+  document.getElementById("formularioPlano").style.display = "none";
+  document.getElementById("formPlanoAuditoria").reset();
+}
+
+
