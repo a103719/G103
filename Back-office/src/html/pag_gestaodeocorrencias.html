@@ -135,10 +135,18 @@
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h4 class="fw-semibold mb-0">Gestão de ocorrências</h4>
-          <button class="btn btn-outline-primary d-flex align-items-center gap-2">
-            <iconify-icon icon="lets-icons:filter"></iconify-icon>
-            Filtrar
-          </button>
+          <div class="dropdown">
+            <button class="btn btn-outline-primary d-flex align-items-center gap-2 dropdown-toggle" type="button" id="btnFiltroDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <iconify-icon icon="lets-icons:filter"></iconify-icon>
+              Filtrar
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btnFiltroDropdown">
+              <li><a class="dropdown-item" href="#" data-estado="">Todos</a></li>
+              <li><a class="dropdown-item" href="#" data-estado="Pendente">Pendente</a></li>
+              <li><a class="dropdown-item" href="#" data-estado="Em análise">Em análise</a></li>
+              <li><a class="dropdown-item" href="#" data-estado="Resolvido">Resolvido</a></li>
+            </ul>
+          </div>          
         </div>
         <div class="table-responsive">
           <table class="table table-borderless align-middle">
@@ -293,7 +301,7 @@
       <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalLocalizacaoLabel">Localização da Ocorrência</h5>
+            <h5 class="modal-title text-center" id="modalLocalizacaoLabel">Localização da Ocorrência</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body text-center" style="overflow: auto;">
@@ -347,5 +355,31 @@
       image.style.transformOrigin = "center center";
     }
   </script> 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const itensDropdown = document.querySelectorAll(".dropdown-menu .dropdown-item");
+      const linhasTabela = document.querySelectorAll("table tbody tr");
+  
+      itensDropdown.forEach(item => {
+        item.addEventListener("click", function (e) {
+          e.preventDefault();
+          const estadoSelecionado = this.getAttribute("data-estado");
+  
+          linhasTabela.forEach(linha => {
+            // Seleciona qualquer badge com class que contenha "badge"
+            const badge = linha.querySelector("span[class*='badge']");
+            const estado = badge?.textContent.trim();
+  
+            if (!estadoSelecionado || estado === estadoSelecionado) {
+              linha.style.display = "";
+            } else {
+              linha.style.display = "none";
+            }
+          });
+        });
+      });
+    });
+  </script>  
+
 </body>
 </html>
