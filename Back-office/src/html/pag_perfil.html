@@ -113,13 +113,11 @@
               </ul>
               <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                  <a href="../html/pag_perfil.html" target="_blank"
-                    class="btn btn-primary">Nome Administrador</a>
+                  <a href="../html/pag_perfil.html" target="_blank" class="btn btn-primary"><span id="nomeTopo">Nome Administrador</span></a>
                   <li class="nav-item dropdown">
                     <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <img src="../assets/images/profile/user1.jpg" alt="" width="35" height="35"
-                        class="rounded-circle">
+                      <img id="fotoTopo" src="../assets/images/profile/user1.jpg" alt="" width="35" height="35" class="rounded-circle">
                     </a>
                   </li>
                 </ul>
@@ -134,7 +132,7 @@
           <div class="card-body">
             <div class="text-center">
               <h5 class="card-title fw-semibold mb-4">Perfil</h5>
-              <img src="../assets/images/profile/user1.jpg" alt="Foto de Perfil" class="rounded-circle mb-4" width="120" height="120">
+              <img id="fotoPerfil" src="../assets/images/profile/user1.jpg" alt="Foto de Perfil" class="rounded-circle mb-4" width="120" height="120">
             </div>
             <div class="card">
               <div class="card-body">
@@ -163,6 +161,10 @@
                     <label for="telefone" class="form-label">Contacto Telefónico</label>
                     <input type="tel" class="form-control" id="telefone" disabled>
                   </div>
+                  <div class="mb-3">
+                    <label for="foto" class="form-label">Foto de Perfil</label>
+                    <input class="form-control" type="file" id="foto" accept="image/*" disabled>
+                  </div>
                   <div class="d-flex gap-3 justify-content-center mt-3">
                   <button type="button" class="btn btn-primary" onclick="ativarEdicao()">Editar Perfil</button>
                   </div>
@@ -176,6 +178,7 @@
 <!-- Script para ativar campos -->
 <script>
   function ativarEdicao() {
+    // Ativa todos os inputs (inclusive o de tipo file)
     const inputs = document.querySelectorAll("#perfilForm input");
     inputs.forEach(input => input.disabled = false);
 
@@ -195,6 +198,7 @@
 
 
 
+
           <!-- FIM Conteúdo principal -->
 
         </div>
@@ -208,6 +212,11 @@
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script src="../assets/js/guardar_alteracoes.js"></script>
+  <script src="../assets/js/alterar_imagemperfil.js"></script>
+  <script src="../assets/js/perfil.js"></script>
+
+
 </body>
 
 </html>
