@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const nomePlano = document.getElementById("input-nome-plano").value.trim();
     const dataAuditoria = document.getElementById("input-data-auditoria").value;
-    const ocorrencias = Array.from(document.querySelectorAll("#ocorrencias-relacionadas .badge"))
+    const ocorrencias = Array.from(document.querySelectorAll("#ocorrencias-relacionadas span"))
       .map(span => span.textContent.trim());
     const materiais = document.getElementById("input-materiais").value.trim();
     const duracao = document.getElementById("input-duracao").value.trim();
@@ -93,7 +93,7 @@ function mostrarFormulario(icone = null) {
 
     const divOcorrencias = document.getElementById("ocorrencias-relacionadas");
     divOcorrencias.innerHTML = ocorrenciasArray
-      .map(o => `<span class="badge bg-primary me-1">${o}</span>`)
+    .map(o => `<span class="me-2">${o}</span>`)
       .join("");
 
     const peritosArray = peritos.split(" / ").map(p => p.trim());
@@ -101,7 +101,7 @@ function mostrarFormulario(icone = null) {
       cb.checked = peritosArray.includes(cb.value);
     });
 
-    botao.textContent = (estado === "Por Criar") ? "Criar Plano" : "Atualizar";
+    botao.textContent = (estado === "Por Criar") ? "Criar Plano" : "Atualizar Plano";
   } else {
     botao.textContent = "Criar Plano";
   }
