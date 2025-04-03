@@ -165,7 +165,7 @@
                       <td>Miguel Henriques / Tiago Pinto</td>
                       <td><span class="badge bg-success">Criado</span></td>
                       <td>
-                        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+                        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Editar"></iconify-icon>
                       </td>
                     </tr>
                     <tr>
@@ -175,7 +175,7 @@
                       <td>Tiago Pinto</td>
                       <td><span class="badge bg-success">Criado</span></td>
                       <td>
-                        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+                        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Editar"></iconify-icon>
                       </td>
                     </tr>
                     <tr>
@@ -186,7 +186,7 @@
                       <td><span class="badge bg-warning text-dark">Por Criar</span></td>
                       <td>
                         <a href="#formPlanoAuditoria" title="Criar Plano">
-                          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+                          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Criar Plano"></iconify-icon>
                         </a>
                       </td>
                     </tr>
@@ -198,7 +198,7 @@
                       <td><span class="badge bg-warning text-dark">Por Criar</span></td>
                       <td>
                         <a href="#formPlanoAuditoria" title="Criar Plano">
-                          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario()"></iconify-icon>
+                          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Criar Plano"></iconify-icon>
                         </a>
                       </td>
                     </tr>
@@ -220,13 +220,11 @@
                     <!-- Ocorrências Relacionadas -->
                     <div class="mb-3">
                       <label class="form-label">Ocorrências Relacionadas</label>
-                      <select class="form-select" id="ocorrencia">
-                        <option selected disabled>Escolha uma ocorrência</option>
-                        <option value="1">Estacionamento indevido</option>
-                        <option value="2">Estacionamento em lugar reservado</option>
-                        <option value="3">Bloqueio da via</option>
-                      </select>
+                      <div id="ocorrencias-relacionadas" class="border rounded p-2 bg-light" style="min-height: 40px;">
+                        <span class="text-muted">Nenhuma ocorrência relacionada</span>
+                      </div>
                     </div>
+                    
                     <div class="mb-3">
                       <label class="form-label">Nome do Plano</label>
                       <input type="text" class="form-control" id="input-nome-plano">
@@ -260,19 +258,22 @@
                         </div>
                       </div>
                     </div>                    
+                    <!-- Aqui colocas os campos novos -->
                     <div class="mb-3">
                       <label class="form-label">Materiais</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" id="input-materiais">
                     </div>
+
                     <div class="mb-3">
                       <label class="form-label">Duração</label>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" id="input-duracao">
                     </div>
+
                     <div class="mb-3">
                       <label class="form-label">Descrição</label>
-                      <textarea class="form-control" rows="3"></textarea>
+                      <textarea class="form-control" id="input-descricao" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Criar Plano</button>
+                    <button type="submit" class="btn btn-primary" id="btn-submit-plano">Criar Plano</button>
                   </form>
                 </div>
               </div>
