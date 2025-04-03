@@ -128,7 +128,7 @@
           </header>
           <!--  Header End -->
             
-          <!-- Conteúdo principal -->
+          
 <!-- Conteúdo principal -->
 <div class="container-fluid">
     <div class="card mb-4">
@@ -168,7 +168,7 @@
                   <span class="badge rounded-pill bg-primary estado-ocorrencia">Pendente</span>
                 </td>
                 <td>
-                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes('ocorrencia1')"></iconify-icon>
+                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
                 </td>
                 
               </tr>
@@ -177,10 +177,10 @@
                 <td>Marco Sousa</td>
                 <td>41.451106, -8.283268 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
                 <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-info text-white">Em análise</span>
+                  <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
                 </td>
                 <td>
-                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes('ocorrencia1')"></iconify-icon>
+                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
                 </td>
                 
               </tr>
@@ -189,10 +189,10 @@
                 <td>Paula Amaral</td>
                 <td>41.441106, -8.273322 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
                 <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-info text-white">Em análise</span>
+                  <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
                 </td>
                 <td>
-                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes('ocorrencia1')"></iconify-icon>
+                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
                 </td>                
               </tr>
               <tr>
@@ -200,10 +200,10 @@
                 <td>Roberto Pimenta</td>
                 <td>41.466534, -8.293517 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
                 <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-info text-white">Em análise</span>
+                  <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
                 </td>
                 <td>
-                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes('ocorrencia1')"></iconify-icon>
+                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
                 </td>
                 
               </tr>
@@ -212,10 +212,10 @@
                 <td>João Paulo</td>
                 <td>41.466324, -8.293210 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
                 <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-success">Resolvido</span>
+                  <span class="badge rounded-pill bg-success estado-ocorrencia">Resolvido</span>
                   </td>
                   <td>
-                    <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes('ocorrencia1')"></iconify-icon>
+                    <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
                   </td>
                   
               </tr>
@@ -240,32 +240,33 @@
         <div class="row align-items-start mb-3">
           <div class="col-md-4">
             <label class="form-label fw-semibold">Designação</label>
-            <p class="mb-1">Estacionamento indevido</p>
+            <p class="mb-1 campo-designacao">Estacionamento indevido</p>
           </div>
           <div class="col-md-4">
             <label class="form-label fw-semibold">Nome do Utilizador</label>
-            <p class="mb-1">Henrique Araújo</p>
+            <p class="mb-1 campo-nome">Henrique Araújo</p>
           </div>
           <div class="col-md-4">
             <label class="form-label fw-semibold">Localização</label>
-            <p class="mb-1">41.451106, -8.293168 <iconify-icon icon="mdi:map-marker"></iconify-icon></p>
+            <p class="mb-1 campo-localizacao">41.451106, -8.293168 <iconify-icon icon="mdi:map-marker"></iconify-icon></p>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-4">
             <label class="form-label fw-semibold">Estado</label>
-            <select class="form-select campo-editavel" disabled>
-              <option selected>Pendente</option>
-              <option>Em análise</option>
-              <option>Resolvido</option>
-            </select>
+            <select class="form-select campo-editavel estado-select" disabled>
+              <option value="Pendente">Pendente</option>
+              <option value="Em análise">Em análise</option>
+              <option value="Resolvido">Resolvido</option>
+            </select>            
           </div>
           <div class="col-md-8">
             <label class="form-label fw-semibold">Atribuir Segurança</label>
-            <div class="form-check"><input class="form-check-input" type="radio" name="seguranca" value="Miguel Henriques" disabled> Miguel Henriques</div>
-            <div class="form-check"><input class="form-check-input" type="radio" name="seguranca" value="Tiago Pinto" disabled> Tiago Pinto</div>
-            <div class="form-check"><input class="form-check-input" type="radio" name="seguranca" value="Armindo Santos" disabled> Armindo Santos</div>
+            <div class="form-check"><input class="form-check-input seguranca-checkbox" type="checkbox" value="Miguel Henriques" disabled> Miguel Henriques</div>
+            <div class="form-check"><input class="form-check-input seguranca-checkbox" type="checkbox" value="Tiago Pinto" disabled> Tiago Pinto</div>
+            <div class="form-check"><input class="form-check-input seguranca-checkbox" type="checkbox" value="Armindo Santos" disabled> Armindo Santos</div>
+
           </div>
         </div>
 
@@ -337,6 +338,6 @@
       const modal = new bootstrap.Modal(document.getElementById('modalLocalizacao'));
       modal.show();
     }
-  </script>  
+  </script>    
 </body>
 </html>
