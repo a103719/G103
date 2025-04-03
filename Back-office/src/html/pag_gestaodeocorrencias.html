@@ -7,6 +7,9 @@
   <title>EyesEveryWhere</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/_LogoEyes.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
 </head>
 
 <body>
@@ -163,7 +166,10 @@
               <tr>
                 <td>Estacionamento indevido</td>
                 <td>Henrique Araújo</td>
-                <td>41.451106, -8.293168 <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa()"></iconify-icon></td>
+                <td class="coordenadas">41.451106, -8.293168
+                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+                </td>
+                                
                 <td class="align-middle ps-2">
                   <span class="badge rounded-pill bg-primary estado-ocorrencia">Pendente</span>
                 </td>
@@ -175,7 +181,10 @@
               <tr>
                 <td>Estacionamento em lugar reservado</td>
                 <td>Marco Sousa</td>
-                <td>41.451106, -8.283268 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
+                <td class="coordenadas">41.451106, -8.293268
+                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+                </td>
+              </td>   
                 <td class="align-middle ps-2">
                   <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
                 </td>
@@ -187,7 +196,9 @@
               <tr>
                 <td>Estacionamento a restringir via de circulação</td>
                 <td>Paula Amaral</td>
-                <td>41.441106, -8.273322 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
+                <td class="coordenadas">41.451106, -8.283268
+                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+                </td>
                 <td class="align-middle ps-2">
                   <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
                 </td>
@@ -198,7 +209,9 @@
               <tr>
                 <td>Estacionamento indevido</td>
                 <td>Roberto Pimenta</td>
-                <td>41.466534, -8.293517 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
+                <td class="coordenadas">41.451106, -8.383268
+                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+                </td>
                 <td class="align-middle ps-2">
                   <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
                 </td>
@@ -210,7 +223,9 @@
               <tr>
                 <td>Estacionamento em lugar reservado</td>
                 <td>João Paulo</td>
-                <td>41.466324, -8.293210 <iconify-icon icon="mdi:map-marker"></iconify-icon></td>
+                <td class="coordenadas">41.451106, -8.383268
+                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+                </td>
                 <td class="align-middle ps-2">
                   <span class="badge rounded-pill bg-success estado-ocorrencia">Resolvido</span>
                   </td>
@@ -305,16 +320,13 @@
             <h5 class="modal-title text-center" id="modalLocalizacaoLabel">Localização da Ocorrência</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
-          <div class="modal-body text-center" style="overflow: auto;">
-            <div style="width: 100%; max-height: 600px; overflow: auto;">
-              <img id="imagemMapa" src="../assets/images/products/Carro-mal-estacionado.jpg"
-                   alt="Mapa Localização"
-                   style="width: 100%; max-width: unset; height: auto; cursor: zoom-in;"
-                   onwheel="zoomImage(event)">
-            </div>
-          </div>                       
+          <div class="modal-body" style="height: 500px;">
+            <div id="mapaOcorrencia" style="width: 100%; height: 100%; border-radius: 8px;"></div>
+          </div>
         </div>
       </div>
+    </div>
+    
           <!-- FIM Conteúdo principal -->
 
         </div>
@@ -334,10 +346,43 @@
   <script src="../assets/js/filtrar.js"></script>
   <script src="../assets/js/zoom_mapa.js"></script>
   <script>
-    function abrirMapa() {
+    let mapa = null;
+    let marcador = null;
+  
+    function abrirMapa(icon) {
+      const coordenadasTexto = icon.closest('td').textContent.trim();
+      const coordenadas = coordenadasTexto.match(/(-?\d+\.\d+),\s*(-?\d+\.\d+)/);
+  
+      if (!coordenadas) {
+        alert("⚠️ Não foi possível obter as coordenadas.");
+        return;
+      }
+  
+      const [_, lat, lng] = coordenadas.map(Number);
+  
       const modal = new bootstrap.Modal(document.getElementById('modalLocalizacao'));
       modal.show();
+  
+      setTimeout(() => {
+        if (!mapa) {
+          mapa = L.map('mapaOcorrencia').setView([lat, lng], 18);
+  
+          // 🌌 Vista Satélite da Esri
+          L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '© Esri &mdash; Fonte: Esri, Earthstar Geographics',
+            maxZoom: 20
+          }).addTo(mapa);
+  
+          marcador = L.marker([lat, lng]).addTo(mapa);
+        } else {
+          mapa.setView([lat, lng], 18);
+          marcador.setLatLng([lat, lng]);
+        }
+      }, 300);
     }
-  </script>    
+  </script>
+  
+  
+     
 </body>
 </html>
