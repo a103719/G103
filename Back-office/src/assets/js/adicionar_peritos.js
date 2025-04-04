@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function criarDropdownEstado(id, estadoAtual) {
     const select = document.createElement('select');
-    select.className = 'form-select form-select-sm w-auto bg-white text-dark';
+    select.className = 'form-select form-select-sm w-auto'; // Base visual
+    atualizarEstiloEstado(select, estadoAtual);
     select.dataset.id = id;
 
     for (const key in estados) {
@@ -40,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function atualizarEstiloEstado(select, estado) {
-    // Limpa classes anteriores
+    // Remove estilos anteriores
     select.classList.remove('bg-success-subtle', 'text-success', 'bg-warning-subtle', 'text-warning', 'bg-danger-subtle', 'text-danger');
-    // Reaplica o estilo branco + cor do estado
+    // Aplica o estilo atual
     select.classList.add(...estados[estado].class.split(' '));
   }
 
@@ -62,8 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const novaLinha = document.createElement("tr");
 
-    const dropdown = criarDropdownEstado(proximoID, estadoInicial);
-
     novaLinha.innerHTML = `
       <td><div class="d-flex align-items-center"><div><h6 class="mb-1 fw-bolder">${proximoID}</h6></div></div></td>
       <td><p class="fs-3 fw-normal mb-0">${nome}</p></td>
@@ -76,9 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
       </td>
     `;
 
-    // Inserir dropdown no <td> do estado
-    const tdEstado = novaLinha.children[3];
-    tdEstado.appendChild(dropdown);
+    const dropdown = criarDropdownEstado(proximoID, estadoInicial);
+    novaLinha.children[3].appendChild(dropdown);
 
     tabelaBody.appendChild(novaLinha);
     proximoID++;
@@ -93,5 +91,13 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem(`estado_perito_${id}`);
       tr.remove();
     }
+  });
+
+  // Aplica estilo aos dropdowns já existentes (caso a página seja recarregada)
+  document.querySelectorAll("select[data-id]").forEach(select => {
+    const id = select.dataset.id;
+    const estadoGuardado = obterEstado(id);
+    select.value = estadoGuardado;
+    atualizarEstiloEstado(select, estadoGuardado);
   });
 });

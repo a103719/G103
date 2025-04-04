@@ -1,8 +1,10 @@
 let linhaEmEdicao = null;
+let materiaisSelecionadosAuditoria = [];
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("formPlanoAuditoria");
   const botaoSubmit = document.getElementById("btn-submit-plano");
+  const listaMateriais = document.getElementById("materiaisSelecionados");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -11,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const dataAuditoria = document.getElementById("input-data-auditoria").value;
     const ocorrencias = Array.from(document.querySelectorAll("#ocorrencias-relacionadas span"))
       .map(span => span.textContent.trim());
-    const materiais = document.getElementById("input-materiais").value.trim();
     const duracao = document.getElementById("input-duracao").value.trim();
     const descricao = document.getElementById("input-descricao").value.trim();
 
@@ -27,24 +28,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const ocorrenciasTexto = ocorrencias.join(", ");
+    const materiaisJSON = JSON.stringify(materiaisSelecionadosAuditoria);
+    const materiaisTexto = materiaisSelecionadosAuditoria.length > 0
+      ? materiaisSelecionadosAuditoria.map(m => `${m.nome} (${m.qtd} ${m.unidade})`).join(", ")
+      : "—";
 
     if (linhaEmEdicao) {
       linhaEmEdicao.children[0].textContent = nomePlano;
       linhaEmEdicao.children[1].textContent = ocorrenciasTexto;
       linhaEmEdicao.children[2].textContent = dataAuditoria;
       linhaEmEdicao.children[3].textContent = peritosSelecionados;
-      linhaEmEdicao.setAttribute("data-materiais", materiais);
-      linhaEmEdicao.setAttribute("data-duracao", duracao);
-      linhaEmEdicao.setAttribute("data-descricao", descricao);
-      linhaEmEdicao.children[4].innerHTML = '<span class="badge bg-success">Criado</span>';
-      linhaEmEdicao.children[5].innerHTML = `
+      linhaEmEdicao.children[4].textContent = materiaisTexto;
+      linhaEmEdicao.children[5].innerHTML = '<span class="badge bg-success">Criado</span>';
+      linhaEmEdicao.children[6].innerHTML = `
         <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark"
           onclick="editarPlano(this)" title="Editar"></iconify-icon>
       `;
+      linhaEmEdicao.setAttribute("data-materiais", materiaisJSON);
+      linhaEmEdicao.setAttribute("data-duracao", duracao);
+      linhaEmEdicao.setAttribute("data-descricao", descricao);
       linhaEmEdicao = null;
     } else {
       const novaLinha = document.createElement("tr");
-      novaLinha.setAttribute("data-materiais", materiais);
+      novaLinha.setAttribute("data-materiais", materiaisJSON);
       novaLinha.setAttribute("data-duracao", duracao);
       novaLinha.setAttribute("data-descricao", descricao);
 
@@ -53,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${ocorrenciasTexto}</td>
         <td>${dataAuditoria}</td>
         <td>${peritosSelecionados}</td>
+        <td>${materiaisTexto}</td>
         <td><span class="badge bg-success">Criado</span></td>
         <td>
           <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark"
@@ -63,14 +70,18 @@ document.addEventListener("DOMContentLoaded", function () {
       document.querySelector("tbody").appendChild(novaLinha);
     }
 
-    form.reset();
     fecharFormulario();
+    form.reset();
+    materiaisSelecionadosAuditoria = [];
+    listaMateriais.innerHTML = "";
+    document.getElementById("stockDisponivel").textContent = "";
   });
 });
 
 function mostrarFormulario(icone = null) {
   document.getElementById("formularioPlano").style.display = "block";
   const botao = document.getElementById("btn-submit-plano");
+  const listaMateriais = document.getElementById("materiaisSelecionados");
 
   if (icone) {
     const linha = icone.closest("tr");
@@ -79,31 +90,38 @@ function mostrarFormulario(icone = null) {
     const nome = linha.children[0].textContent.trim();
     const data = linha.children[2].textContent.trim();
     const peritos = linha.children[3].textContent.trim();
-    const materiais = linha.getAttribute("data-materiais") || "";
+    const materiaisJSON = linha.getAttribute("data-materiais") || "[]";
     const duracao = linha.getAttribute("data-duracao") || "";
     const descricao = linha.getAttribute("data-descricao") || "";
-    const estado = linha.children[4].textContent.trim();
     const ocorrenciasArray = linha.children[1].textContent.split(",").map(o => o.trim());
 
     document.getElementById("input-nome-plano").value = nome !== "—" ? nome : "";
-    document.getElementById("input-data-auditoria").value = data !== "—" ? data : "";
-    document.getElementById("input-materiais").value = materiais;
+    document.getElementById("input-data-auditoria").value = formatarDataParaInput(data);
     document.getElementById("input-duracao").value = duracao;
     document.getElementById("input-descricao").value = descricao;
 
     const divOcorrencias = document.getElementById("ocorrencias-relacionadas");
-    divOcorrencias.innerHTML = ocorrenciasArray
-    .map(o => `<span class="me-2">${o}</span>`)
-      .join("");
+    divOcorrencias.innerHTML = ocorrenciasArray.map(o => `<span class="me-2">${o}</span>`).join("");
 
     const peritosArray = peritos.split(" / ").map(p => p.trim());
     document.querySelectorAll('#checkbox-peritos input[type="checkbox"]').forEach(cb => {
       cb.checked = peritosArray.includes(cb.value);
     });
 
-    botao.textContent = (estado === "Por Criar") ? "Criar Plano" : "Atualizar Plano";
+    materiaisSelecionadosAuditoria = JSON.parse(materiaisJSON);
+    listaMateriais.innerHTML = "";
+    materiaisSelecionadosAuditoria.forEach(mat => {
+      const li = document.createElement("li");
+      li.className = "list-group-item d-flex justify-content-between align-items-center";
+      li.textContent = `${mat.nome} - ${mat.qtd} ${mat.unidade}`;
+      listaMateriais.appendChild(li);
+    });
+
+    botao.textContent = "Atualizar Plano";
   } else {
     botao.textContent = "Criar Plano";
+    materiaisSelecionadosAuditoria = [];
+    document.getElementById("materiaisSelecionados").innerHTML = "";
   }
 
   document.getElementById("input-nome-plano").focus();
@@ -114,10 +132,21 @@ function fecharFormulario() {
   document.getElementById("formPlanoAuditoria").reset();
   document.querySelectorAll('#checkbox-peritos input[type="checkbox"]').forEach(cb => cb.checked = false);
   document.getElementById("ocorrencias-relacionadas").innerHTML = "";
+  document.getElementById("materiaisSelecionados").innerHTML = "";
+  document.getElementById("stockDisponivel").textContent = "";
+  materiaisSelecionadosAuditoria = [];
   document.getElementById("btn-submit-plano").textContent = "Criar Plano";
   linhaEmEdicao = null;
 }
 
 function editarPlano(icone) {
   mostrarFormulario(icone);
+}
+
+function formatarDataParaInput(dataStr) {
+  const partes = dataStr.split("-");
+  if (partes.length === 3) {
+    return `${partes[2]}-${partes[1]}-${partes[0]}`;
+  }
+  return "";
 }

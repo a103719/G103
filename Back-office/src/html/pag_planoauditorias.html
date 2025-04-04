@@ -114,12 +114,11 @@
               <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                   <a href="../html/pag_perfil.html" target="_blank"
-                    class="btn btn-primary">Nome Administrador</a>
+                    class="btn btn-primary perfil-nome">Nome Administrador</a>
                   <li class="nav-item dropdown">
                     <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <img src="../assets/images/profile/user1.jpg" alt="" width="35" height="35"
-                        class="rounded-circle">
+                      <img src="../assets/images/profile/user1.jpg" alt="Perfil" width="35" height="35" class="rounded-circle perfil-imagem">
                     </a>
                   </li>
                 </ul>
@@ -153,6 +152,7 @@
                       <th>Ocorrência(s) Relacionadas</th>
                       <th>Data</th>
                       <th>Perítos Atribuídos</th>
+                      <th>Materiais</th>
                       <th>Estado</th>
                       <th></th>
                     </tr>
@@ -163,6 +163,7 @@
                       <td>Evacuação de corredores e acessos</td>
                       <td>16-03-2025</td>
                       <td>Miguel Henriques / Tiago Pinto</td>
+                      <td>Cone de sinalização (2 un), Extintor CO2 (1 un)</td>
                       <td><span class="badge bg-success">Criado</span></td>
                       <td>
                         <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Editar"></iconify-icon>
@@ -173,6 +174,7 @@
                       <td>Estacionamento em lugar reservado</td>
                       <td>20-03-2025</td>
                       <td>Tiago Pinto</td>
+                      <td>Semáforo portátil (1 un)</td>
                       <td><span class="badge bg-success">Criado</span></td>
                       <td>
                         <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Editar"></iconify-icon>
@@ -181,6 +183,7 @@
                     <tr>
                       <td><em>—</em></td>
                       <td>Estacionamento em lugar reservado</td>
+                      <td><em>—</em></td>
                       <td><em>—</em></td>
                       <td><em>—</em></td>
                       <td><span class="badge bg-warning text-dark">Por Criar</span></td>
@@ -195,6 +198,7 @@
                       <td>Bloqueio da via</td>
                       <td><em>—</em></td>
                       <td><em>—</em></td>
+                      <td><em>—</em></td>
                       <td><span class="badge bg-warning text-dark">Por Criar</span></td>
                       <td>
                         <a href="#formPlanoAuditoria" title="Criar Plano">
@@ -203,6 +207,7 @@
                       </td>
                     </tr>
                   </tbody>
+                  
                 </table>
               </div>
             </div>
@@ -259,11 +264,20 @@
                       </div>
                     </div>                    
                     <!-- Aqui colocas os campos novos -->
-                    <div class="mb-3">
-                      <label class="form-label">Materiais</label>
-                      <input type="text" class="form-control" id="input-materiais">
-                    </div>
+                    <!-- Campo Materiais substituído por dropdown com stock + quantidade + lista selecionada -->
+<div class="mb-3">
+  <label class="form-label">Materiais</label>
+  <div class="d-flex gap-3 align-items-center">
+    <select id="selectMaterial" class="form-select w-50">
+      <option disabled selected>Selecione um material</option>
+    </select>
+    <input type="number" id="quantidadeMaterial" class="form-control w-25" placeholder="Qtd." min="1">
+    <button type="button" class="btn btn-primary" id="adicionarMaterial">Adicionar</button>
+  </div>
+  <div id="stockDisponivel" class="text-muted mt-2"></div>
+</div>
 
+<ul id="materiaisSelecionados" class="list-group mb-4"></ul>
                     <div class="mb-3">
                       <label class="form-label">Duração</label>
                       <input type="text" class="form-control" id="input-duracao">
@@ -296,5 +310,8 @@
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="../assets/js/AdicionarPlanoAuditoria.js"></script>
   <script src="../assets/js/filtrar.js"></script>  
+  <script src="../assets/js/perfil_global.js"></script>
+  <script src="../assets/js/stock_materiais.js"></script>
+
 </body>
 </html>

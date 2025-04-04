@@ -117,12 +117,11 @@
               <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                   <a href="../html/pag_perfil.html" target="_blank"
-                    class="btn btn-primary">Nome Administrador</a>
+                    class="btn btn-primary perfil-nome">Nome Administrador</a>
                   <li class="nav-item dropdown">
                     <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <img src="../assets/images/profile/user1.jpg" alt="" width="35" height="35"
-                        class="rounded-circle">
+                      <img src="../assets/images/profile/user1.jpg" alt="Perfil" width="35" height="35" class="rounded-circle perfil-imagem">
                     </a>
                   </li>
                 </ul>
@@ -344,43 +343,8 @@
   <script src="../assets/js/detalhes.js"></script>
   <script src="../assets/js/gestao_ocorrencias.js"></script>
   <script src="../assets/js/filtrar.js"></script>
-  <script src="../assets/js/zoom_mapa.js"></script>
-  <script>
-    let mapa = null;
-    let marcador = null;
-  
-    function abrirMapa(icon) {
-      const coordenadasTexto = icon.closest('td').textContent.trim();
-      const coordenadas = coordenadasTexto.match(/(-?\d+\.\d+),\s*(-?\d+\.\d+)/);
-  
-      if (!coordenadas) {
-        alert("⚠️ Não foi possível obter as coordenadas.");
-        return;
-      }
-  
-      const [_, lat, lng] = coordenadas.map(Number);
-  
-      const modal = new bootstrap.Modal(document.getElementById('modalLocalizacao'));
-      modal.show();
-  
-      setTimeout(() => {
-        if (!mapa) {
-          mapa = L.map('mapaOcorrencia').setView([lat, lng], 18);
-  
-          // 🌌 Vista Satélite da Esri
-          L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '© Esri &mdash; Fonte: Esri, Earthstar Geographics',
-            maxZoom: 20
-          }).addTo(mapa);
-  
-          marcador = L.marker([lat, lng]).addTo(mapa);
-        } else {
-          mapa.setView([lat, lng], 18);
-          marcador.setLatLng([lat, lng]);
-        }
-      }, 300);
-    }
-  </script>
+  <script src="../assets/js/perfil_global.js"></script>
+  <script src="../assets/js/mapa_ocorrencias.js"></script>
   
   
      
