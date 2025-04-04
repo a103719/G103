@@ -1,26 +1,73 @@
 let linhaEmEdicao = null;
 let materiaisSelecionadosAuditoria = [];
 
+// Lista de materiais simulada com stock atual
+const materiais = [
+  { id: 1, nome: "Cone de sinalização", stock: 30, unidade: "un" },
+  { id: 2, nome: "Semáforo portátil", stock: 5, unidade: "un" },
+  { id: 3, nome: "Extintor CO2", stock: 10, unidade: "un" }
+];
+
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("formPlanoAuditoria");
   const botaoSubmit = document.getElementById("btn-submit-plano");
   const listaMateriais = document.getElementById("materiaisSelecionados");
+
+  preencherSelectMateriais();
+
+  document.getElementById("selectMaterial").addEventListener("change", () => {
+    const mat = materiais.find(m => m.id == selectMaterial.value);
+    if (mat) {
+      document.getElementById("stockDisponivel").textContent = `Stock disponível: ${mat.stock} ${mat.unidade}`;
+    }
+  });
+
+  document.getElementById("adicionarMaterial").addEventListener("click", () => {
+    const matId = parseInt(document.getElementById("selectMaterial").value);
+    const qtd = parseInt(document.getElementById("quantidadeMaterial").value);
+    const mat = materiais.find(m => m.id === matId);
+
+    if (!mat || isNaN(qtd) || qtd <= 0) return;
+
+    if (qtd > mat.stock) {
+      alert(`Stock insuficiente! Só existem ${mat.stock} ${mat.unidade}.`);
+      return;
+    }
+
+    // Atualizar stock local
+    mat.stock -= qtd;
+    atualizarTextoSelect(matId);
+
+    document.getElementById("stockDisponivel").textContent = `Stock disponível: ${mat.stock} ${mat.unidade}`;
+
+    const materialSelecionado = {
+      id: mat.id,
+      nome: mat.nome,
+      qtd: qtd,
+      unidade: mat.unidade
+    };
+
+    materiaisSelecionadosAuditoria.push(materialSelecionado);
+
+    const li = document.createElement("li");
+    li.className = "list-group-item d-flex justify-content-between align-items-center";
+    li.textContent = `${mat.nome} - ${qtd} ${mat.unidade}`;
+    listaMateriais.appendChild(li);
+
+    document.getElementById("quantidadeMaterial").value = "";
+  });
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const nomePlano = document.getElementById("input-nome-plano").value.trim();
     const dataAuditoria = document.getElementById("input-data-auditoria").value;
-    const ocorrencias = Array.from(document.querySelectorAll("#ocorrencias-relacionadas span"))
-      .map(span => span.textContent.trim());
+    const ocorrencias = Array.from(document.querySelectorAll("#ocorrencias-relacionadas span")).map(span => span.textContent.trim());
     const duracao = document.getElementById("input-duracao").value.trim();
     const descricao = document.getElementById("input-descricao").value.trim();
 
     const checkboxes = document.querySelectorAll('#checkbox-peritos input[type="checkbox"]');
-    const peritosSelecionados = Array.from(checkboxes)
-      .filter(checkbox => checkbox.checked)
-      .map(checkbox => checkbox.value)
-      .join(" / ");
+    const peritosSelecionados = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value).join(" / ");
 
     if (!nomePlano || !dataAuditoria || ocorrencias.length === 0 || !peritosSelecionados) {
       alert("Por favor, preencha todos os campos obrigatórios.");
@@ -108,6 +155,7 @@ function mostrarFormulario(icone = null) {
       cb.checked = peritosArray.includes(cb.value);
     });
 
+    // Restaurar materiais
     materiaisSelecionadosAuditoria = JSON.parse(materiaisJSON);
     listaMateriais.innerHTML = "";
     materiaisSelecionadosAuditoria.forEach(mat => {
@@ -149,4 +197,25 @@ function formatarDataParaInput(dataStr) {
     return `${partes[2]}-${partes[1]}-${partes[0]}`;
   }
   return "";
+}
+
+function preencherSelectMateriais() {
+  const selectMaterial = document.getElementById("selectMaterial");
+  if (!selectMaterial) return;
+  selectMaterial.innerHTML = `<option disabled selected>Selecione um material</option>`;
+  materiais.forEach(mat => {
+    const option = document.createElement("option");
+    option.value = mat.id;
+    option.textContent = `${mat.nome} (Stock: ${mat.stock} ${mat.unidade})`;
+    selectMaterial.appendChild(option);
+  });
+}
+
+function atualizarTextoSelect(matId) {
+  const mat = materiais.find(m => m.id === matId);
+  if (!mat) return;
+  const option = document.querySelector(`#selectMaterial option[value='${matId}']`);
+  if (option) {
+    option.textContent = `${mat.nome} (Stock: ${mat.stock} ${mat.unidade})`;
+  }
 }

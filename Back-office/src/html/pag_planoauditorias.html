@@ -265,19 +265,20 @@
                     </div>                    
                     <!-- Aqui colocas os campos novos -->
                     <!-- Campo Materiais substituído por dropdown com stock + quantidade + lista selecionada -->
-<div class="mb-3">
-  <label class="form-label">Materiais</label>
-  <div class="d-flex gap-3 align-items-center">
-    <select id="selectMaterial" class="form-select w-50">
-      <option disabled selected>Selecione um material</option>
-    </select>
-    <input type="number" id="quantidadeMaterial" class="form-control w-25" placeholder="Qtd." min="1">
-    <button type="button" class="btn btn-primary" id="adicionarMaterial">Adicionar</button>
-  </div>
-  <div id="stockDisponivel" class="text-muted mt-2"></div>
-</div>
-
-<ul id="materiaisSelecionados" class="list-group mb-4"></ul>
+                    <div class="mb-3">
+                      <label class="form-label">Materiais</label>
+                      <div class="d-flex gap-3 align-items-center flex-wrap">
+                        <select id="selectMaterial" class="form-select w-auto">
+                          <option disabled selected>Selecione um material</option>
+                        </select>
+                        <input type="number" id="quantidadeMaterial" class="form-control w-auto" placeholder="Qtd." min="1">
+                        <button type="button" class="btn btn-primary" id="adicionarMaterial">Adicionar</button>
+                      </div>
+                      <div id="stockDisponivel" class="text-muted mt-2"></div>
+                    </div>
+                    
+                    <ul id="materiaisSelecionados" class="list-group mb-4"></ul>
+                    
                     <div class="mb-3">
                       <label class="form-label">Duração</label>
                       <input type="text" class="form-control" id="input-duracao">
