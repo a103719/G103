@@ -166,35 +166,16 @@
                     <input class="form-control" type="file" id="foto" accept="image/*" disabled>
                   </div>
                   <div class="d-flex gap-3 justify-content-center mt-3">
-                  <button type="button" class="btn btn-primary" onclick="ativarEdicao()">Editar Perfil</button>
+                    <button type="button" class="btn btn-primary" id="btnEditar">Editar Perfil</button>
                   </div>
                 </form>             
               </div>
             </div>
           </div>
         </div>
-<!-- FIM Conteúdo principal -->
+      <!-- FIM Conteúdo principal -->
 
-<!-- Script para ativar campos -->
-<script>
-  function ativarEdicao() {
-    // Ativa todos os inputs (inclusive o de tipo file)
-    const inputs = document.querySelectorAll("#perfilForm input");
-    inputs.forEach(input => input.disabled = false);
-
-    const btnContainer = document.querySelector(".d-flex.gap-3");
-
-    // Evita adicionar o botão várias vezes
-    if (!document.getElementById("btnGuardar")) {
-      const btnGuardar = document.createElement("button");
-      btnGuardar.type = "submit";
-      btnGuardar.id = "btnGuardar";
-      btnGuardar.className = "btn btn-success";
-      btnGuardar.innerText = "Guardar Alterações";
-      btnContainer.appendChild(btnGuardar);
-    }
-  }
-</script>
+     
 
 
 

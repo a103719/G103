@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (imagemTopo) imagemTopo.src = imagemGuardada;
     }
   
-    // 🖼️ Guardar imagem assim que o utilizador selecionar
+    // Guardar imagem assim que o utilizador selecionar
     fotoInput.addEventListener("change", function () {
       const file = fotoInput.files[0];
       if (file && file.type.startsWith("image/")) {

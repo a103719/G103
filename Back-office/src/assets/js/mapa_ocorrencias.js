@@ -18,8 +18,6 @@ function abrirMapa(icon) {
   setTimeout(() => {
     if (!mapa) {
       mapa = L.map('mapaOcorrencia').setView([lat, lng], 18);
-
-      // 🌌 Vista Satélite da Esri
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: '© Esri &mdash; Fonte: Esri, Earthstar Geographics',
         maxZoom: 20

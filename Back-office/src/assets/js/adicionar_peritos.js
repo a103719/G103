@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector("form");
   const tabelaBody = document.querySelector("#tabela-peritos");
-  let proximoID = tabelaBody.rows.length + 1;
+  let listaDePeritos = JSON.parse(localStorage.getItem("peritos")) || [];
+  let proximoID = listaDePeritos.length > 0 ? Math.max(...listaDePeritos.map(p => p.id)) + 1 : 1;
 
   const estados = {
     disponivel: { label: 'Disponível', class: 'bg-success-subtle text-success' },
@@ -9,17 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
     indisponivel: { label: 'Indisponível', class: 'bg-danger-subtle text-danger' }
   };
 
-  function guardarEstado(id, estado) {
-    localStorage.setItem(`estado_perito_${id}`, estado);
-  }
-
-  function obterEstado(id) {
-    return localStorage.getItem(`estado_perito_${id}`) || 'disponivel';
+  function guardarLista() {
+    localStorage.setItem("peritos", JSON.stringify(listaDePeritos));
+    atualizarDashboard(); // Atualiza dashboard, se aplicável
   }
 
   function criarDropdownEstado(id, estadoAtual) {
     const select = document.createElement('select');
-    select.className = 'form-select form-select-sm w-auto'; // Base visual
+    select.className = 'form-select form-select-sm w-auto';
     atualizarEstiloEstado(select, estadoAtual);
     select.dataset.id = id;
 
@@ -33,18 +31,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
     select.addEventListener('change', () => {
       const novoEstado = select.value;
-      guardarEstado(id, novoEstado);
-      atualizarEstiloEstado(select, novoEstado);
+      const perito = listaDePeritos.find(p => p.id == id);
+      if (perito) {
+        perito.estado = novoEstado;
+        guardarLista();
+        atualizarEstiloEstado(select, novoEstado);
+      }
     });
 
     return select;
   }
 
   function atualizarEstiloEstado(select, estado) {
-    // Remove estilos anteriores
-    select.classList.remove('bg-success-subtle', 'text-success', 'bg-warning-subtle', 'text-warning', 'bg-danger-subtle', 'text-danger');
-    // Aplica o estilo atual
+    select.classList.remove(
+      'bg-success-subtle', 'text-success',
+      'bg-warning-subtle', 'text-warning',
+      'bg-danger-subtle', 'text-danger'
+    );
     select.classList.add(...estados[estado].class.split(' '));
+  }
+
+  function renderTabela() {
+    tabelaBody.innerHTML = "";
+    listaDePeritos.forEach(perito => {
+      const linha = document.createElement("tr");
+      linha.innerHTML = `
+        <td><div class="d-flex align-items-center"><div><h6 class="mb-1 fw-bolder">${perito.id}</h6></div></div></td>
+        <td><p class="fs-3 fw-normal mb-0">${perito.nome}</p></td>
+        <td><p class="fs-3 fw-normal mb-0">${perito.area}</p></td>
+        <td></td>
+        <td>
+          <div class="cursor-pointer btn-remover" title="Remover perito">
+            <iconify-icon icon="mingcute:delete-3-line" class="nav-small-cap-icon fs-4"></iconify-icon>
+          </div>
+        </td>
+      `;
+      const dropdown = criarDropdownEstado(perito.id, perito.estado);
+      linha.children[3].appendChild(dropdown);
+      tabelaBody.appendChild(linha);
+    });
   }
 
   form.addEventListener("submit", function (e) {
@@ -58,46 +83,52 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const estadoInicial = "disponivel";
-    guardarEstado(proximoID, estadoInicial);
+    const novoPerito = {
+      id: proximoID,
+      nome: nome,
+      area: area,
+      estado: "disponivel"
+    };
 
-    const novaLinha = document.createElement("tr");
-
-    novaLinha.innerHTML = `
-      <td><div class="d-flex align-items-center"><div><h6 class="mb-1 fw-bolder">${proximoID}</h6></div></div></td>
-      <td><p class="fs-3 fw-normal mb-0">${nome}</p></td>
-      <td><p class="fs-3 fw-normal mb-0">${area}</p></td>
-      <td></td>
-      <td>
-        <div class="cursor-pointer btn-remover" title="Remover perito">
-          <iconify-icon icon="mingcute:delete-3-line" class="nav-small-cap-icon fs-4"></iconify-icon>
-        </div>
-      </td>
-    `;
-
-    const dropdown = criarDropdownEstado(proximoID, estadoInicial);
-    novaLinha.children[3].appendChild(dropdown);
-
-    tabelaBody.appendChild(novaLinha);
+    listaDePeritos.push(novoPerito);
+    guardarLista();
+    renderTabela();
     proximoID++;
-
     form.reset();
   });
 
   tabelaBody.addEventListener("click", function (e) {
     if (e.target.closest(".btn-remover")) {
       const tr = e.target.closest("tr");
-      const id = tr.querySelector("h6").textContent;
-      localStorage.removeItem(`estado_perito_${id}`);
-      tr.remove();
+      const id = parseInt(tr.querySelector("h6").textContent);
+      listaDePeritos = listaDePeritos.filter(p => p.id !== id);
+      guardarLista();
+      renderTabela();
     }
   });
 
-  // Aplica estilo aos dropdowns já existentes (caso a página seja recarregada)
-  document.querySelectorAll("select[data-id]").forEach(select => {
-    const id = select.dataset.id;
-    const estadoGuardado = obterEstado(id);
-    select.value = estadoGuardado;
-    atualizarEstiloEstado(select, estadoGuardado);
-  });
+  renderTabela();
+
+  // OPCIONAL: atualiza a secção da dashboard com os peritos disponíveis/em ação
+  function atualizarDashboard() {
+    const tabelaDashboard = document.querySelector("#tabela-dashboard-peritos tbody");
+    if (!tabelaDashboard) return;
+
+    tabelaDashboard.innerHTML = "";
+
+    listaDePeritos.forEach(p => {
+      if (p.estado === "disponivel" || p.estado === "em_acao") {
+        const linha = document.createElement("tr");
+        linha.innerHTML = `
+          <td>${p.id}</td>
+          <td>${p.nome}</td>
+          <td>${p.area}</td>
+          <td><span class="badge ${p.estado === 'disponivel' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning'}">${estados[p.estado].label}</span></td>
+        `;
+        tabelaDashboard.appendChild(linha);
+      }
+    });
+  }
+
+  atualizarDashboard();
 });

@@ -251,89 +251,34 @@
               </div>
             </div>
           
+            
             <!--Dashboard 5-->
-            <div class="col-lg-7 col-md-6 mb-4">
-                <div class="card h-100">
-                  <div class="card-body p-4">
-                    <div class="d-flex mb-4 justify-content-between align-items-center">
-                      <h5 class="mb-0 fw-bold">Profissionais disponíveis e em ação</h5>
-                    </div>
-            
-                    <div class="table-responsive" data-simplebar>
-                      <table class="table table-borderless align-middle text-nowrap">
-                        <thead>
-                          <tr>
-                            <th class="text-secondary" scope="col" >ID</th>
-                            <th class="text-secondary" scope="col">Nome</th>
-                            <th class="text-secondary" scope="col">Profissão</th>
-                            <th class="text-secondary" scope="col">Estado</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <div>
-                                  <h6 class="mb-1 fw-bolder">1</h6>
-                                </div>
-                              </div>
-                            </td>
-                            <td><p class="fs-3 fw-normal mb-0">João Paulo</p></td>
-                            <td><p class="fs-3 fw-normal mb-0">Administrador</p></td>
-                            <td>
-                              <span class="badge bg-light-success rounded-pill text-success px-3 py-2 fs-3">Disponível</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <div>
-                                  <h6 class="mb-1 fw-bolder">2</h6>
-                                </div>
-                              </div>
-                            </td>
-                            <td><p class="fs-3 fw-normal mb-0">Miguel Henriques</p></td>
-                            <td><p class="fs-3 fw-normal mb-0">Segurança</p></td>
-                            <td>
-                              <span class="badge bg-light-danger rounded-pill text-danger px-3 py-2 fs-3">Em ação</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <div>
-                                  <h6 class="mb-1 fw-bolder">3</h6>
-                                </div>
-                              </div>
-                            </td>
-                            <td><p class="fs-3 fw-normal mb-0">Tiago Pinto</p></td>
-                            <td><p class="fs-3 fw-normal mb-0">Segurança</p></td>
-                            <td>
-                              <span class="badge bg-light-success rounded-pill text-success px-3 py-2 fs-3">Disponível</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <div>
-                                  <h6 class="mb-1 fw-bolder">4</h6>
-                                </div>
-                              </div>
-                            </td>
-                            <td><p class="fs-3 fw-normal mb-0">Armindo Santos</p></td>
-                            <td><p class="fs-3 fw-normal mb-0">Segurança</p></td>
-                            <td>
-                              <span class="badge bg-light-danger rounded-pill text-danger px-3 py-2 fs-3">Em ação</span>
-                            </td>
-                          </tr>
-            
-                          <!-- Podes continuar com as outras linhas do mesmo modo... -->
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+        <div class="col-lg-7 col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body p-4">
+              <div class="d-flex mb-4 justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Profissionais disponíveis e em ação</h5>
               </div>
+
+              <div class="table-responsive" data-simplebar>
+                <table class="table table-borderless align-middle text-nowrap" id="tabela-dashboard-peritos">
+                  <thead>
+                    <tr>
+                      <th class="text-secondary" scope="col">ID</th>
+                      <th class="text-secondary" scope="col">Nome</th>
+                      <th class="text-secondary" scope="col">Profissão</th>
+                      <th class="text-secondary" scope="col">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Vai ser preenchido dinamicamente via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
           <!-- FIM Conteúdo principal -->
 
@@ -353,8 +298,37 @@
   <!-- Script do gráfico -->
 <script src="../assets/js/grafico.js"></script>
 <script src="../assets/js/perfil_global.js"></script>
-
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const lista = JSON.parse(localStorage.getItem("peritos")) || [];
   
+    const tabela = document.querySelector("#tabela-dashboard-peritos tbody");
+    if (!tabela) return;
+  
+    tabela.innerHTML = "";
+  
+    lista.forEach(p => {
+      if (p.estado === "disponivel" || p.estado === "em_acao") {
+        const estadoClasse = p.estado === "disponivel"
+          ? 'bg-light-success text-success'
+          : 'bg-light-danger text-danger';
+  
+        const estadoTexto = p.estado === "disponivel" ? "Disponível" : "Em ação";
+  
+        const linha = document.createElement("tr");
+        linha.innerHTML = `
+          <td><div class="d-flex align-items-center"><div><h6 class="mb-1 fw-bolder">${p.id}</h6></div></div></td>
+          <td><p class="fs-3 fw-normal mb-0">${p.nome}</p></td>
+          <td><p class="fs-3 fw-normal mb-0">${p.area}</p></td>
+          <td><span class="badge rounded-pill ${estadoClasse} px-3 py-2 fs-3">${estadoTexto}</span></td>
+        `;
+        tabela.appendChild(linha);
+      }
+    });
+  });
+  </script>
+  
+   
 
 </body>
 
