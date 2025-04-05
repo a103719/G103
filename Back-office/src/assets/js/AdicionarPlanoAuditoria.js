@@ -1,7 +1,8 @@
+// AdicionarPlanoAuditoria.js
+
 let linhaEmEdicao = null;
 let materiaisSelecionadosAuditoria = [];
 
-// Lista de materiais simulada com stock atual
 const materiais = [
   { id: 1, nome: "Cone de sinalização", stock: 30, unidade: "un" },
   { id: 2, nome: "Semáforo portátil", stock: 5, unidade: "un" },
@@ -14,6 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const listaMateriais = document.getElementById("materiaisSelecionados");
 
   preencherSelectMateriais();
+  carregarAuditoriasDaStorage();
+  carregarAuditoriasPendentes();
 
   document.getElementById("selectMaterial").addEventListener("change", () => {
     const mat = materiais.find(m => m.id == selectMaterial.value);
@@ -28,13 +31,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const mat = materiais.find(m => m.id === matId);
 
     if (!mat || isNaN(qtd) || qtd <= 0) return;
-
     if (qtd > mat.stock) {
       alert(`Stock insuficiente! Só existem ${mat.stock} ${mat.unidade}.`);
       return;
     }
 
-    // Atualizar stock local
     mat.stock -= qtd;
     atualizarTextoSelect(matId);
 
@@ -62,12 +63,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const nomePlano = document.getElementById("input-nome-plano").value.trim();
     const dataAuditoria = document.getElementById("input-data-auditoria").value;
-    const ocorrencias = Array.from(document.querySelectorAll("#ocorrencias-relacionadas span")).map(span => span.textContent.trim());
+    const ocorrencias = Array.from(document.querySelectorAll("#ocorrencias-relacionadas span"))
+      .map(span => span.textContent.trim());
     const duracao = document.getElementById("input-duracao").value.trim();
     const descricao = document.getElementById("input-descricao").value.trim();
 
     const checkboxes = document.querySelectorAll('#checkbox-peritos input[type="checkbox"]');
-    const peritosSelecionados = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value).join(" / ");
+    const peritosSelecionados = Array.from(checkboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value)
+      .join(" / ");
 
     if (!nomePlano || !dataAuditoria || ocorrencias.length === 0 || !peritosSelecionados) {
       alert("Por favor, preencha todos os campos obrigatórios.");
@@ -80,43 +85,29 @@ document.addEventListener("DOMContentLoaded", function () {
       ? materiaisSelecionadosAuditoria.map(m => `${m.nome} (${m.qtd} ${m.unidade})`).join(", ")
       : "—";
 
-    if (linhaEmEdicao) {
-      linhaEmEdicao.children[0].textContent = nomePlano;
-      linhaEmEdicao.children[1].textContent = ocorrenciasTexto;
-      linhaEmEdicao.children[2].textContent = dataAuditoria;
-      linhaEmEdicao.children[3].textContent = peritosSelecionados;
-      linhaEmEdicao.children[4].textContent = materiaisTexto;
-      linhaEmEdicao.children[5].innerHTML = '<span class="badge bg-success">Criado</span>';
-      linhaEmEdicao.children[6].innerHTML = `
+    const novaLinha = linhaEmEdicao || document.createElement("tr");
+    novaLinha.setAttribute("data-materiais", materiaisJSON);
+    novaLinha.setAttribute("data-duracao", duracao);
+    novaLinha.setAttribute("data-descricao", descricao);
+
+    novaLinha.innerHTML = `
+      <td>${nomePlano}</td>
+      <td>${ocorrenciasTexto}</td>
+      <td>${dataAuditoria}</td>
+      <td>${peritosSelecionados}</td>
+      <td>${materiaisTexto}</td>
+      <td><span class="badge bg-success">Criado</span></td>
+      <td>
         <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark"
           onclick="editarPlano(this)" title="Editar"></iconify-icon>
-      `;
-      linhaEmEdicao.setAttribute("data-materiais", materiaisJSON);
-      linhaEmEdicao.setAttribute("data-duracao", duracao);
-      linhaEmEdicao.setAttribute("data-descricao", descricao);
-      linhaEmEdicao = null;
-    } else {
-      const novaLinha = document.createElement("tr");
-      novaLinha.setAttribute("data-materiais", materiaisJSON);
-      novaLinha.setAttribute("data-duracao", duracao);
-      novaLinha.setAttribute("data-descricao", descricao);
+      </td>
+    `;
 
-      novaLinha.innerHTML = `
-        <td>${nomePlano}</td>
-        <td>${ocorrenciasTexto}</td>
-        <td>${dataAuditoria}</td>
-        <td>${peritosSelecionados}</td>
-        <td>${materiaisTexto}</td>
-        <td><span class="badge bg-success">Criado</span></td>
-        <td>
-          <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark"
-            onclick="editarPlano(this)" title="Editar"></iconify-icon>
-        </td>
-      `;
-
+    if (!linhaEmEdicao) {
       document.querySelector("tbody").appendChild(novaLinha);
     }
 
+    guardarAuditoriasNaStorage();
     fecharFormulario();
     form.reset();
     materiaisSelecionadosAuditoria = [];
@@ -155,7 +146,6 @@ function mostrarFormulario(icone = null) {
       cb.checked = peritosArray.includes(cb.value);
     });
 
-    // Restaurar materiais
     materiaisSelecionadosAuditoria = JSON.parse(materiaisJSON);
     listaMateriais.innerHTML = "";
     materiaisSelecionadosAuditoria.forEach(mat => {
@@ -218,4 +208,97 @@ function atualizarTextoSelect(matId) {
   if (option) {
     option.textContent = `${mat.nome} (Stock: ${mat.stock} ${mat.unidade})`;
   }
+}
+
+function carregarAuditoriasPendentes() {
+  const ocorrenciasPendentes = JSON.parse(localStorage.getItem("auditoriasPendentes")) || [];
+  const auditoriasGuardadas = JSON.parse(localStorage.getItem("listaAuditorias")) || [];
+
+  ocorrenciasPendentes.forEach(designacao => {
+    const novaLinha = document.createElement("tr");
+    novaLinha.setAttribute("data-materiais", "[]");
+    novaLinha.setAttribute("data-duracao", "");
+    novaLinha.setAttribute("data-descricao", "");
+
+    novaLinha.innerHTML = `
+      <td><em>—</em></td>
+      <td>${designacao}</td>
+      <td><em>—</em></td>
+      <td><em>—</em></td>
+      <td><em>—</em></td>
+      <td><span class="badge bg-warning text-dark">Por Criar</span></td>
+      <td>
+        <a href="#formPlanoAuditoria" title="Criar Plano">
+          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario(this)"></iconify-icon>
+        </a>
+      </td>
+    `;
+
+    document.querySelector("tbody").appendChild(novaLinha);
+
+    // Adicionar também à lista de auditorias guardadas
+    auditoriasGuardadas.push({
+      nome: "—",
+      ocorrencias: designacao,
+      data: "—",
+      peritos: "—",
+      materiais: "—",
+      estado: "Por Criar",
+      materiaisJSON: "[]",
+      duracao: "",
+      descricao: ""
+    });
+  });
+
+  // Atualizar localStorage
+  localStorage.setItem("listaAuditorias", JSON.stringify(auditoriasGuardadas));
+  localStorage.removeItem("auditoriasPendentes");
+}
+
+
+function guardarAuditoriasNaStorage() {
+  const linhas = document.querySelectorAll("tbody tr");
+  const auditorias = [];
+
+  linhas.forEach(linha => {
+    const nome = linha.children[0].textContent.trim();
+    const ocorrencias = linha.children[1].textContent.trim();
+    const data = linha.children[2].textContent.trim();
+    const peritos = linha.children[3].textContent.trim();
+    const materiais = linha.children[4].textContent.trim();
+    const estado = linha.children[5].textContent.trim();
+    const materiaisJSON = linha.getAttribute("data-materiais") || "[]";
+    const duracao = linha.getAttribute("data-duracao") || "";
+    const descricao = linha.getAttribute("data-descricao") || "";
+
+    auditorias.push({ nome, ocorrencias, data, peritos, materiais, estado, materiaisJSON, duracao, descricao });
+  });
+
+  localStorage.setItem("listaAuditorias", JSON.stringify(auditorias));
+}
+
+function carregarAuditoriasDaStorage() {
+  const auditorias = JSON.parse(localStorage.getItem("listaAuditorias")) || [];
+  auditorias.forEach(a => {
+    const linha = document.createElement("tr");
+    linha.setAttribute("data-materiais", a.materiaisJSON);
+    linha.setAttribute("data-duracao", a.duracao);
+    linha.setAttribute("data-descricao", a.descricao);
+
+    const badgeClass = a.estado === "Criado" ? "bg-success" : "bg-warning text-dark";
+
+    linha.innerHTML = `
+      <td>${a.nome}</td>
+      <td>${a.ocorrencias}</td>
+      <td>${a.data}</td>
+      <td>${a.peritos}</td>
+      <td>${a.materiais}</td>
+      <td><span class="badge ${badgeClass}">${a.estado}</span></td>
+      <td>
+        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="editarPlano(this)" title="Editar"></iconify-icon>
+      </td>
+    `;
+
+    document.querySelector("tbody").appendChild(linha);
+  });
 }

@@ -1,3 +1,5 @@
+// gestao_ocorrencias.js
+
 document.addEventListener("DOMContentLoaded", function () {
   const btnAprovar = document.getElementById("btn-aprovar");
   const btnRecusar = document.getElementById("btn-recusar");
@@ -9,6 +11,26 @@ document.addEventListener("DOMContentLoaded", function () {
   const estadoSelect = document.querySelector("select.estado-select");
 
   let linhaSelecionada = null;
+
+  // Carregar estados do localStorage ao iniciar
+  const estadosGuardados = JSON.parse(localStorage.getItem("ocorrenciasEstados") || "{}");
+
+  document.querySelectorAll("tbody tr").forEach(tr => {
+    const designacao = tr.cells[0].textContent.trim();
+    if (estadosGuardados[designacao]) {
+      const novoEstado = estadosGuardados[designacao];
+      const badge = tr.querySelector(".estado-ocorrencia");
+      badge.textContent = novoEstado;
+      badge.className = "badge rounded-pill estado-ocorrencia";
+      if (novoEstado === "Pendente") {
+        badge.classList.add("bg-primary");
+      } else if (novoEstado === "Em análise") {
+        badge.classList.add("bg-info", "text-white");
+      } else if (novoEstado === "Resolvido") {
+        badge.classList.add("bg-success");
+      }
+    }
+  });
 
   window.mostrarDetalhes = function (icon) {
     const linha = icon.closest("tr");
@@ -98,13 +120,35 @@ document.addEventListener("DOMContentLoaded", function () {
         badge.classList.add("bg-info", "text-white");
       } else if (novoEstado === "Resolvido") {
         badge.classList.add("bg-success");
+
+        // Se resolvido, adicionar à lista de auditorias pendentes
+        const designacao = linhaSelecionada.cells[0].textContent.trim();
+        const auditoriasPendentes = JSON.parse(localStorage.getItem("auditoriasPendentes") || "[]");
+        if (!auditoriasPendentes.includes(designacao)) {
+          auditoriasPendentes.push(designacao);
+          localStorage.setItem("auditoriasPendentes", JSON.stringify(auditoriasPendentes));
+        }
       }
     }
 
     linhaSelecionada.setAttribute("data-observacoes", novaObs);
     linhaSelecionada.setAttribute("data-seguranca", segurancasSelecionados);
 
+    // Atualizar localStorage com novo estado
+    const designacao = linhaSelecionada.cells[0].textContent.trim();
+    estadosGuardados[designacao] = novoEstado;
+    localStorage.setItem("ocorrenciasEstados", JSON.stringify(estadosGuardados));
+
     bloquearEdicao();
     document.getElementById("cartao-detalhes").style.display = "none";
   });
+  document.getElementById("btn-reset-localstorage").addEventListener("click", function () {
+    if (confirm("Tens a certeza que queres limpar todos os dados guardados localmente?")) {
+      localStorage.removeItem("ocorrenciasEstados");
+      localStorage.removeItem("auditoriasPendentes");
+      localStorage.removeItem("auditorias");
+      location.reload(); // Atualiza a página para refletir o reset
+    }
+  });
+  
 });
