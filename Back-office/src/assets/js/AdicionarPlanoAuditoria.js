@@ -295,10 +295,17 @@ function carregarAuditoriasDaStorage() {
       <td>${a.materiais}</td>
       <td><span class="badge ${badgeClass}">${a.estado}</span></td>
       <td>
-        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="editarPlano(this)" title="Editar"></iconify-icon>
+        ${
+          a.estado === "Por Criar"
+            ? `<a href="#formPlanoAuditoria" title="Criar Plano">
+                 <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario(this)"></iconify-icon>
+               </a>`
+            : `<iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="editarPlano(this)" title="Editar"></iconify-icon>`
+        }
       </td>
     `;
 
     document.querySelector("tbody").appendChild(linha);
   });
 }
+
