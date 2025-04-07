@@ -210,40 +210,15 @@
               <div class="card h-100">
                 <div class="card-body p-4">
                   <h5 class="card-title fw-semibold mb-4">Ocorrências em aberto</h5>
-          
                   <div class="table-responsive">
                     <table class="table mb-0">
                       <thead>
                         <tr>
-                          <th class="text-secondary" style="border-bottom: none;">Designação</th>
-                          <th class="text-secondary ps-4" style="border-bottom: none;">Estado</th>
+                          <th class="text-secondary">Designação</th>
+                          <th class="text-secondary ps-4">Estado</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td class="align-middle border-bottom">
-                            Estacionamento indevido
-                          </td>
-                          <td class="align-middle ps-4" style="border-left: 2px">
-                            <span class="badge rounded-pill bg-primary">Pendente</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="align-middle border-bottom">
-                            Estacionamento em lugar reservado
-                          </td>
-                          <td class="align-middle ps-4" style="border-left: 2px;">
-                            <span class="badge rounded-pill bg-info text-white">Em análise</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="align-middle">
-                            Estacionamento a restringir via de circulação
-                          </td>
-                          <td class="align-middle ps-4" style="border-left: 2px;">
-                            <span class="badge rounded-pill bg-info text-white">Em análise</span>
-                          </td>
-                        </tr>
+                      <tbody id="ocorrencias-em-aberto-body">                       
                       </tbody>
                     </table>
                   </div>
@@ -327,6 +302,43 @@
     });
   });
   </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  atualizarDashboardOcorrencias();
+});
+
+function atualizarDashboardOcorrencias() {
+  const tbody = document.getElementById("ocorrencias-em-aberto-body");
+  if (!tbody) return;
+
+  tbody.innerHTML = ""; // Limpa a tabela
+
+  const lista = JSON.parse(localStorage.getItem("ocorrenciasLista")) || [];
+
+  lista.forEach(ocorrencia => {
+    const estado = ocorrencia.estado?.trim();
+    if (estado && estado !== "Resolvido") {
+      const designacao = ocorrencia.designacao;
+
+      const badgeClasse = estado === "Pendente"
+        ? "bg-primary"
+        : estado === "Em análise"
+        ? "bg-info text-white"
+        : "";
+
+      const linha = document.createElement("tr");
+      linha.innerHTML = `
+        <td>${designacao}</td>
+        <td>
+          <span class="badge rounded-pill ${badgeClasse}">${estado}</span>
+        </td>
+      `;
+      tbody.appendChild(linha);
+    }
+  });
+}
+
+</script>
   
    
 

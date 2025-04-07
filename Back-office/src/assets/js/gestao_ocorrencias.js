@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let linhaSelecionada = null;
 
-  // Carregar estados do localStorage ao iniciar
   const estadosGuardados = JSON.parse(localStorage.getItem("ocorrenciasEstados") || "{}");
 
   document.querySelectorAll("tbody tr").forEach(tr => {
@@ -52,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     atualizarCheckboxesPeritos();
 
-    // Após gerar os checkboxes, marcar os que estavam atribuídos
     setTimeout(() => {
       const checkboxes = document.querySelectorAll(".seguranca-checkbox");
       checkboxes.forEach(cb => {
@@ -126,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
       } else if (novoEstado === "Resolvido") {
         badge.classList.add("bg-success");
 
-        // Se resolvido, adicionar à lista de auditorias pendentes
         const designacao = linhaSelecionada.cells[0].textContent.trim();
         const auditoriasPendentes = JSON.parse(localStorage.getItem("auditoriasPendentes") || "[]");
         if (!auditoriasPendentes.includes(designacao)) {
@@ -143,6 +140,23 @@ document.addEventListener("DOMContentLoaded", function () {
     estadosGuardados[designacao] = novoEstado;
     localStorage.setItem("ocorrenciasEstados", JSON.stringify(estadosGuardados));
 
+    // --- NOVO BLOCO: guardar lista de ocorrências no localStorage ---
+    const todasAsLinhas = document.querySelectorAll("table tbody tr");
+    const listaDeOcorrencias = [];
+
+    todasAsLinhas.forEach(tr => {
+      const desig = tr.cells[0]?.textContent?.trim();
+      const badgeEl = tr.querySelector(".estado-ocorrencia");
+      const estado = badgeEl?.textContent?.trim();
+
+      if (desig && estado) {
+        listaDeOcorrencias.push({ designacao: desig, estado });
+      }
+    });
+
+    localStorage.setItem("ocorrenciasLista", JSON.stringify(listaDeOcorrencias));
+    // ---------------------------------------------------------------
+
     bloquearEdicao();
     document.getElementById("cartao-detalhes").style.display = "none";
   });
@@ -152,6 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("ocorrenciasEstados");
       localStorage.removeItem("auditoriasPendentes");
       localStorage.removeItem("auditorias");
+      localStorage.removeItem("ocorrenciasLista");
       location.reload();
     }
   });
@@ -159,16 +174,15 @@ document.addEventListener("DOMContentLoaded", function () {
   function atualizarCheckboxesPeritos() {
     const container = document.getElementById("lista-peritos-checkboxes");
     if (!container) return;
-  
-    container.innerHTML = ""; // Limpa os antigos
-  
+
+    container.innerHTML = "";
+
     const listaDePeritos = JSON.parse(localStorage.getItem("peritos")) || [];
-  
-    // Filtrar apenas seguranças com estado diferente de 'indisponivel'
+
     const segurancasDisponiveis = listaDePeritos.filter(perito => {
       return perito.area === "Segurança" && perito.estado !== "indisponivel";
     });
-  
+
     segurancasDisponiveis.forEach(perito => {
       const div = document.createElement("div");
       div.className = "form-check col-md-6";
@@ -179,7 +193,6 @@ document.addEventListener("DOMContentLoaded", function () {
       container.appendChild(div);
     });
   }
-  
 
   atualizarCheckboxesPeritos();
 });
