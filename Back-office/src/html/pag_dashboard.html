@@ -205,26 +205,31 @@
             </div>
           </div>
           <!--Dashboard 4-->
-            <!-- Ocorrências em aberto -->
-            <div class="col-lg-5 col-md-6 mb-4">
-              <div class="card h-100">
-                <div class="card-body p-4">
-                  <h5 class="card-title fw-semibold mb-4">Ocorrências em aberto</h5>
-                  <div class="table-responsive">
-                    <table class="table mb-0">
-                      <thead>
-                        <tr>
-                          <th class="text-secondary">Designação</th>
-                          <th class="text-secondary ps-4">Estado</th>
-                        </tr>
-                      </thead>
-                      <tbody id="ocorrencias-em-aberto-body">                       
-                      </tbody>
-                    </table>
-                  </div>
+           <!-- Ocorrências em aberto -->
+          <div class="col-lg-5 col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body p-4">
+                <h5 class="card-title fw-semibold mb-4">Ocorrências em aberto</h5>
+
+                <!-- Tabela com scroll automático -->
+                <div class="table-responsive flex-grow-1 overflow-auto">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-secondary">Designação</th>
+                        <th class="text-secondary ps-4">Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ocorrencias-em-aberto-body">
+                      <!-- Preenchido dinamicamente -->
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
+          </div>
+
+
           
             
             <!--Dashboard 5-->
@@ -303,41 +308,40 @@
   });
   </script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  atualizarDashboardOcorrencias();
-});
-
-function atualizarDashboardOcorrencias() {
-  const tbody = document.getElementById("ocorrencias-em-aberto-body");
-  if (!tbody) return;
-
-  tbody.innerHTML = ""; // Limpa a tabela
-
-  const lista = JSON.parse(localStorage.getItem("ocorrenciasLista")) || [];
-
-  lista.forEach(ocorrencia => {
-    const estado = ocorrencia.estado?.trim();
-    if (estado && estado !== "Resolvido") {
-      const designacao = ocorrencia.designacao;
-
-      const badgeClasse = estado === "Pendente"
-        ? "bg-primary"
-        : estado === "Em análise"
-        ? "bg-info text-white"
-        : "";
-
-      const linha = document.createElement("tr");
-      linha.innerHTML = `
-        <td>${designacao}</td>
-        <td>
-          <span class="badge rounded-pill ${badgeClasse}">${estado}</span>
-        </td>
-      `;
-      tbody.appendChild(linha);
-    }
+  document.addEventListener("DOMContentLoaded", function () {
+    atualizarDashboardOcorrencias();
   });
-}
 
+  function atualizarDashboardOcorrencias() {
+    const tbody = document.getElementById("ocorrencias-em-aberto-body");
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+
+    const lista = JSON.parse(localStorage.getItem("ocorrenciasLista")) || [];
+
+    lista.forEach(ocorrencia => {
+      const estado = ocorrencia.estado?.trim();
+      if (estado && estado !== "Resolvido") {
+        const designacao = ocorrencia.designacao;
+
+        const badgeClasse = estado === "Pendente"
+          ? "bg-primary"
+          : estado === "Em análise"
+          ? "bg-info text-white"
+          : "";
+
+        const linha = document.createElement("tr");
+        linha.innerHTML = `
+          <td>${designacao}</td>
+          <td>
+            <span class="badge rounded-pill ${badgeClasse}">${estado}</span>
+          </td>
+        `;
+        tbody.appendChild(linha);
+      }
+    });
+  }
 </script>
   
    

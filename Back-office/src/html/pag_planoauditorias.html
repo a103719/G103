@@ -145,7 +145,7 @@
                 </div>
               </div>
               <div class="table-responsive" style="overflow-x: auto;">
-                <table class="table table-borderless align-middle text-nowrap">
+                <table id="tabela-auditorias" class="table table-borderless align-middle text-nowrap">
                   <thead class="border-bottom">                 
                     <tr>
                       <th>Nome do Plano</th>
@@ -157,7 +157,8 @@
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="tabela-auditorias">
+                    >
                     <tr>
                       <td>Verificação de Vias de Evacuação</td>
                       <td>Evacuação de corredores e acessos</td>
@@ -207,9 +208,12 @@
                       </td>
                     </tr>
                   </tbody>
-                  
                 </table>
-              </div>
+                <div class="text-center mt-3">
+                  <button id="btn-ver-mais" style="background: none; border: none; cursor: pointer;">
+                    <iconify-icon icon="mdi:chevron-down" width="24" height="24"></iconify-icon>
+                  </button>
+                </div>
             </div>
           </div>
           <!-- Formulário para Criar Plano de Auditoria -->
@@ -312,6 +316,42 @@
   <script src="../assets/js/filtrar.js"></script>  
   <script src="../assets/js/perfil_global.js"></script>
   <script src="../assets/js/stock_materiais.js"></script>
-
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const btnVerMais = document.getElementById("btn-ver-mais");
+      const icone = btnVerMais.querySelector("iconify-icon");
+      const limiteInicial = 5;
+      let expandido = false;
+  
+      function aplicarLimite() {
+        const todasAsLinhas = Array.from(document.querySelectorAll("#tabela-auditorias tbody tr"));
+        const linhasVisiveis = todasAsLinhas.filter(tr => tr.dataset.match !== "false");
+  
+        linhasVisiveis.forEach((linha, index) => {
+          linha.style.display = (!expandido && index >= limiteInicial) ? "none" : "";
+        });
+  
+        btnVerMais.style.display = linhasVisiveis.length > limiteInicial ? "inline-block" : "none";
+      }
+  
+      btnVerMais.addEventListener("click", () => {
+        expandido = !expandido;
+        aplicarLimite();
+        icone.setAttribute("icon", expandido ? "mdi:chevron-up" : "mdi:chevron-down");
+      });
+  
+      // Expor função global para chamar após filtro
+      window.reaplicarLimiteAuditorias = function () {
+        expandido = false;
+        aplicarLimite();
+        icone.setAttribute("icon", "mdi:chevron-down");
+      };
+  
+      aplicarLimite();
+    });
+  </script>
+  
+  
+  
 </body>
 </html>
