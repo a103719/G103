@@ -138,114 +138,111 @@
           
 <!-- Conteúdo principal -->
 <div class="container-fluid">
-    <div class="card mb-4">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="fw-semibold mb-0">Gestão de ocorrências</h4>
-          <div class="dropdown">
-            <button class="btn btn-outline-primary d-flex align-items-center gap-2 dropdown-toggle" type="button" id="btnFiltroDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-              <iconify-icon icon="lets-icons:filter"></iconify-icon>
-              Filtrar
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="btnFiltroDropdown">
-              <li><a class="dropdown-item" href="#" data-estado="">Todos</a></li>
-              <li><a class="dropdown-item" href="#" data-estado="Pendente">Pendente</a></li>
-              <li><a class="dropdown-item" href="#" data-estado="Em análise">Em análise</a></li>
-              <li><a class="dropdown-item" href="#" data-estado="Resolvido">Resolvido</a></li>
-            </ul>
-          </div>          
-        </div>
-        <div class="table-responsive">
-          <table class="table table-borderless align-middle">
-            <thead class="border-bottom">
-              <tr>
-                <th>Designação</th>
-                <th>Nome do Utilizador</th>
-                <th>Localização</th>
-                <th>Estado</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Estacionamento indevido</td>
-                <td>Henrique Araújo</td>
-                <td class="coordenadas">41.451106, -8.293168
-                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
-                </td>
-                                
-                <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-primary estado-ocorrencia">Pendente</span>
-                </td>
-                <td>
-                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
-                </td>
-                
-              </tr>
-              <tr>
-                <td>Estacionamento em lugar reservado</td>
-                <td>Marco Sousa</td>
-                <td class="coordenadas">41.451106, -8.293268
-                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
-                </td>
-              </td>   
-                <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
-                </td>
-                <td>
-                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
-                </td>
-                
-              </tr>
-              <tr>
-                <td>Estacionamento a restringir via de circulação</td>
-                <td>Paula Amaral</td>
-                <td class="coordenadas">41.451106, -8.283268
-                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
-                </td>
-                <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
-                </td>
-                <td>
-                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
-                </td>                
-              </tr>
-              <tr>
-                <td>Estacionamento indevido</td>
-                <td>Roberto Pimenta</td>
-                <td class="coordenadas">41.451106, -8.383268
-                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
-                </td>
-                <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
-                </td>
-                <td>
-                  <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
-                </td>
-                
-              </tr>
-              <tr>
-                <td>Estacionamento em lugar reservado</td>
-                <td>João Paulo</td>
-                <td class="coordenadas">41.451106, -8.383268
-                  <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
-                </td>
-                <td class="align-middle ps-2">
-                  <span class="badge rounded-pill bg-success estado-ocorrencia">Resolvido</span>
-                  </td>
-                  <td>
-                    <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
-                  </td>
-                  
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-semibold mb-0">Gestão de ocorrências</h4>
+        <div class="dropdown">
+          <button class="btn btn-outline-primary d-flex align-items-center gap-2 dropdown-toggle" type="button" id="btnFiltroDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <iconify-icon icon="lets-icons:filter"></iconify-icon>
+            Filtrar
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="btnFiltroDropdown">
+            <li><a class="dropdown-item" href="#" data-estado="">Todos</a></li>
+            <li><a class="dropdown-item" href="#" data-estado="Pendente">Pendente</a></li>
+            <li><a class="dropdown-item" href="#" data-estado="Em análise">Em análise</a></li>
+            <li><a class="dropdown-item" href="#" data-estado="Resolvido">Resolvido</a></li>
+          </ul>
+        </div>          
+      </div>
+      <div class="table-responsive">
+        <table class="table table-borderless align-middle" id="tabela-ocorrencias">
+          <thead class="border-bottom">
+            <tr>
+              <th>Designação</th>
+              <th>Nome do Utilizador</th>
+              <th>Localização</th>
+              <th>Estado</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Estacionamento indevido</td>
+              <td>Henrique Araújo</td>
+              <td class="coordenadas">41.451106, -8.293168
+                <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+              </td>
+              <td class="align-middle ps-2">
+                <span class="badge rounded-pill bg-primary estado-ocorrencia">Pendente</span>
+              </td>
+              <td>
+                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>Estacionamento em lugar reservado</td>
+              <td>Marco Sousa</td>
+              <td class="coordenadas">41.451106, -8.293268
+                <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+              </td>
+              <td class="align-middle ps-2">
+                <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
+              </td>
+              <td>
+                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>Estacionamento a restringir via de circulação</td>
+              <td>Paula Amaral</td>
+              <td class="coordenadas">41.451106, -8.283268
+                <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+              </td>
+              <td class="align-middle ps-2">
+                <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
+              </td>
+              <td>
+                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>Estacionamento indevido</td>
+              <td>Roberto Pimenta</td>
+              <td class="coordenadas">41.451106, -8.383268
+                <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+              </td>
+              <td class="align-middle ps-2">
+                <span class="badge rounded-pill bg-info text-white estado-ocorrencia">Em análise</span>
+              </td>
+              <td>
+                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>Estacionamento em lugar reservado</td>
+              <td>João Paulo</td>
+              <td class="coordenadas">41.451106, -8.383268
+                <iconify-icon icon="mdi:map-marker" class="cursor-pointer" onclick="abrirMapa(this)"></iconify-icon>
+              </td>
+              <td class="align-middle ps-2">
+                <span class="badge rounded-pill bg-success estado-ocorrencia">Resolvido</span>
+              </td>
+              <td>
+                <iconify-icon icon="bx:edit" class="nav-small-cap-icon fs-6 cursor-pointer" onclick="mostrarDetalhes(this)"></iconify-icon>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div class="text-center mt-2">
-          <iconify-icon icon="mdi:chevron-down" class="fs-4 cursor-pointer"></iconify-icon>
+          <button id="btn-ver-mais-ocorrencias" style="background: none; border: none; cursor: pointer; display: none;">
+            <iconify-icon icon="mdi:chevron-down" class="fs-4"></iconify-icon>
+          </button>
         </div>
       </div>
     </div>
+  </div>
+</div>
   
     <!-- Cartão de Detalhes -->
 <div id="cartao-detalhes" class="card mt-4" style="display: none;">
@@ -347,6 +344,31 @@
   <script src="../assets/js/filtrar.js"></script>
   <script src="../assets/js/perfil_global.js"></script>
   <script src="../assets/js/mapa_ocorrencias.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("btn-ver-mais-ocorrencias");
+      const icone = btn.querySelector("iconify-icon");
+      const limite = 3;
+      let expandido = false;
+  
+      function aplicarLimiteOcorrencias() {
+        const linhas = Array.from(document.querySelectorAll("#tabela-ocorrencias tbody tr"));
+        linhas.forEach((linha, index) => {
+          linha.style.display = (!expandido && index >= limite) ? "none" : "";
+        });
+        btn.style.display = linhas.length > limite ? "inline-block" : "none";
+      }
+  
+      btn.addEventListener("click", () => {
+        expandido = !expandido;
+        aplicarLimiteOcorrencias();
+        icone.setAttribute("icon", expandido ? "mdi:chevron-up" : "mdi:chevron-down");
+      });
+  
+      aplicarLimiteOcorrencias();
+    });
+  </script>
+  
       
 </body>
 </html>
