@@ -108,6 +108,25 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   renderTabela();
+  function atualizarCheckboxesSeguranca() {
+    const container = document.getElementById("checkboxes-seguranca"); // Garante que este ID existe na página de ocorrências
+    if (!container) return;
+  
+    container.innerHTML = ""; // Limpa os checkboxes anteriores
+  
+    listaDePeritos.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "form-check";
+  
+      div.innerHTML = `
+        <input class="form-check-input seguranca-checkbox" type="checkbox" value="${p.nome}" id="seg-${p.id}">
+        <label class="form-check-label" for="seg-${p.id}">${p.nome}</label>
+      `;
+  
+      container.appendChild(div);
+    });
+  }
+  
 
   // OPCIONAL: atualiza a secção da dashboard com os peritos disponíveis/em ação
   function atualizarDashboard() {

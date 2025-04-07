@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const btnRecusar = document.getElementById("btn-recusar");
   const btnSalvar = document.getElementById("btn-salvar");
 
-  const camposEditaveis = document.querySelectorAll(".campo-editavel");
-  const checkboxesSeguranca = document.querySelectorAll(".seguranca-checkbox");
   const observacoes = document.getElementById("input-observacoes");
   const estadoSelect = document.querySelector("select.estado-select");
 
@@ -51,9 +49,16 @@ document.addEventListener("DOMContentLoaded", function () {
     observacoes.value = linha.getAttribute("data-observacoes") || "";
     const segurancaAtual = linha.getAttribute("data-seguranca") || "";
     const listaSegurancas = segurancaAtual.split(";");
-    checkboxesSeguranca.forEach(cb => {
-      cb.checked = listaSegurancas.includes(cb.value);
-    });
+
+    atualizarCheckboxesPeritos();
+
+    // Após gerar os checkboxes, marcar os que estavam atribuídos
+    setTimeout(() => {
+      const checkboxes = document.querySelectorAll(".seguranca-checkbox");
+      checkboxes.forEach(cb => {
+        cb.checked = listaSegurancas.includes(cb.value);
+      });
+    }, 10);
 
     if (estadoAtual === "Pendente") {
       btnAprovar.style.display = "";
@@ -73,15 +78,15 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function desbloquearEdicao() {
-    camposEditaveis.forEach(el => el.disabled = false);
-    checkboxesSeguranca.forEach(el => el.disabled = false);
+    document.querySelectorAll(".campo-editavel").forEach(el => el.disabled = false);
+    document.querySelectorAll(".seguranca-checkbox").forEach(el => el.disabled = false);
     observacoes.disabled = false;
     btnSalvar.disabled = false;
   }
 
   function bloquearEdicao() {
-    camposEditaveis.forEach(el => el.disabled = true);
-    checkboxesSeguranca.forEach(el => el.disabled = true);
+    document.querySelectorAll(".campo-editavel").forEach(el => el.disabled = true);
+    document.querySelectorAll(".seguranca-checkbox").forEach(el => el.disabled = true);
     observacoes.disabled = true;
     btnSalvar.disabled = true;
   }
@@ -105,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const novoEstado = estadoSelect.value;
     const novaObs = observacoes.value.trim();
-    const segurancasSelecionados = Array.from(checkboxesSeguranca)
+    const segurancasSelecionados = Array.from(document.querySelectorAll(".seguranca-checkbox"))
       .filter(cb => cb.checked)
       .map(cb => cb.value)
       .join(";");
@@ -134,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
     linhaSelecionada.setAttribute("data-observacoes", novaObs);
     linhaSelecionada.setAttribute("data-seguranca", segurancasSelecionados);
 
-    // Atualizar localStorage com novo estado
     const designacao = linhaSelecionada.cells[0].textContent.trim();
     estadosGuardados[designacao] = novoEstado;
     localStorage.setItem("ocorrenciasEstados", JSON.stringify(estadosGuardados));
@@ -142,13 +146,40 @@ document.addEventListener("DOMContentLoaded", function () {
     bloquearEdicao();
     document.getElementById("cartao-detalhes").style.display = "none";
   });
+
   document.getElementById("btn-reset-localstorage").addEventListener("click", function () {
     if (confirm("Tens a certeza que queres limpar todos os dados guardados localmente?")) {
       localStorage.removeItem("ocorrenciasEstados");
       localStorage.removeItem("auditoriasPendentes");
       localStorage.removeItem("auditorias");
-      location.reload(); // Atualiza a página para refletir o reset
+      location.reload();
     }
   });
+
+  function atualizarCheckboxesPeritos() {
+    const container = document.getElementById("lista-peritos-checkboxes");
+    if (!container) return;
   
+    container.innerHTML = ""; // Limpa os antigos
+  
+    const listaDePeritos = JSON.parse(localStorage.getItem("peritos")) || [];
+  
+    // Filtrar apenas seguranças com estado diferente de 'indisponivel'
+    const segurancasDisponiveis = listaDePeritos.filter(perito => {
+      return perito.area === "Segurança" && perito.estado !== "indisponivel";
+    });
+  
+    segurancasDisponiveis.forEach(perito => {
+      const div = document.createElement("div");
+      div.className = "form-check col-md-6";
+      div.innerHTML = `
+        <input class="form-check-input seguranca-checkbox campo-editavel" type="checkbox" value="${perito.nome}" disabled>
+        <label class="form-check-label">${perito.nome}</label>
+      `;
+      container.appendChild(div);
+    });
+  }
+  
+
+  atualizarCheckboxesPeritos();
 });

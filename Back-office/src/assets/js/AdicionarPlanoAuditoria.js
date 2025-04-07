@@ -10,6 +10,7 @@ const materiais = [
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
+  preencherCheckboxPeritosDisponiveis();
   const form = document.getElementById("formPlanoAuditoria");
   const botaoSubmit = document.getElementById("btn-submit-plano");
   const listaMateriais = document.getElementById("materiaisSelecionados");
@@ -117,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function mostrarFormulario(icone = null) {
+  preencherCheckboxPeritosDisponiveis();
   document.getElementById("formularioPlano").style.display = "block";
   const botao = document.getElementById("btn-submit-plano");
   const listaMateriais = document.getElementById("materiaisSelecionados");
@@ -308,4 +310,30 @@ function carregarAuditoriasDaStorage() {
     document.querySelector("tbody").appendChild(linha);
   });
 }
+
+function preencherCheckboxPeritosDisponiveis() {
+  const container = document.getElementById("checkbox-peritos");
+  if (!container) return;
+
+  container.innerHTML = ""; // Limpa os checkboxes antigos
+
+  const listaPeritos = JSON.parse(localStorage.getItem("peritos")) || [];
+  const peritosDisponiveis = listaPeritos.filter(p => p.estado !== "indisponivel");
+
+  peritosDisponiveis.forEach((perito, index) => {
+    const col = document.createElement("div");
+    col.className = "col-md-6";
+
+    const div = document.createElement("div");
+    div.className = "form-check";
+    div.innerHTML = `
+      <input class="form-check-input" type="checkbox" value="${perito.nome}" id="perito${index}">
+      <label class="form-check-label" for="perito${index}">${perito.nome}</label>
+    `;
+
+    col.appendChild(div);
+    container.appendChild(col);
+  });
+}
+
 
