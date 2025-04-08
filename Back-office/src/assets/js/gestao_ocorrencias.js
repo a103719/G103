@@ -11,9 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let linhaSelecionada = null;
 
   const estadosGuardados = JSON.parse(localStorage.getItem("ocorrenciasEstados") || "{}");
+  const observacoesGuardadas = JSON.parse(localStorage.getItem("ocorrenciasObservacoes") || "{}");
+  const segurancasGuardados = JSON.parse(localStorage.getItem("ocorrenciasSegurancas") || "{}");
 
   document.querySelectorAll("tbody tr").forEach(tr => {
     const designacao = tr.cells[0].textContent.trim();
+
     if (estadosGuardados[designacao]) {
       const novoEstado = estadosGuardados[designacao];
       const badge = tr.querySelector(".estado-ocorrencia");
@@ -26,6 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
       } else if (novoEstado === "Resolvido") {
         badge.classList.add("bg-success");
       }
+    }
+
+    if (observacoesGuardadas[designacao]) {
+      tr.setAttribute("data-observacoes", observacoesGuardadas[designacao]);
+    }
+
+    if (segurancasGuardados[designacao]) {
+      tr.setAttribute("data-seguranca", segurancasGuardados[designacao]);
     }
   });
 
@@ -138,24 +149,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const designacao = linhaSelecionada.cells[0].textContent.trim();
     estadosGuardados[designacao] = novoEstado;
+
+    const observacoesGuardadas = JSON.parse(localStorage.getItem("ocorrenciasObservacoes") || "{}");
+    observacoesGuardadas[designacao] = novaObs;
+    localStorage.setItem("ocorrenciasObservacoes", JSON.stringify(observacoesGuardadas));
+
+    const segurancasGuardados = JSON.parse(localStorage.getItem("ocorrenciasSegurancas") || "{}");
+    segurancasGuardados[designacao] = segurancasSelecionados;
+    localStorage.setItem("ocorrenciasSegurancas", JSON.stringify(segurancasGuardados));
+
     localStorage.setItem("ocorrenciasEstados", JSON.stringify(estadosGuardados));
-
-    // --- NOVO BLOCO: guardar lista de ocorrências no localStorage ---
-    const todasAsLinhas = document.querySelectorAll("table tbody tr");
-    const listaDeOcorrencias = [];
-
-    todasAsLinhas.forEach(tr => {
-      const desig = tr.cells[0]?.textContent?.trim();
-      const badgeEl = tr.querySelector(".estado-ocorrencia");
-      const estado = badgeEl?.textContent?.trim();
-
-      if (desig && estado) {
-        listaDeOcorrencias.push({ designacao: desig, estado });
-      }
-    });
-
-    localStorage.setItem("ocorrenciasLista", JSON.stringify(listaDeOcorrencias));
-    // ---------------------------------------------------------------
 
     bloquearEdicao();
     document.getElementById("cartao-detalhes").style.display = "none";
@@ -167,6 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("auditoriasPendentes");
       localStorage.removeItem("auditorias");
       localStorage.removeItem("ocorrenciasLista");
+      localStorage.removeItem("ocorrenciasObservacoes");
+      localStorage.removeItem("ocorrenciasSegurancas");
       location.reload();
     }
   });
@@ -178,7 +183,6 @@ document.addEventListener("DOMContentLoaded", function () {
     container.innerHTML = "";
 
     const listaDePeritos = JSON.parse(localStorage.getItem("peritos")) || [];
-
     const segurancasDisponiveis = listaDePeritos.filter(perito => {
       return perito.area === "Segurança" && perito.estado !== "indisponivel";
     });
