@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
   btnSalvar.addEventListener("click", function () {
     if (!linhaSelecionada) return;
 
+    const designacao = linhaSelecionada.cells[0].textContent.trim();
     const novoEstado = estadoSelect.value;
     const novaObs = observacoes.value.trim();
     const segurancasSelecionados = Array.from(document.querySelectorAll(".seguranca-checkbox"))
@@ -135,7 +136,6 @@ document.addEventListener("DOMContentLoaded", function () {
       } else if (novoEstado === "Resolvido") {
         badge.classList.add("bg-success");
 
-        const designacao = linhaSelecionada.cells[0].textContent.trim();
         const auditoriasPendentes = JSON.parse(localStorage.getItem("auditoriasPendentes") || "[]");
         if (!auditoriasPendentes.includes(designacao)) {
           auditoriasPendentes.push(designacao);
@@ -147,18 +147,29 @@ document.addEventListener("DOMContentLoaded", function () {
     linhaSelecionada.setAttribute("data-observacoes", novaObs);
     linhaSelecionada.setAttribute("data-seguranca", segurancasSelecionados);
 
-    const designacao = linhaSelecionada.cells[0].textContent.trim();
     estadosGuardados[designacao] = novoEstado;
 
-    const observacoesGuardadas = JSON.parse(localStorage.getItem("ocorrenciasObservacoes") || "{}");
-    observacoesGuardadas[designacao] = novaObs;
-    localStorage.setItem("ocorrenciasObservacoes", JSON.stringify(observacoesGuardadas));
+    const observacoesGuardadasAtualizadas = JSON.parse(localStorage.getItem("ocorrenciasObservacoes") || "{}");
+    observacoesGuardadasAtualizadas[designacao] = novaObs;
+    localStorage.setItem("ocorrenciasObservacoes", JSON.stringify(observacoesGuardadasAtualizadas));
 
-    const segurancasGuardados = JSON.parse(localStorage.getItem("ocorrenciasSegurancas") || "{}");
-    segurancasGuardados[designacao] = segurancasSelecionados;
-    localStorage.setItem("ocorrenciasSegurancas", JSON.stringify(segurancasGuardados));
+    const segurancasGuardadosAtualizados = JSON.parse(localStorage.getItem("ocorrenciasSegurancas") || "{}");
+    segurancasGuardadosAtualizados[designacao] = segurancasSelecionados;
+    localStorage.setItem("ocorrenciasSegurancas", JSON.stringify(segurancasGuardadosAtualizados));
 
     localStorage.setItem("ocorrenciasEstados", JSON.stringify(estadosGuardados));
+
+    // Atualizar lista geral de ocorrências (usada na dashboard)
+    const listaOcorrenciasAtual = JSON.parse(localStorage.getItem("ocorrenciasLista")) || [];
+    const novoItem = { designacao, estado: novoEstado };
+
+    const index = listaOcorrenciasAtual.findIndex(o => o.designacao === designacao);
+    if (index !== -1) {
+      listaOcorrenciasAtual[index] = novoItem;
+    } else {
+      listaOcorrenciasAtual.push(novoItem);
+    }
+    localStorage.setItem("ocorrenciasLista", JSON.stringify(listaOcorrenciasAtual));
 
     bloquearEdicao();
     document.getElementById("cartao-detalhes").style.display = "none";
@@ -199,4 +210,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   atualizarCheckboxesPeritos();
+  // Garante que ocorenciasLista está preenchido no início
+(function sincronizarOcorrenciasNaStorage() {
+  const linhas = document.querySelectorAll("tbody tr");
+  const ocorrencias = [];
+
+  linhas.forEach(tr => {
+    const designacao = tr.cells[0]?.textContent?.trim();
+    const badge = tr.querySelector(".estado-ocorrencia");
+    const estado = badge?.textContent?.trim();
+
+    if (designacao && estado) {
+      ocorrencias.push({ designacao, estado });
+    }
+  });
+
+  localStorage.setItem("ocorrenciasLista", JSON.stringify(ocorrencias));
+})();
+
 });
