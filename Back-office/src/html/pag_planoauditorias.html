@@ -158,67 +158,9 @@
                     </tr>
                   </thead>
                   <tbody id="tabela-auditorias">
-                    <tr>
-                      <td>Verificação de Vias de Evacuação</td>
-                      <td>Evacuação de corredores e acessos</td>
-                      <td>16-03-2025</td>
-                      <td>Miguel Henriques / Tiago Pinto</td>
-                      <td>Cone de sinalização (2 un), Extintor CO2 (1 un)</td>
-                      <td><span class="badge bg-success">Criado</span></td>
-                      <td>
-                        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Editar"></iconify-icon>
-                      </td>
-                      <td>
-                      <iconify-icon icon="mdi:close" class=" cursor-pointer ms-2" onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
-                    </td>
-                    </tr>
-                    <tr>
-                      <td>Auditoria a Estacionamentos Irregulares </td>
-                      <td>Estacionamento em lugar reservado</td>
-                      <td>20-03-2025</td>
-                      <td>Tiago Pinto</td>
-                      <td>Semáforo portátil (1 un)</td>
-                      <td><span class="badge bg-success">Criado</span></td>
-                      <td>
-                        <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Editar"></iconify-icon>
-                      </td>
-                      <td>
-                        <iconify-icon icon="mdi:close" class=" cursor-pointer ms-2" onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><em>—</em></td>
-                      <td>Estacionamento em lugar reservado</td>
-                      <td><em>—</em></td>
-                      <td><em>—</em></td>
-                      <td><em>—</em></td>
-                      <td><span class="badge bg-warning text-dark">Por Criar</span></td>
-                      <td>
-                        <a href="#formPlanoAuditoria" title="Criar Plano">
-                          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Criar Plano"></iconify-icon>
-                        </a>
-                      </td>
-                      <td>
-                        <iconify-icon icon="mdi:close" class=" cursor-pointer ms-2" onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><em>—</em></td>
-                      <td>Bloqueio da via</td>
-                      <td><em>—</em></td>
-                      <td><em>—</em></td>
-                      <td><em>—</em></td>
-                      <td><span class="badge bg-warning text-dark">Por Criar</span></td>
-                      <td>
-                        <a href="#formPlanoAuditoria" title="Criar Plano">
-                          <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Criar Plano"></iconify-icon>
-                        </a>
-                      </td>
-                      <td>
-                        <iconify-icon icon="mdi:close" class=" cursor-pointer ms-2" onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
-                      </td>
-                    </tr>
+                    <!-- Vai ser preenchido dinamicamente via JS -->
                   </tbody>
+                  
                 </table>
                 <div class="text-center mt-3">
                   <button id="btn-ver-mais" style="background: none; border: none; cursor: pointer;">
@@ -324,9 +266,8 @@
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="../assets/js/AdicionarPlanoAuditoria.js"></script>
-  <script src="../assets/js/filtrar.js"></script>  
+  <script src="../assets/js/filtrar_auditorias.js"></script>  
   <script src="../assets/js/perfil_global.js"></script>
-  <script src="../assets/js/stock_materiais.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const btnVerMais = document.getElementById("btn-ver-mais");

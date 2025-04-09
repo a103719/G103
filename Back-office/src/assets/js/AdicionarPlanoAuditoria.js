@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <td>
     <iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark"
       onclick="editarPlano(this)" title="Editar"></iconify-icon>
-    <iconify-icon icon="mdi:close" class="cursor-pointer"
+    <iconify-icon icon="mdi:close" class="cursor-pointer  ms-2"
       onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
   </td>
 `;
@@ -239,7 +239,7 @@ function carregarAuditoriasPendentes() {
   <td>
     <div class="d-flex align-items-center gap-2">
       <iconify-icon icon="gg:add-r" class="fs-5 cursor-pointer text-dark" onclick="mostrarFormulario(this)" title="Criar Plano"></iconify-icon>
-      <iconify-icon icon="mdi:close" class="cursor-pointer" onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
+      <iconify-icon icon="mdi:close" class="cursor-pointer  ms-2" onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
     </div>
   </td>
 `;
@@ -314,7 +314,7 @@ function carregarAuditoriasDaStorage() {
            </a>`
         : `<iconify-icon icon="bx:edit" class="fs-6 cursor-pointer text-dark" onclick="editarPlano(this)" title="Editar"></iconify-icon>`
     }
-    <iconify-icon icon="mdi:close" class=" cursor-pointer ms-2" onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
+     <iconify-icon icon="mdi:close" class="cursor-pointer ms-2" onclick="eliminarLinha(this)" title="Eliminar"></iconify-icon>
   </td>
 `;
 

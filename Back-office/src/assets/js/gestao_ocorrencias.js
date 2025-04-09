@@ -170,7 +170,11 @@ document.addEventListener("DOMContentLoaded", function () {
       listaOcorrenciasAtual.push(novoItem);
     }
     localStorage.setItem("ocorrenciasLista", JSON.stringify(listaOcorrenciasAtual));
-
+    criarNotificacao(
+      "Ocorrência atualizada",
+      `A ocorrência "${designacao}" foi marcada como ${novoEstado}.`,
+      novoEstado === "Resolvido" ? "success" : "info"
+    );
     bloquearEdicao();
     document.getElementById("cartao-detalhes").style.display = "none";
   });
