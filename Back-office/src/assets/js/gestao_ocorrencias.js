@@ -129,20 +129,43 @@ document.addEventListener("DOMContentLoaded", function () {
     if (badge) {
       badge.textContent = novoEstado;
       badge.className = "badge rounded-pill estado-ocorrencia";
+    
+      const hoje = new Date().toISOString().split("T")[0];
+      const historico = JSON.parse(localStorage.getItem("historicoOcorrenciasPorEstado") || "{}");
+    
+      // Inicializar dia se não existir
+      if (!historico[hoje]) {
+        historico[hoje] = { pendente: 0, emAnalise: 0, resolvido: 0 };
+      }
+    
+      // Atualiza o histórico do dia com base no novo estado
       if (novoEstado === "Pendente") {
         badge.classList.add("bg-primary");
+        historico[hoje].pendente += 1;
       } else if (novoEstado === "Em análise") {
         badge.classList.add("bg-info", "text-white");
+        historico[hoje].emAnalise += 1;
       } else if (novoEstado === "Resolvido") {
         badge.classList.add("bg-success");
+        historico[hoje].resolvido += 1;
+
         localStorage.setItem("novaAuditoriaCriada", "true");
+    
         const auditoriasPendentes = JSON.parse(localStorage.getItem("auditoriasPendentes") || "[]");
         if (!auditoriasPendentes.includes(designacao)) {
           auditoriasPendentes.push(designacao);
           localStorage.setItem("auditoriasPendentes", JSON.stringify(auditoriasPendentes));
         }
       }
+ 
+      historico[hoje].total =
+        historico[hoje].pendente +
+        historico[hoje].emAnalise +
+        historico[hoje].resolvido;
+    
+      localStorage.setItem("historicoOcorrenciasPorEstado", JSON.stringify(historico));
     }
+    
 
     linhaSelecionada.setAttribute("data-observacoes", novaObs);
     linhaSelecionada.setAttribute("data-seguranca", segurancasSelecionados);
@@ -217,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   atualizarCheckboxesPeritos();
-  // Garante que ocorenciasLista está preenchido no início
+  
 (function sincronizarOcorrenciasNaStorage() {
   const linhas = document.querySelectorAll("tbody tr");
   const ocorrencias = [];

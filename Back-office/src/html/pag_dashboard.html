@@ -146,6 +146,9 @@
                       <h5 class="card-title fw-semibold">Visão geral das ocorrências por estado</h5>
                     </div>
                   </div>
+                  <canvas id="graficoResolvidas" height="70"></canvas>
+                  <canvas id="graficoOcorrencias" height="70"></canvas>
+
                   <div id="profit"></div>
                 </div>
               </div>
@@ -189,17 +192,17 @@
                         </div>
                       </div>
                       
-                      <div class="row">
+                      <div id="resolvidasPorPeriodo" class="row">
                         <div class="col-4">
-                          <h4 class="fw-semibold mb-3 text-center">4</h4>
+                          <h4 class="fw-semibold mb-3 text-center">0</h4>
                           <p class="text-center"><small>Dia</small></p>
                         </div>
                         <div class="col-4">
-                          <h4 class="fw-semibold mb-3 text-center">96</h4>
+                          <h4 class="fw-semibold mb-3 text-center">0</h4>
                           <p class="text-center"><small>Mês</small></p>
                         </div>
                         <div class="col-4">
-                          <h4 class="fw-semibold mb-3 text-center">2688</h4>
+                          <h4 class="fw-semibold mb-3 text-center">0</h4>
                           <p class="text-center"><small>Ano</small></p>
                         </div>
                       </div>
@@ -286,6 +289,10 @@
 <script src="../assets/js/perfil_global.js"></script>
 <script src="../assets/js/notificacoes_globais.js"></script>
 <script src="../assets/js/notificacoes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../assets/js/grafico_ocorrencias.js"></script>
+<script src="../assets/js/dashboard_3.js"></script>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const lista = JSON.parse(localStorage.getItem("peritos")) || [];
@@ -351,8 +358,6 @@
     });
   }
 </script>
-  
-   
 
 </body>
 
