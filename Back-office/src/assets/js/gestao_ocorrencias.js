@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
         badge.classList.add("bg-info", "text-white");
       } else if (novoEstado === "Resolvido") {
         badge.classList.add("bg-success");
-
+        localStorage.setItem("novaAuditoriaCriada", "true");
         const auditoriasPendentes = JSON.parse(localStorage.getItem("auditoriasPendentes") || "[]");
         if (!auditoriasPendentes.includes(designacao)) {
           auditoriasPendentes.push(designacao);

@@ -118,7 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     guardarAuditoriasNaStorage();
-    localStorage.setItem("novaAuditoriaCriada", "true");
     fecharFormulario();
     form.reset();
     materiaisSelecionadosAuditoria = [];
