@@ -95,6 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
     renderTabela();
     proximoID++;
     form.reset();
+
+    localStorage.setItem("novoPeritoAdicionado", "true");
   });
 
   tabelaBody.addEventListener("click", function (e) {

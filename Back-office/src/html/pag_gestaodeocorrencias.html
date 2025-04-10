@@ -116,12 +116,9 @@
                   <a class="nav-link" href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown"
                      aria-expanded="false">
                     <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>
-                    <!-- Badge de contagem de notificações -->
                     <div class="notification bg-primary rounded-circle d-none" id="badgeNotificacoes"></div>
                   </a>
-                  <!-- Lista das notificações -->
-                  <ul class="dropdown-menu dropdown-menu-end" id="listaNotificacoes" style="min-width: 300px;">
-                    <!-- Aqui o JS vai injetar os itens de notificação -->
+                  <ul id="listaNotificacoes" class="dropdown-menu dropdown-menu-start" style="min-width: 400px; left: 30px;"> </ul>
                   </ul>
                 </li>
               </ul>
@@ -355,6 +352,7 @@
   <script src="../assets/js/perfil_global.js"></script>
   <script src="../assets/js/mapa_ocorrencias.js"></script>
   <script src="../assets/js/notificacoes.js"></script>
+  <script src="../assets/js/notificacoes_globais.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const btn = document.getElementById("btn-ver-mais-ocorrencias");

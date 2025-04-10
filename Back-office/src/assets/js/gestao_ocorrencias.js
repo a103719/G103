@@ -170,11 +170,14 @@ document.addEventListener("DOMContentLoaded", function () {
       listaOcorrenciasAtual.push(novoItem);
     }
     localStorage.setItem("ocorrenciasLista", JSON.stringify(listaOcorrenciasAtual));
-    criarNotificacao(
-      "Ocorrência atualizada",
-      `A ocorrência "${designacao}" foi marcada como ${novoEstado}.`,
-      novoEstado === "Resolvido" ? "success" : "info"
-    );
+    const notificacao = {
+      titulo: "Ocorrência atualizada",
+      mensagem: `A ocorrência "${designacao}" foi marcada como ${novoEstado}.`,
+      tipo: novoEstado === "Resolvido" ? "success" : "info"
+    };
+    
+    localStorage.setItem("notificacaoPorMostrar", JSON.stringify(notificacao));
+    
     bloquearEdicao();
     document.getElementById("cartao-detalhes").style.display = "none";
   });

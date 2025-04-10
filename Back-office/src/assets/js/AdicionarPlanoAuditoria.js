@@ -96,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
     novaLinha.setAttribute("data-materiais", materiaisJSON);
     novaLinha.setAttribute("data-duracao", duracao);
     novaLinha.setAttribute("data-descricao", descricao);
-
     novaLinha.innerHTML = `
   <td>${nomePlano}</td>
   <td>${ocorrenciasTexto}</td>
@@ -119,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     guardarAuditoriasNaStorage();
+    localStorage.setItem("novaAuditoriaCriada", "true");
     fecharFormulario();
     form.reset();
     materiaisSelecionadosAuditoria = [];
