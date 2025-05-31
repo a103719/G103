@@ -363,7 +363,6 @@ if (btnRecusar) {
         o.designacao === designacao &&
         o.utilizador === utilizador
       );
-
       ocorrencias.push({
         designacao,
         utilizador,
