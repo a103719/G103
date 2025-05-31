@@ -1,7 +1,7 @@
 
 (() => {
 
-  const KEY          = "eyesEverywhere";
+  const KEY          = "eyesEverywhereState";
   const LEGACY_KEYS  = [
     "peritos", "ocorrenciasLista", "ocorrenciasSegurancas",
     "ocorrenciasEstados", "listaAuditorias", "auditoriasPendentes",

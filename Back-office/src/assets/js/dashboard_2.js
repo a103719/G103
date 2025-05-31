@@ -1,13 +1,6 @@
-<<<<<<< Updated upstream
 document.addEventListener("DOMContentLoaded", () => {
   const elValor = document.getElementById("tmr");
   if (!elValor) return;
-=======
-
-document.addEventListener("DOMContentLoaded", () => {
-  const elValor = document.getElementById("tmr");          
-  if (!elValor) return;                                     
->>>>>>> Stashed changes
 
   const lista = JSON.parse(localStorage.getItem("ocorrenciasLista")) || [];
 
