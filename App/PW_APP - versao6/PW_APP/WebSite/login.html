@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <h1>Faz login com a tua Conta Google</h1>
+
+  <!-- Aqui o botão Google será renderizado -->
+  <div id="googleLoginBtn"></div>
+
+  <script>
+    // Esta função é chamada automaticamente após login bem-sucedido
+    function handleCredentialResponse(response) {
+      console.log("Token recebido:", response.credential);
+
+      // Aqui podes validar o token com o teu backend, se quiseres
+      // Para este exemplo: redirecionar diretamente
+      window.location.href = "Pontuacao.html";
+    }
+
+    // Inicializar o botão quando a página carregar
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "418270977695-katnkd32tul3tr837tl607es6bst58dl.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("googleLoginBtn"),
+        {
+          theme: "outline",
+          size: "large"
+        }
+      );
+    };
+  </script>
+</body>
+</html>

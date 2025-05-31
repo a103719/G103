@@ -1,68 +1,115 @@
-
 <!DOCTYPE html>
+
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Registar Ocorrência</title>
-  <link rel="stylesheet" href="registo.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=390, height=844, user-scalable=no"/>
+<link href="css/registo.css" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=390, height=844, user-scalable=no" name="viewport"/>
+<link rel="icon" type="image/png" href="assets/LogoEyes.png">
+<title>Registar Ocorrência</title>
+<link href="css/registo.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="css/inicial.css" rel="stylesheet"/><link href="https://unpkg.com/leaflet/dist/leaflet.css" rel="stylesheet"/>
 </head>
 <body>
-  <div class="app-container">
-    <a href="#" class="back-btn">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/chevron-left.png" alt="Voltar" />
-    </a>
-    <div class="form-container">
-      <h1>Registar Ocorrência</h1>
+<div class="app-container">
+<div class="bg-circle1"></div>
+<div class="bg-circle2"></div>
 
-      <select class="dropdown">
-        <option>Selecione o Tipo de Ocorrência</option>
-        <option>Buraco na estrada</option>
-        <option>Iluminação pública</option>
-        <option>Outro</option>
-      </select>
+  <button class="btn-back" onclick="history.back()">
+    <img src="https://img.icons8.com/ios-filled/24/ffffff/chevron-left.png" alt="Voltar"/>
+  </button>
+<div class="form-container">
+<h1>Registar Ocorrência</h1>
 
-      <select class="dropdown">
-        <option>Escolha a Localização</option>
-        <option>Lisboa</option>
-        <option>Porto</option>
-        <option>Coimbra</option>
-      </select>
+<form id="formulario" onsubmit="adicionarPontos(event)">
+<label for="tipoOcorrencia">Tipo de Ocorrência</label>
+<select id="tipoOcorrencia" name="tipoOcorrencia" class="dropdown">
+  <option>Selecione o Tipo de Ocorrência</option>
+  <option>Estacionamento irregular</option>
+  <option>Estacionamento em lugar reservado</option>
+  <option>Estacionamento a restringir a via de circulação</option>
+</select>
+<div class="mapa-leaflet" id="mapa"></div>
+<div class="upload-box">
+  <label for="foto-upload" id="uploadLabel">
+    <img alt="Upload" src="https://img.icons8.com/ios-filled/50/0A77BC/image.png"/>
+    <p id="uploadText">Carregue fotografias, vídeos ou áudios para<br/>documentar a sua ocorrência.</p>
+  </label>
 
-      <div class="upload-box">
-        <img src="https://img.icons8.com/ios-filled/50/image.png" alt="Upload" />
-        <p>Carregue fotografias para<br>documentar a ocorrência.</p>
-      </div>
+  <input accept="image/*,video/*,audio/*" id="foto-upload" multiple style="display:none" type="file"/>
 
-      <label for="titulo">Título</label>
-      <div class="input-wrapper">
-        <input type="text" id="titulo" maxlength="180" oninput="atualizarContador()" />
-        <span id="contador">0/180</span>
-      </div>
+  <!-- Apenas uma div com este ID -->
+  <div class="preview-container" id="previewContainer"></div>
+</div>
+<label for="descricao">Descrição</label>
+<div class="textarea-wrapper">
+<textarea id="descricao" maxlength="360" oninput="atualizarContadorDescricao()" placeholder="Descrição da Ocorrência. Inclua a matrícula caso ache necessário"></textarea>
+<span id="contador-desc">0/360</span>
+</div><label for="observacoes">Observações</label>
+<div class="input-wrapper">
+<textarea id="observacoes" maxlength="180" oninput="atualizarContador()" placeholder="Escreva uma observação (opcional)" ></textarea> 
+<span id="contador">0/360</span>
+</div>
 
-      <label for="descricao">Descrição</label>
-      <div class="textarea-wrapper">
-        <textarea id="descricao" maxlength="360" placeholder="Descrição da Ocorrência, inclua a matrícula 360 caso seja necessário..." oninput="atualizarContadorDescricao()"></textarea>
-        <span id="contador-desc">0/360</span>
-      </div>
+<button class="submit">📸 Submeter Ocorrência</button>
+</div>
+</div>
+<!-- Barra de navegação inferior -->
+<div class="bottom-nav">
+  <a class="nav-item" href="inicial.html">
+    <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/home.png" alt="Início"/>
+    <span>Início</span>
+  </a>
+  <a class="nav-item active" href="registo.html">
+    <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/plus-math.png" alt="Registar"/>
+    <span>Registar</span>
+  </a>
+  <a class="nav-item" href="historico.html">
+    <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/time-machine.png" alt="Histórico"/>
+    <span>Histórico</span>
+  </a>
+  <a class="nav-item" href="pontos.html">
+    <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/star.png" alt="Pontos"/>
+    <span>Pontos</span>
+  </a>
+</div>
 
-      <button class="submit">📸 Submeter Ocorrência</button>
-    </div>
-  </div>
 
-  <script>
-    function atualizarContador() {
-      const input = document.getElementById("titulo");
-      const contador = document.getElementById("contador");
-      contador.textContent = input.value.length + "/180";
-    }
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+ 
+  function atualizarContadorDescricao() {
+    const textarea = document.getElementById("descricao");
+    const contador = document.getElementById("contador-desc");
+    contador.textContent = textarea.value.length + "/360";
+  } 
+  function atualizarContador() {
+    const input = document.getElementById("observacoes");
+    const contador = document.getElementById("contador");
+    contador.textContent = input.value.length + "/180";
+  }
 
-    function atualizarContadorDescricao() {
-      const textarea = document.getElementById("descricao");
-      const contador = document.getElementById("contador-desc");
-      contador.textContent = textarea.value.length + "/360";
-    }
-  </script>
+</script>
+<!-- Toastify CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<!-- Toastify JS -->
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+  window.mostrarToast = function (mensagem, cor = "#0A77BC") {
+    Toastify({
+      text: mensagem,
+      duration: 3000,
+      gravity: "top",
+      position: "center",
+      style: { background: cor }
+    }).showToast();
+  }
+</script>
+<script type="module" src="js/registo.js"></script>
 </body>
 </html>

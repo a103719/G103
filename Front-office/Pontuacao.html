@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pontuação</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      background-color: #f4f6f3;
+      text-align: center;
+    }
+
+    .btn-voltar {
+      display: inline-block;
+      margin-bottom: 25px;
+      padding: 10px 22px;
+      font-size: 16px;
+      background-color: #31943a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-voltar:hover { background-color: #31943a; }
+
+    h1 { margin-bottom: 20px; font-size: 28px; }
+    .pontos { font-size: 22px; margin-bottom: 30px; color: #333; }
+
+    .container-recompensas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.recompensa {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 250px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  height: 320px; /* altura fixa */
+}
+
+.recompensa img {
+  max-width: 100px;
+  max-height: 80px;
+  margin-bottom: 10px;
+  object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.recompensa div {
+  font-size: 18px;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center; /* centraliza verticalmente o texto */
+  justify-content: center; /* centraliza horizontalmente o texto */
+  padding: 0 5px;
+  text-align: center;
+}
+
+.recompensa button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #3bb147;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.recompensa button:hover {
+  background-color: #31943a;
+}
+
+
+
+    #lista-redimidos {
+      list-style: none; 
+      padding: 0; 
+      max-width: 400px; 
+      margin: 20px auto; 
+      text-align: left;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    #lista-redimidos li {
+      padding: 8px 15px;
+      border-bottom: 1px solid #ccc;
+      font-size: 16px;
+      color: #333;
+    }
+    #lista-redimidos li:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="btn-voltar">Voltar ao site</a>
+  <h1>Bem‑vindo à tua conta</h1>
+  <div class="pontos" id="pontosDisplay">A carregar...</div>
+
+  <div class="container-recompensas">
+    <div class="recompensa">
+      <img src="sasum.jpeg" alt="Imagem da recompensa" />
+      <div>Trocar por 10 Senhas Cantina UMINHO (100 pontos)</div>
+      <button onclick="trocarRecompensa(100)">Trocar</button>
+    </div>
+    <div class="recompensa">
+      <img src="autocarro.jpeg" alt="Imagem da recompensa" />
+      <div>Trocar por 10 Viagens AAUM (200 pontos)</div>
+      <button onclick="trocarRecompensa(200)">Trocar</button>
+    </div>
+    <div class="recompensa">
+      <img src="enterro.png" alt="Imagem da recompensa" />
+      <div>Trocar por Pulseira Enterro da Gata'25 (500 pontos)</div>
+      <button onclick="trocarRecompensa(500)">Trocar</button>
+    </div>
+  </div>
+
+  <h2>Itens Redimidos</h2>
+  <ul id="lista-redimidos">
+    <li>Nenhum item redimido ainda.</li>
+  </ul>
+
+  <p>Os teus pontos atuais: <span id="pontos-atuais">0</span></p>
+
+  <script>
+    const email = localStorage.getItem('utilizadorLogado');
+
+if (!email) {
+  alert('Não há utilizador autenticado. A voltar ao login...');
+  localStorage.setItem('destinoPosLogin', 'pontuacao.html');
+  window.location.href = 'login.html';
+}
+
+function lerEstado() {
+  const raw = localStorage.getItem('eyesEverywhereState');
+  return raw ? JSON.parse(raw) : { pontosUtilizadores: {}, redimidosPorUtilizador: {} };
+}
+
+function guardarEstado(estado) {
+  localStorage.setItem('eyesEverywhereState', JSON.stringify(estado));
+}
+
+// Inicializa pontos se não existirem
+function inicializarPontosSeNaoExistir(email, pontosIniciais = 200) {
+  const estado = lerEstado();
+  if (!estado.pontosUtilizadores) estado.pontosUtilizadores = {};
+  if (estado.pontosUtilizadores[email] === undefined) {
+    estado.pontosUtilizadores[email] = pontosIniciais;
+    guardarEstado(estado);
+  }
+}
+inicializarPontosSeNaoExistir(email, 200);
+
+function obterPontos(email) {
+  const estado = lerEstado();
+  return estado.pontosUtilizadores?.[email] ?? 0;
+}
+
+function guardarPontos(email, pontos) {
+  const estado = lerEstado();
+  if (!estado.pontosUtilizadores) estado.pontosUtilizadores = {};
+  estado.pontosUtilizadores[email] = pontos;
+  guardarEstado(estado);
+}
+
+// ---- Funções para gerir itens redimidos dentro do eyesEverywhereState ----
+
+// Carrega itens redimidos do estado global
+function carregarRedimidos() {
+  const estado = lerEstado();
+  if (!estado.redimidosPorUtilizador) estado.redimidosPorUtilizador = {};
+  return estado.redimidosPorUtilizador[email] || [];
+}
+
+// Guarda lista redimida no estado global
+function guardarRedimidos(itens) {
+  const estado = lerEstado();
+  if (!estado.redimidosPorUtilizador) estado.redimidosPorUtilizador = {};
+  estado.redimidosPorUtilizador[email] = itens;
+  guardarEstado(estado);
+}
+
+// Adiciona item redimido para o utilizador atual e atualiza a lista visual
+function adicionarItemRedimido(nomeItem) {
+  const itens = carregarRedimidos();
+  itens.push(nomeItem);
+  guardarRedimidos(itens);
+  atualizarListaRedimidos();
+}
+
+// Atualiza lista visual
+function atualizarListaRedimidos() {
+  const lista = carregarRedimidos();
+  const ul = document.getElementById('lista-redimidos');
+  if (!ul) return;
+  if (lista.length === 0) {
+    ul.innerHTML = '<li>Nenhum item redimido ainda.</li>';
+  } else {
+    ul.innerHTML = lista.map(item => `<li>${item}</li>`).join('');
+  }
+}
+
+// Inicializa pontos e redimidos
+let pontos = obterPontos(email);
+atualizarListaRedimidos();
+
+function atualizarPontos() {
+  document.getElementById('pontosDisplay').innerText = `Meus Pontos: ${pontos}`;
+  document.getElementById('pontos-atuais').innerText = pontos;
+}
+
+function trocarRecompensa(custo) {
+  if (pontos >= custo) {
+    pontos -= custo;
+    guardarPontos(email, pontos);
+
+    let nomeItem = '';
+    switch(custo) {
+      case 100: nomeItem = '10 Senhas Cantina UMINHO'; break;
+      case 200: nomeItem = '10 Viagens AAUM'; break;
+      case 500: nomeItem = "Pulseira Enterro da Gata'25"; break;
+      default: nomeItem = 'Recompensa desconhecida';
+    }
+
+    adicionarItemRedimido(nomeItem);
+
+    mostrarToast('🎉 Recompensa trocada com sucesso!', 'sucesso');
+    atualizarPontos();
+  } else {
+    mostrarToast('⚠️ Não tens pontos suficientes para trocar pela bonificação.', 'erro');
+  }
+}
+
+function mostrarToast(mensagem, tipo = 'sucesso') {
+  const toast = document.createElement('div');
+  toast.textContent = mensagem;
+  toast.style.position = 'fixed';
+  toast.style.top = '20px';
+  toast.style.left = '50%';
+  toast.style.transform = 'translateX(-50%)';
+  toast.style.padding = '15px 25px';
+  toast.style.borderRadius = '10px';
+  toast.style.boxShadow = '0 0 15px rgba(0,0,0,0.2)';
+  toast.style.zIndex = '9999';
+  toast.style.backgroundColor = tipo === 'sucesso' ? '#10bc69' : '#ff3860';
+  toast.style.color = '#fff';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+atualizarPontos();
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  font-family: 'Poppins', sans-serif;
+}
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+.bg-circle1, .bg-circle2 {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+.bg-circle1 {
+  width: 400px;
+  height: 400px;
+  top: -200px;
+  left: 100px;
+  background: #dfe8ff;
+}
+.bg-circle2 {
+  width: 300px;
+  height: 300px;
+  top: 500px;
+  left: -100px;
+  background: #eef2ff;
+}
+.login-logo {
+  width: 140px;
+  height: 140px;
+  border-radius: 32px;
+  object-fit: cover;
+  margin-top: 20px;
+}
+.login-title {
+  text-align: center;
+  color: #0a77bc;
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+.welcome-text {
+  text-align: center;
+  color: #494949;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.form-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.input {
+  width: 100%;
+  padding: 14px;
+  background: #f1f4ff;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #626262;
+  border: 2px solid #d6dfff;
+  outline: none;
+}
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background: #0a77bc;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.social-section {
+  text-align: center;
+  margin-top: 20px;
+}
+.social-section p {
+  color: #0cc750;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.google-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+.social-icons div {
+  background: #ececec;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+.social-icons img {
+  width: 24px;
+  height: 24px;
+}
+
+
+.google-btn-container {
+  max-width: 300px;
+  margin: 0 auto 12px auto;
+}
+
+.social-section {
+  margin-top: 30px;
+}
+
+.social-section p {
+  color: #4CAF50;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.social-icons div {
+  background: #ececec;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.social-icons div:hover {
+  transform: scale(1.05);
+}
+
+.social-icons img {
+  width: 20px;
+  height: 20px;
+  filter: invert(20%);
+}
+
+.app-container {
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.input,
+.btn-login {
+  width: 100%;
+  max-width: 300px;
+}
+
+.form-area {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

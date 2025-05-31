@@ -1,0 +1,468 @@
+{
+  "peritos": [
+    {
+      "id": 1,
+      "nome": "Leonel",
+      "area": "Segurança",
+      "estado": "em_acao"
+    },
+    {
+      "id": 2,
+      "nome": "João",
+      "area": "Segurança",
+      "estado": "disponivel"
+    },
+    {
+      "id": 3,
+      "nome": "João Coelho",
+      "area": "Segurança",
+      "estado": "disponivel"
+    },
+    {
+      "id": 4,
+      "nome": "Manuel",
+      "area": "Administrador",
+      "estado": "indisponivel"
+    }
+  ],
+  "ocorrenciasLista": [
+    {
+      "designacao": "ID-10134/ Estacionamento irregular",
+      "utilizador": "Luis Pinheiro",
+      "estado": "Pendente",
+      "latitude": 41.451196,
+      "longitude": -8.292259,
+      "segurancas": "Leonel",
+      "foto": "../assets/images/products/Carro-mal-estacionado2.jpg",
+      "createdAt": 1747068686706,
+      "firstResponseAt": null,
+      "resolvedAt": null
+    },
+    {
+      "designacao": "ID-10332/ Estacionamento em lugar reservado",
+      "utilizador": "Manuel Joaquim",
+      "estado": "Pendente",
+      "latitude": 41.450439,
+      "longitude": -8.293911,
+      "segurancas": "Leonel;João",
+      "foto": "",
+      "createdAt": 1747068686706,
+      "firstResponseAt": null,
+      "resolvedAt": null
+    },
+    {
+      "designacao": "ID-10034/ Estacionamento a restringir via de circulação",
+      "utilizador": "Jorge Tinoco",
+      "estado": "Resolvido",
+      "latitude": 41.453545,
+      "longitude": -8.289702,
+      "segurancas": "",
+      "foto": "../assets/images/products/Carro-mal-estacionado.jpg",
+      "createdAt": 1747068686706,
+      "firstResponseAt": 1747068727111,
+      "resolvedAt": null
+    },
+    {
+      "designacao": "ID-11234/ Estacionamento irregular",
+      "utilizador": "Manuel Martins",
+      "estado": "Resolvido",
+      "latitude": 41.452931,
+      "longitude": -8.289654,
+      "segurancas": "Leonel",
+      "foto": "",
+      "createdAt": 1747068686706,
+      "firstResponseAt": null,
+      "resolvedAt": 1747068692898
+    },
+    {
+      "designacao": "ID-10245/ Estacionamento em lugar reservado a colaboradores",
+      "utilizador": "Rodrigo Pereira",
+      "estado": "Resolvido",
+      "latitude": 41.45088,
+      "longitude": -8.293599,
+      "segurancas": "",
+      "foto": "../assets/images/products/Carro-mal-estacionado.jpg",
+      "createdAt": 1747068686706,
+      "firstResponseAt": null,
+      "resolvedAt": null
+    }
+  ],
+  "ocorrenciasSegurancas": {
+    "ID-10034/ Estacionamento a restringir via de circulação": "",
+    "ID-10234/ Estacionamento irregular": "Leonel",
+    "ID-11234/ Estacionamento irregular": "Leonel",
+    "ID-10332/ Estacionamento em lugar reservado": "Leonel;João",
+    "ID-10134/ Estacionamento irregular": "Leonel"
+  },
+  "ocorrenciasEstados": {
+    "ID-10034/ Estacionamento a restringir via de circulação": "Pendente",
+    "ID-10234/ Estacionamento irregular": "Em análise",
+    "ID-11234/ Estacionamento irregular": "Resolvido",
+    "ID-10332/ Estacionamento em lugar reservado": "Resolvido",
+    "ID-10134/ Estacionamento irregular": "Resolvido"
+  },
+  "listaAuditorias": [
+    {
+      "nome": "Carro queimado a arder",
+      "ocorrencias": "ID-11234/ Estacionamento proibido",
+      "data": "2025-04-23",
+      "peritos": "Leonel / João",
+      "materiais": "Cone de sinalização (14 un)",
+      "estado": "Criado",
+      "materiaisJSON": "[{\"id\":1,\"nome\":\"Cone de sinalização\",\"qtd\":14,\"unidade\":\"un\"}]",
+      "duracao": "1 dia",
+      "descricao": ""
+    },
+    {
+      "nome": "Incendio",
+      "ocorrencias": "ID-10034/ Estacionamento a restringir via de circulação",
+      "data": "2025-04-30",
+      "peritos": "João",
+      "materiais": "Cone de sinalização (4 un)",
+      "estado": "Criado",
+      "materiaisJSON": "[{\"id\":1,\"nome\":\"Cone de sinalização\",\"qtd\":4,\"unidade\":\"un\"}]",
+      "duracao": "2 dia",
+      "descricao": ""
+    },
+    {
+      "nome": "—",
+      "ocorrencias": "ID-10034/ Estacionamento a restringir via de circulação",
+      "data": "—",
+      "peritos": "—",
+      "materiais": "—",
+      "estado": "Por Criar",
+      "materiaisJSON": "[]",
+      "duracao": "",
+      "descricao": ""
+    },
+    {
+      "nome": "—",
+      "ocorrencias": "ID-10034/ Estacionamento a restringir via de circulação",
+      "data": "—",
+      "peritos": "—",
+      "materiais": "—",
+      "estado": "Por Criar",
+      "materiaisJSON": "[]",
+      "duracao": "",
+      "descricao": ""
+    }
+  ],
+  "materiaisStock": [
+    {
+      "id": 1,
+      "nome": "Cone de sinalização",
+      "stock": 22,
+      "unidade": "un"
+    },
+    {
+      "id": 2,
+      "nome": "Semáforo portátil",
+      "stock": 11,
+      "unidade": "un"
+    },
+    {
+      "id": 3,
+      "nome": "Extintor CO2",
+      "stock": 20,
+      "unidade": "un"
+    }
+  ],
+  "historicoOcorrenciasPorEstado": {
+    "2025-04-23": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-04-17": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-04-18": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-04-19": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-04-20": {
+      "pendente": 1,
+      "emAnalise": 3,
+      "resolvido": 1,
+      "total": 5
+    },
+    "2025-04-21": {
+      "pendente": 3,
+      "emAnalise": 1,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-04-22": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 3,
+      "total": 7
+    },
+    "2025-04-24": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-04-25": {
+      "pendente": 1,
+      "emAnalise": 3,
+      "resolvido": 1,
+      "total": 5
+    },
+    "2025-04-26": {
+      "pendente": 3,
+      "emAnalise": 1,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-04-27": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 3,
+      "total": 7
+    },
+    "2025-04-28": {
+      "pendente": 0,
+      "emAnalise": 2,
+      "resolvido": 4,
+      "total": 6
+    },
+    "2025-04-29": {
+      "pendente": 1,
+      "emAnalise": 1,
+      "resolvido": 2,
+      "total": 4
+    },
+    "2025-04-30": {
+      "pendente": 0,
+      "emAnalise": 0,
+      "resolvido": 0,
+      "total": 0
+    },
+    "2025-05-09": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 3,
+      "total": 7
+    },
+    "2025-05-03": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-05-04": {
+      "pendente": 1,
+      "emAnalise": 3,
+      "resolvido": 1,
+      "total": 5
+    },
+    "2025-05-05": {
+      "pendente": 3,
+      "emAnalise": 1,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-05-06": {
+      "pendente": 2,
+      "emAnalise": 2,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-05-07": {
+      "pendente": 1,
+      "emAnalise": 3,
+      "resolvido": 1,
+      "total": 5
+    },
+    "2025-05-08": {
+      "pendente": 3,
+      "emAnalise": 1,
+      "resolvido": 2,
+      "total": 6
+    },
+    "2025-05-12": {
+      "pendente": 2,
+      "emAnalise": 4,
+      "resolvido": 3,
+      "total": 9
+    },
+    "2025-05-10": {
+      "pendente": 0,
+      "emAnalise": 2,
+      "resolvido": 4,
+      "total": 6
+    },
+    "2025-05-11": {
+      "pendente": 1,
+      "emAnalise": 1,
+      "resolvido": 2,
+      "total": 4
+    }
+  },
+  "backofficeNotificacoes": [
+    {
+      "id": 1747068765931,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10034/ Estacionamento a restringir via de circulação\" foi marcada como Pendente.",
+      "tipo": "info",
+      "data": "2025-05-12T16:52:45.931Z"
+    },
+    {
+      "id": 1747068728478,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10034/ Estacionamento a restringir via de circulação\" foi marcada como Em análise.",
+      "tipo": "info",
+      "data": "2025-05-12T16:52:08.478Z"
+    },
+    {
+      "id": 1747068694632,
+      "titulo": "Nova Auditoria",
+      "mensagem": "Uma nova auditoria foi criada com sucesso.",
+      "tipo": "success",
+      "data": "2025-05-12T16:51:34.632Z"
+    },
+    {
+      "id": 1747068694631,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-11234/ Estacionamento irregular\" foi marcada como Resolvido.",
+      "tipo": "success",
+      "data": "2025-05-12T16:51:34.631Z"
+    },
+    {
+      "id": 1747068349908,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-11234/ Estacionamento irregular\" foi marcada como Em análise.",
+      "tipo": "info",
+      "data": "2025-05-12T16:45:49.908Z"
+    },
+    {
+      "id": 1747068207774,
+      "titulo": "Nova Auditoria",
+      "mensagem": "Uma nova auditoria foi criada com sucesso.",
+      "tipo": "success",
+      "data": "2025-05-12T16:43:27.774Z"
+    },
+    {
+      "id": 1747068207773,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10332/ Estacionamento em lugar reservado\" foi marcada como Resolvido.",
+      "tipo": "success",
+      "data": "2025-05-12T16:43:27.773Z"
+    },
+    {
+      "id": 1747068181952,
+      "titulo": "Nova Auditoria",
+      "mensagem": "Uma nova auditoria foi criada com sucesso.",
+      "tipo": "success",
+      "data": "2025-05-12T16:43:01.952Z"
+    },
+    {
+      "id": 1747068181951,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10134/ Estacionamento irregular\" foi marcada como Resolvido.",
+      "tipo": "success",
+      "data": "2025-05-12T16:43:01.951Z"
+    },
+    {
+      "id": 1746788306453,
+      "titulo": "Nova Auditoria",
+      "mensagem": "Uma nova auditoria foi criada com sucesso.",
+      "tipo": "success",
+      "data": "2025-05-09T10:58:26.453Z"
+    },
+    {
+      "id": 1746788306452,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10332/ Estacionamento em lugar reservado\" foi marcada como Resolvido.",
+      "tipo": "success",
+      "data": "2025-05-09T10:58:26.452Z"
+    },
+    {
+      "id": 1745962837806,
+      "titulo": "Nova Auditoria",
+      "mensagem": "Uma nova auditoria foi criada com sucesso.",
+      "tipo": "success",
+      "data": "2025-04-29T21:40:37.806Z"
+    },
+    {
+      "id": 1745962837805,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-11234/ Estacionamento irregular\" foi marcada como Resolvido.",
+      "tipo": "success",
+      "data": "2025-04-29T21:40:37.805Z"
+    },
+    {
+      "id": 1745962829463,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10234/ Estacionamento irregular\" foi marcada como Em análise.",
+      "tipo": "info",
+      "data": "2025-04-29T21:40:29.463Z"
+    },
+    {
+      "id": 1745961611138,
+      "titulo": "Nova Auditoria",
+      "mensagem": "Uma nova auditoria foi criada com sucesso.",
+      "tipo": "success",
+      "data": "2025-04-29T21:20:11.138Z"
+    },
+    {
+      "id": 1745961611136,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10034/ Estacionamento a restringir via de circulação\" foi marcada como Resolvido.",
+      "tipo": "success",
+      "data": "2025-04-29T21:20:11.136Z"
+    },
+    {
+      "id": 1745961472629,
+      "titulo": "Nova Auditoria",
+      "mensagem": "Uma nova auditoria foi criada com sucesso.",
+      "tipo": "success",
+      "data": "2025-04-29T21:17:52.629Z"
+    },
+    {
+      "id": 1745961472628,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10034/ Estacionamento a restringir via de circulação\" foi marcada como Resolvido.",
+      "tipo": "success",
+      "data": "2025-04-29T21:17:52.628Z"
+    },
+    {
+      "id": 1745961109453,
+      "titulo": "Nova Auditoria",
+      "mensagem": "Uma nova auditoria foi criada com sucesso.",
+      "tipo": "success",
+      "data": "2025-04-29T21:11:49.453Z"
+    },
+    {
+      "id": 1745961109453,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-10332/ Estacionamento em lugar reservado\" foi marcada como Resolvido.",
+      "tipo": "success",
+      "data": "2025-04-29T21:11:49.453Z"
+    },
+    {
+      "id": 1745961099649,
+      "titulo": "Ocorrência atualizada",
+      "mensagem": "A ocorrência \"ID-11234/ Estacionamento proibido\" foi marcada como Em análise.",
+      "tipo": "info",
+      "data": "2025-04-29T21:11:39.649Z"
+    }
+  ],
+  "auditoriasPendentes": [
+    "ID-11234/ Estacionamento irregular"
+  ]
+}

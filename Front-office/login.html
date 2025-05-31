@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - EyesEveryWhere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- Fontes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --green-dark: #2e7d32;
+      --green-light: #e6f0d9;
+      --green-accent: #c8c8c8;
+      --text-dark: #333;
+      --bg-white: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background-color: var(--green-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      background: var(--bg-white);
+      padding: 40px 35px 50px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      border: 2px solid var(--green-dark);
+      transition: box-shadow 0.3s ease;
+    }
+    .login-card:hover {
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .login-card h1 {
+      color: var(--green-dark);
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 36px;
+      letter-spacing: 1.2px;
+    }
+
+    #googleLoginBtn {
+      display: inline-block;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 30px 20px 40px;
+      }
+      .login-card h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="login-card" role="main" aria-label="Formulário de login Google">
+    <h1>Iniciar Sessão com Conta Google</h1>
+    <div id="googleLoginBtn" aria-label="Botão para iniciar sessão com Google"></div>
+  </main>
+
+  <script>
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split('')
+            .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+            .join('')
+        );
+        return JSON.parse(jsonPayload);
+      } catch {
+        return null;
+      }
+    }
+
+    function handleCredentialResponse(response) {
+      const payload = parseJwt(response.credential);
+
+      if (payload && payload.email) {
+        const email = payload.email;
+        localStorage.setItem('utilizadorLogado', email);
+
+        // Remove chave antiga de pontos caso exista para evitar conflito
+        localStorage.removeItem('pontos_' + email);
+
+        // Redirecionamento pós-login
+        const destino = localStorage.getItem('destinoPosLogin') || 'pontuacao.html';
+        localStorage.removeItem('destinoPosLogin');
+        window.location.href = destino;
+      } else {
+        alert('Erro ao obter email do token Google.');
+      }
+    }
+
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: '418270977695-katnkd32tul3tr837tl607es6bst58dl.apps.googleusercontent.com',
+        callback: handleCredentialResponse,
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById('googleLoginBtn'),
+        {
+          theme: 'filled_blue',
+          size: 'large',
+          shape: 'rectangular',
+          text: 'continue_with',
+          width: 320,
+          locale: 'pt-PT'
+        }
+      );
+
+      // Opcional: prompt automático para login
+      // google.accounts.id.prompt();
+    };
+  </script>
+
+</body>
+</html>
