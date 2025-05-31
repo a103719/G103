@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EyesEveryWhere - Login</title>
+    <link rel="shortcut icon" href="../assets/images/logos/_LogoEyes.png" type="image/png" />
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <div class="page-wrapper" id="main-wrapper" 
+         data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" 
+         data-sidebar-position="fixed" data-header-position="fixed">
+      <div class="position-relative overflow-hidden text-bg-light 
+                  min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xxl-3">
+          <div class="card mb-0">
+            <div class="card-body text-center">
+              <img src="../assets/images/logos/LogoEyes.png" 
+                   alt="Logo EyesEveryWhere" class="mb-4" style="max-width:100%;" />
+
+              <form>
+                <div class="mb-3 text-start">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="email" id="username" class="form-control" aria-describedby="emailHelp" placeholder="teu@exemplo.com">
+                </div>
+                <div class="mb-4 text-start">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" id="password" class="form-control" placeholder="••••••••">
+                </div>
+                <a id="btnLogin" href="./pag_dashboard.html" 
+                   class="btn btn-primary w-100 py-2 fs-5 mb-3">Login</a>
+              </form>
+
+              <div id="google-signin-button"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+   <script>
+  // Lista de e-mails permitidos
+  const ALLOWED_EMAILS = [
+    "leonelp2004@gmail.com",
+  ];
+
+  // Valida se o e-mail está na lista
+  function emailValido(email) {
+    return ALLOWED_EMAILS.includes(email);
+  }
+
+  function decodeJwt(token) {
+    const payload = token.split('.')[1];
+    // adapta base64url → base64
+    const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64));
+  }
+
+  window.onload = () => {
+    google.accounts.id.initialize({
+      client_id: '414040572378-o92dd40naucjrnngn41foha8tt0mq3sl.apps.googleusercontent.com',
+      callback: handleCredentialResponse
+    });
+    google.accounts.id.renderButton(
+      document.getElementById('google-signin-button'),
+      {
+        type: 'standard',
+        shape: 'rectangular',
+        theme: 'outline',
+        text: 'signin_with',
+        size: 'large',
+        logo_alignment: 'left',
+      }
+    );
+  };
+
+  function handleCredentialResponse(response) {
+    if (!response.credential) {
+      return window.location.href = './pag_dashboard.html';
+    }
+
+    // response.credential é um JWT: extrai o payload
+    const payload = decodeJwt(response.credential);
+    const email   = payload.email;
+    console.log("Google Sign-In payload:", payload);
+
+    // valida o e-mail
+    if (!emailValido(email)) {
+      alert(`A conta ${email} não está autorizada.`);
+      // opcional: revoga imediatamente a sessão Google
+      return google.accounts.id.revoke(response.credential, done => {
+        console.log("Credenciais revogadas.");
+      });
+    }
+
+    // tudo ok: grava flag e avança
+    sessionStorage.setItem('ee_logged', 'true');
+    sessionStorage.setItem('ee_user_email', email);
+    sessionStorage.setItem('ee_user_name', payload.name || "");
+
+    window.location.href = './pag_dashboard.html';
+  }
+
+  // Listener do botão “Login” convencional
+  document.getElementById('btnLogin').addEventListener('click', e => {
+    sessionStorage.setItem('ee_logged', 'true');
+    // poderias também guardar o e-mail do #username aqui, se quiseres
+  });
+</script>
+  </body>
+</html>

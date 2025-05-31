@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="pt">
+<!-- Declaração do tipo de documento e definição do idioma como português -->
+
+<head>
+
+  <!-- Script da API do Google Identity Services para autenticação -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- Folha de estilos do Leaflet (biblioteca para mapas interativos) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Script JavaScript do Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Definição da codificação de caracteres para UTF-8 -->
+  <meta charset="utf-8">
+
+  <!-- Configuração do viewport para responsive design (compatível com dispositivos móveis) -->
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Título da página que aparece no separador do navegador -->
+  <title>EyesEveryWhere</title>
+
+  <!-- Meta tags para descrição e palavras-chave (vazias neste caso, podem ser preenchidas para SEO) -->
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Ícone da página (favicon), visível no separador do navegador e em favoritos -->
+  <link href="assets/img/Capturar2.PNG" rel="icon">
+  <link href="assets/img/Capturar2.PNG" rel="apple-touch-icon">
+
+  <!-- Pré-conexões às fontes do Google para melhorar o desempenho de carregamento -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+
+  <!-- Importação de várias fontes do Google Fonts (Roboto, Raleway, Ubuntu) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Ficheiros CSS de bibliotecas externas (Bootstrap, ícones, animações, etc.) -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Ficheiro CSS principal do projeto -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+</head>
+
+
+<body class="index-page">
+  <!-- Início do corpo da página com a classe "index-page" que pode ser usada para aplicar estilos específicos à página principal -->
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <!-- Cabeçalho da página com estilo fixo no topo (sticky) e alinhamento flexível -->
+
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <!-- Container fluido que se adapta à largura do ecrã com largura máxima definida (XL), e elementos alinhados ao centro -->
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- Logótipo da marca que redireciona para a página principal (index.html), alinhado à esquerda -->
+
+        <!-- Imagem de logótipo comentada (pode ser ativada se necessário) -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+
+        <h1 class="sitename">EyesEveryWhere</h1>
+        <!-- Nome do site apresentado como título -->
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <!-- Menu de navegação principal com o ID navmenu -->
+
+        <ul>
+          <!-- Lista de ligações de navegação (ancoradas a secções da página) -->
+
+          <li><a href="#hero" class="active">Quem somos?</a></li>
+          <!-- Link para a secção "Quem somos?", com a classe "active" a indicar que está selecionada -->
+
+          <li><a href="#about1">O que fazemos?</a></li>
+          <li><a href="#about2">Indicadores</a></li>
+          <li><a href="#services">Tipos de Ocorrências</a></li>
+          <li><a href="#about3">Submeter e Visualizar Ocorrências</a></li>
+          <li><a id="auth-btn" href="#">Login</a></li>
+          <!-- Ligações para outras secções da página conforme o conteúdo existente -->
+        </ul>
+
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a id="link-pontos" class="btn-getstarted" href="#">Meus Pontos</a>
+
+      <!-- Botão que redireciona para a página de login, para ver pontos ou perfil do utilizador -->
+
+      <!-- Integração do Google Identity Services para autenticação -->
+      <div id="g_id_onload" data-client_id="418270977695-katnkd32tul3tr837tl607es6bst58dl.apps.googleusercontent.com"
+        data-login_uri="http://127.0.0.1:5500/login.html" data-auto_prompt="false">
+      </div>
+
+      <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+        data-shape="rectangular" data-logo_alignment="left">
+      </div>
+      <!-- Botão visual de início de sessão com conta Google -->
+    </div>
+  </header>
+
+
+  <main class="main">
+    <!-- Início da área principal do conteúdo da página -->
+
+    <div id="area-pontos" style="display: none;">
+      <!-- Secção escondida inicialmente que mostra os pontos do utilizador e as opções de troca -->
+    </div>
+
+    <!-- Secção "Hero", geralmente a primeira a ser vista no carregamento da página -->
+    <section id="hero" class="hero section">
+
+      <div class="container">
+        <div class="row gy-4">
+          <!-- Layout em grelha com espaçamento entre elementos (gy-4 = gutter vertical) -->
+
+          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up">
+            <!-- Coluna esquerda com texto; em dispositivos móveis aparece depois da imagem -->
+
+            <h1>Quem Somos?</h1>
+            <p>A empresa "EyesEverywhere" é responsável pela realização de auditorias e pelo registo de ocorrências no
+              Parque de Estacionamento da Universidade do Minho.
+              <br>
+              O nosso objetivo principal é melhorar a organização e eficiência do parque de estacionamento, promovendo
+              um ambiente mais seguro e informativo para todos os utilizadores, mas focado na gestão interna de
+              ocorrências.</p>
+            <!-- Texto de apresentação da organização e missão -->
+
+            <div class="d-flex">
+            </div>
+          </div>
+
+          <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
+            <!-- Coluna direita com imagem (aparece primeiro em dispositivos móveis) -->
+
+            <img src="assets/img/Capturar.PNG" class="img-fluid animated" alt="">
+            <!-- Imagem com classe de responsividade e animação -->
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- Secção de serviços em destaque -->
+    <section id="featured-services" class="featured-services section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+          <!-- Início de uma grelha para apresentar serviços ou funcionalidades em destaque -->
+
+          <!-- Secção "Sobre" -->
+          <section id="about1" class="about section">
+
+            <!-- Título da Secção -->
+            <div class="container section-title" data-aos="fade-up">
+              <h2>O que Fazemos?</h2>
+              
+              <p>
+                Possibilitamos que utilizadores do parque (estudantes, docentes, funcionários) possam reportar
+                ocorrências, como veículos mal estacionados, através de uma plataforma digital.
+                <br>
+                As ocorrências registadas pelos utilizadores serão enviadas diretamente para os seguranças da
+                Universidade, que poderão verificar a veracidade, garantindo uma resposta eficaz.
+                <br>
+                Os utilizadores do parque terão bonificações em nível de pontos. Quando registam uma ocorrência, os
+                pontos só serão atribuídos após a confirmação da mesma por um segurança.
+              </p>
+              <!-- Descrição da missão e funcionamento da plataforma de gestão de ocorrências -->
+            </div><!-- Fim do Título da Secção -->
+            <div class="container">
+              <div class="row gy-4">
+
+                <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
+                  <img src="assets/img/Capturar3.PNG" class="img-fluid" alt="">
+                  <!-- Imagem ilustrativa relacionada com a secção -->
+                </div>
+
+                <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
+                  <!-- Espaço reservado para conteúdo adicional (parece estar vazio por agora) -->
+                </div>
+
+              </div>
+            </div>
+          </section><!-- /Fim da Secção "Sobre" -->
+
+<!-- Secção de Estatísticas -->
+<section id="about2" class="stats section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row gy-4">
+
+      <div class="col-lg-3 col-md-6">
+        <div class="stats-item text-center w-100 h-100">
+          <span id="ocorrenciasRegistadas"
+                class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="0"
+                data-purecounter-duration="1"></span>
+          <p>Ocorrências Registadas</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="stats-item text-center w-100 h-100">
+          <span id="ocorrenciasResolvidas"
+                class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="0"
+                data-purecounter-duration="1"></span>
+          <p>Ocorrências Resolvidas</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="stats-item text-center w-100 h-100">
+          <span id="tempoResposta"
+                class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="0"
+                data-purecounter-duration="1"></span>
+          <p>Tempo médio de resposta (horas)</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="stats-item text-center w-100 h-100">
+          <span id="auditoriasRealizadas"
+                class="purecounter"
+                data-purecounter-start="0"
+                data-purecounter-end="0"
+                data-purecounter-duration="1"></span>
+          <p>Auditorias realizadas</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+          <!-- Secção de Serviços / Tipos de Ocorrência -->
+          <section id="services" class="services section light-background">
+
+            <!-- Título da Secção -->
+            <div id="tipos-ocorrencias" class="container section-title" data-aos="fade-up">
+              <h2>Tipos de Ocorrências</h2>
+              <!-- Introdução à secção que apresenta os diferentes tipos de ocorrências que podem ser registadas -->
+            </div>
+            <!-- Fim do Título da Secção -->
+
+            <div class="container">
+              <div class="row gy-4">
+                <!-- Grelha para os botões com diferentes tipos de ocorrência -->
+
+                <div class="container">
+                  <div class="row gy-4">
+
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                      <div class="service-item position-relative">
+                        <button class="btn btn-outline-success w-100 select-ocorrencia"
+                          data-value="ID/ Estacionamento irregular na via de circulação">
+                          ID/ Estacionamento irregular na via
+                        </button>
+                        <!-- Botão para selecionar a ocorrência de estacionamento incorreto -->
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                      <div class="service-item position-relative">
+                        <button class="btn btn-outline-success w-100 select-ocorrencia"
+                          data-value="ID/ Estacionamento em lugar reservado">
+                          ID/ Estacionamento em lugar reservado
+                        </button>
+                        <!-- Botão para selecionar a ocorrência de ocupação de lugares prioritários sem autorização -->
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                      <div class="service-item position-relative">
+                        <button class="btn btn-outline-success w-100 select-ocorrencia"
+                          data-value="ID/ Estacionamento a restringir via de circulação">
+                          ID/ Estacionamento a restringir via de circulação
+                        </button>
+                        <!-- Botão para selecionar a ocorrência de congestionamento no parque -->
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+          </section><!-- /Services Section: Tipos de ocorrências -->
+
+
+          <!-- Secção de Contacto: Submissão e Visualização de Ocorrências -->
+          <section id="about3" class="contact section">
+
+            <!-- Título da Secção -->
+            <div class="container section-title" data-aos="fade-up">
+              <h2>Submeter e Visualizar Ocorrências</h2>
+              <!-- Introdução à secção onde os utilizadores podem registar novas ocorrências e visualizar as já submetidas -->
+            </div><!-- Fim do Título da Secção -->
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+              <div class="row gy-4">
+
+                <!-- Coluna com informações da ocorrência e mapa -->
+                <div class="col-lg-5">
+
+                  <div class="info-wrap">
+
+                    <!-- Item de informação: Designação da ocorrência -->
+                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                      <i class="bi bi-check"></i>
+                      <div>
+                        <h3>Descrição</h3>
+                        <!-- Espaço reservado para apresentar o tipo de ocorrência -->
+                      </div>
+                    </div>
+
+                    <!-- Item de informação: Localização geográfica -->
+                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                      <i class="bi bi-geo-alt flex-shrink-0"></i>
+                      <div>
+                        <h3>Localização</h3>
+                        <!-- Espaço reservado para coordenadas ou descrição do local -->
+                      </div>
+                    </div>
+
+                    <!-- Item de informação: Nome do utilizador -->
+                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                      <i class="bi bi-arrow-repeat"></i>
+                      <div>
+                        <h3>Estado da Ocorrência</h3>
+                        <!-- Nome da pessoa que submeteu a ocorrência -->
+                      </div>
+                    </div>
+
+                    <!-- Mapa interativo onde serão exibidas as ocorrências -->
+                    <div id="mapaOcorrencias" style="width: 100%; height: 300px;"></div>
+                  </div>
+                </div>
+
+                <!-- Coluna com formulário de submissão -->
+                <div class="col-lg-7">
+                  <form class="php-email-form" action="#" method="post" novalidate>
+                    <div class="row gy-4">
+
+                      <!-- estado -->
+                      <div class="col-md-12">
+                        <label for="status-field" class="pb-2">Estado da Ocorrência</label>
+
+                        <!-- Botões de estado -->
+                        <div id="status-buttons" class="btn-group w-100" role="group">
+                          <button type="button" class="btn btn-outline-success" data-value="Resolvido">Resolvido</button>
+                          <button type="button" class="btn btn-outline-success" data-value="Pendente">Pendente</button>
+                          <button type="button" class="btn btn-outline-success" data-value="Em análise">Em análise</button>
+                        </div>
+
+                        <!-- Campo oculto para envio do valor -->
+                        <input type="hidden" name="subject" id="subject-field" required>
+                      </div>
+
+                      <!-- Script para ativar/desativar botões -->
+                      <script>
+                        const buttons = document.querySelectorAll('#status-buttons button');
+                        const hiddenInput = document.getElementById('subject-field');
+
+                        buttons.forEach(button => {
+                          button.addEventListener('click', () => {
+                            // Reset estilo de todos os botões
+                            buttons.forEach(btn => btn.classList.remove('active', 'btn-success'));
+                            buttons.forEach(btn => btn.classList.add('btn-outline-success'));
+
+                            // Ativar botão clicado
+                            button.classList.remove('btn-outline-success');
+                            button.classList.add('active', 'btn-success');
+
+                            // Atualizar input oculto
+                            hiddenInput.value = button.getAttribute('data-value');
+                          });
+                        });
+                      </script>
+
+                      <!-- Campo para selecionar tipo de ocorrência -->
+                      <div class="col-md-12">
+                      <label class="pb-2">Descrição</label>
+                      <div id="ir-para-ocorrencias" class="form-control"
+                          style="cursor:pointer; height:140px;">
+                          Selecione aqui
+                      </div>
+                      <input type="hidden" name="tipo_ocorrencia" id="tipo-ocorrencia" required>
+                    </div>
+
+
+                      <!-- Script que permite ao utilizador ser redirecionado para a secção de tipos de ocorrência -->
+                      <script>
+                        document.getElementById('ir-para-ocorrencias').addEventListener('click', function () {
+                          document.getElementById('tipos-ocorrencias').scrollIntoView({ behavior: 'smooth' });
+                        });
+                      </script>
+
+                      <!-- Campo Latitude -->
+                      <div class="col-md-12">
+                        <label for="latitude-field" class="pb-2">Latitude</label>
+                        <textarea class="form-control" rows="1" id="latitude-field" required></textarea>
+                      </div>
+
+                      <!-- Campo Longitude -->
+                      <div class="col-md-12">
+                        <label for="longitude-field" class="pb-2">Longitude</label>
+                        <textarea class="form-control" rows="1" id="longitude-field" required></textarea>
+                      </div>
+
+                      <!-- Botão de submissão e mensagens de estado -->
+                      <div class="col-md-12 text-center">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Ocorrência Submetida</div>
+
+                        <button type="submit">Submeter Ocorrência</button>
+                      </div>
+
+                    </div>
+                  </form>
+                </div><!-- Fim do Formulário de Contacto -->
+
+                <!-- Separador horizontal -->
+                <hr>
+
+                <!-- Título da lista de ocorrências já submetidas -->
+                <h3 class="mt-4">Ocorrências Submetidas</h3>
+
+                <!-- Área onde serão listadas as ocorrências submetidas pelo utilizador -->
+                <div id="lista-ocorrencias"></div>
+
+              </div>
+
+            </div>
+
+          </section><!-- /Fim da Secção: Submeter e Visualizar Ocorrências -->
+
+
+  </main>
+
+  <footer id="footer" class="footer"></footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Script principal da página -->
+  
+
+  <!-- Script de scroll e seleção de ocorrências -->
+  <script>
+    // Scroll para a secção de ocorrências
+    document.getElementById('ir-para-ocorrencias').addEventListener('click', function () {
+      document.getElementById('tipos-ocorrencias').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Captura do clique na ocorrência
+    document.querySelectorAll('.select-ocorrencia').forEach(button => {
+      button.addEventListener('click', () => {
+        const valor = button.getAttribute('data-value');
+        document.getElementById('tipo-ocorrencia').value = valor; // input hidden
+        document.getElementById('ir-para-ocorrencias').innerText = valor; // mostrar valor no "campo"
+      });
+    });
+  </script>
+  <script>
+function gerarProximoId() {
+  const KEY  = 'ultimoIdOcorrencia';
+  const base = 10000;                   // ponto de partida
+
+  const ultimo = parseInt(localStorage.getItem(KEY) || base, 10);
+  const proximo = ultimo + 1;
+
+  localStorage.setItem(KEY, proximo);   // guarda para a próxima vez
+  return proximo;
+}
+
+</script>
+
+  <!-- Google Identity callback -->
+  <script>
+    function handleCredentialResponse(response) {
+      console.log("ID Token: ", response.credential);
+      localStorage.setItem("id_token", response.credential);
+      window.location.href = "recebe-login.html";
+    }
+  </script>
+
+  <script src="js/main.js"></script>
+
+<!-- Script para guardar dados de indicadores (podes remover depois da 1ª vez) -->
+<script>
+  const dados = {
+    indicadores: {
+      totalOcorrencias: 15,
+      ocorrenciasResolvidas: 12,
+      tempoMedioResposta: "1.3", // em horas (como número)
+      auditoriasRealizadas: 3
+    }
+  };
+  localStorage.setItem("dadosIndicadores", JSON.stringify(dados.indicadores));
+</script>
+
+<!-- Script para atualizar os dados e iniciar a animação -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const indicadores = JSON.parse(localStorage.getItem("dadosIndicadores"));
+
+    if (indicadores) {
+      // Atualizar atributos dos spans com dados dinâmicos
+      document.getElementById("ocorrenciasRegistadas").setAttribute("data-purecounter-end", indicadores.totalOcorrencias);
+      document.getElementById("ocorrenciasResolvidas").setAttribute("data-purecounter-end", indicadores.ocorrenciasResolvidas);
+      document.getElementById("tempoResposta").setAttribute("data-purecounter-end", parseFloat(indicadores.tempoMedioResposta));
+      document.getElementById("auditoriasRealizadas").setAttribute("data-purecounter-end", indicadores.auditoriasRealizadas);
+
+      // Inicializar o PureCounter
+      new PureCounter();
+    }
+  });
+</script>
+<script>
+  document.getElementById('link-pontos').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const userLogged = localStorage.getItem('utilizadorLogado');   
+
+    if (userLogged) {
+      // Já autenticado → pontuação
+      window.location.href = 'pontuacao.html';
+    } else {
+      // Não autenticado → marca destino e vai para login
+      localStorage.setItem('destinoPosLogin', 'pontuacao.html');
+      window.location.href = 'login.html';
+    }
+  });
+</script>
+<script>
+    document.getElementById('link-pontos').addEventListener('click', function (e) {
+      e.preventDefault();
+      const userLogged = localStorage.getItem('utilizadorLogado');
+      if (userLogged) {
+        window.location.href = 'pontuacao.html';
+      } else {
+        localStorage.setItem('destinoPosLogin', 'pontuacao.html');
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+
+  <!-- Script para Login / Logout -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const authBtn = document.getElementById('auth-btn');
+
+    const refreshAuthBtn = () => {
+      const logged = localStorage.getItem('utilizadorLogado');
+      authBtn.textContent = logged ? 'Logout' : 'Login';
+    };
+
+    refreshAuthBtn();
+
+    authBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const logged = localStorage.getItem('utilizadorLogado');
+
+      if (logged) {
+        /* ----------  LOGOUT  ---------- */
+        localStorage.removeItem('utilizadorLogado');
+        localStorage.removeItem('id_token');
+        localStorage.removeItem('destinoPosLogin');
+        if (window.google && google.accounts && google.accounts.id) {
+          try { google.accounts.id.disableAutoSelect(); } catch (_) {}
+        }
+        location.reload();
+      } else {
+        /* ----------  LOGIN  ---------- */
+        // Após autenticação voltar sempre ao index.html
+        localStorage.setItem('destinoPosLogin', 'index.html');
+        window.location.href = 'login.html';
+      }
+    });
+  });
+</script>
+<script>
+/* ------------ Estado principal ------------- */
+function obterEstado () {
+  const raw = localStorage.getItem('eyesEverywhereState');
+  return raw ? JSON.parse(raw) : { ocorrenciasLista: [], backupImportado:false };
+}
+function guardarEstado (est) { localStorage.setItem('eyesEverywhereState', JSON.stringify(est)); }
+
+/* ------------ Importa backup JSON ----------- */
+async function importarBackup () {
+  const est = obterEstado();
+  if (est.backupImportado) return;      // já feito noutro refresh
+
+  const BACKUP_PATH = 'eyesEverywhere_backup.json';     // ⇠ altera se precisares
+  try {
+    const resp = await fetch(BACKUP_PATH);
+    if (!resp.ok) throw new Error(resp.statusText);
+    const json = await resp.json();
+
+    if (Array.isArray(json.ocorrenciasLista)) {
+      // evita duplicados por (designacao + data)
+      const hash = new Set(est.ocorrenciasLista.map(o => o.designacao+o.data));
+      json.ocorrenciasLista.forEach(o => {
+        if (!hash.has(o.designacao+o.data)) est.ocorrenciasLista.push(o);
+      });
+    }
+    est.backupImportado = true;
+    guardarEstado(est);
+  } catch (err) {
+    console.warn('Não foi possível importar o backup:', err);
+  }
+}
+
+/* ------------ Helpers antigos compatíveis --- */
+function obterOcorrencias () { return obterEstado().ocorrenciasLista; }
+function guardarOcorrencia (oc) {
+  const est = obterEstado();
+  est.ocorrenciasLista.push(oc);
+  guardarEstado(est);
+}
+</script>
+
+<!-- ===========================================================
+     LÓGICA DA PÁGINA (mostra / submete ocorrências)
+=========================================================== -->
+<!-- … cabeçalho, HTML, form, etc … -->
+
+<script>
+// lógica de storage wrapper + migração
+function obterEstado() {
+  const raw = localStorage.getItem("eyesEverywhereState");
+  return raw ? JSON.parse(raw) : { ocorrenciasLista: [], backupImportado: false };
+}
+function guardarEstado(est) {
+  /* 1) guarda o blob, como já fazia */
+  localStorage.setItem('eyesEverywhereState', JSON.stringify(est));
+
+  /* 2) **mantém as chaves legadas** que o back ainda lê */
+  localStorage.setItem('ocorrenciasLista', JSON.stringify(
+    Array.isArray(est.ocorrenciasLista) ? est.ocorrenciasLista : []
+  ));
+  localStorage.setItem('ocorrenciasEstados',
+    JSON.stringify(est.ocorrenciasEstados || {}));
+ 
+}
+
+// migração do legado (ocorrenciasLista) para dentro do wrapper
+(function migrateLegacyOcorrencias() {
+  if (!localStorage.getItem("eyesEverywhereState")) {
+    const legacy = JSON.parse(localStorage.getItem("ocorrenciasLista"));
+    const state = { ocorrenciasLista: legacy, backupImportado: false };
+    localStorage.setItem("eyesEverywhereState", JSON.stringify(state));
+  }
+})();
+
+// inicializa mapa
+let mapa;
+function inicializarMapaOcorrencias() {
+  const mapaEl = document.getElementById("mapaOcorrencias");
+  if (!mapaEl) return;
+
+  // se já existe um mapa, limpa-o
+  if (mapa) {
+    mapa.off();
+    mapa.remove();
+  }
+  mapa = L.map("mapaOcorrencias").setView([41.451106, -8.293168], 17);
+  L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    { attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>', maxZoom: 19 }
+  ).addTo(mapa);
+
+  const state = obterEstado();
+  const lista = state.ocorrenciasLista;
+  let marcadorAdicionado = false;
+
+  lista.forEach(o => {
+    const lat = parseFloat(o.latitude), lng = parseFloat(o.longitude);
+    if (!isNaN(lat) && !isNaN(lng)) {
+      const m = L.marker([lat, lng]).addTo(mapa)
+                    .bindPopup(`<strong>${o.designacao}</strong><br>Estado: ${o.estado}`);
+      if (!marcadorAdicionado) {
+        mapa.setView([lat, lng], 15);
+        marcadorAdicionado = true;
+      }
+    }
+  });
+
+  if (!marcadorAdicionado) {
+    mapaEl.innerHTML = '<p class="text-center mt-4">Nenhuma ocorrência com coordenadas disponíveis.</p>';
+  }
+}
+window.addEventListener('load', inicializarMapaOcorrencias);
+
+// lógica de submissão / render da lista
+async function importarBackup() { /* … se precisares … */ }
+function guardarOcorrencia(oc) {
+  const est = obterEstado();
+  est.ocorrenciasLista.push(oc);
+  guardarEstado(est);
+}
+function render() {
+  const listaEl = document.getElementById('lista-ocorrencias');
+  const dados = obterEstado().ocorrenciasLista;
+  listaEl.innerHTML = dados.length
+    ? dados.map(o => `
+        <div class="card mb-3 p-3">
+          <p><strong>Estado:</strong> ${o.estado}</p>
+          <p><strong>Descrição:</strong> ${o.designacao}</p>
+          <p><strong>Lat:</strong> ${o.latitude}</p>
+          <p><strong>Lng:</strong> ${o.longitude}</p>
+        </div>
+      `).join('')
+    : '<p>Nenhuma ocorrência registada.</p>';
+  // sempre que renderizas, redesenhas o mapa também:
+  inicializarMapaOcorrencias();
+}
+function guardarOcorrencia(nova) {
+  const state = obterEstado();
+
+  // Atualiza ou adiciona ocorrência na lista principal
+  const idx = state.ocorrenciasLista.findIndex(o => o.designacao === nova.designacao);
+  if (idx !== -1) {
+    state.ocorrenciasLista[idx] = nova;
+  } else {
+    state.ocorrenciasLista.push(nova);
+  }
+
+  // Garante que os objetos existem
+  if (!state.ocorrenciasEstados) state.ocorrenciasEstados = {};
+  if (!state.ocorrenciasObservacoes) state.ocorrenciasObservacoes = {};
+  if (!state.ocorrenciasSegurancas) state.ocorrenciasSegurancas = {};
+
+  // Atualiza estados (e outros, se houver)
+  state.ocorrenciasEstados[nova.designacao] = nova.estado || "Pendente";
+  // Se tiveres observações e segurancas, atualiza-os também
+  // state.ocorrenciasObservacoes[nova.designacao] = nova.observacao || "";
+  // state.ocorrenciasSegurancas[nova.designacao] = nova.seguranca || "";
+
+  guardarEstado(state);
+}
+
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+  document.querySelectorAll('.php-email-form').forEach(f => f.dataset.email = 'false');
+  await importarBackup();
+
+  render(); // mostra tudo à partida
+
+  const form = document.querySelector('.php-email-form');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const proximoId = gerarProximoId();
+    const tipoOcorrencia = document.getElementById('tipo-ocorrencia').value.trim();
+    const estado = document.getElementById('subject-field').value.trim() || 'Pendente';
+    const latitude = document.getElementById('latitude-field').value.trim();
+    const longitude = document.getElementById('longitude-field').value.trim();
+    const utilizador = localStorage.getItem('utilizadorLogado') || 'Anónimo';
+
+    if (!tipoOcorrencia || !latitude || !longitude) {
+        alert("Preenche todos os campos obrigatórios (tipo de ocorrência, latitude, longitude)!");
+        return; // Sai da função, não guarda
+    }
+
+    const nova = {
+        designacao: `ID-${proximoId}/ ` + tipoOcorrencia.replace(/^ID\/\s*/, ''),
+        id: proximoId,
+        estado: estado,
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        utilizador: utilizador,
+        foto: "",
+        segurancas: ""
+    };
+
+    guardarOcorrencia(nova);
+    const email = localStorage.getItem('utilizadorLogado');
+  if (email) {
+    const raw = localStorage.getItem('eyesEverywhereState');
+    const state = raw ? JSON.parse(raw) : { pontosUtilizadores: {}, redimidosPorUtilizador: {} };
+    state.pontosUtilizadores = state.pontosUtilizadores || {};
+    state.pontosUtilizadores[email] = (state.pontosUtilizadores[email] || 0) + 10;
+    localStorage.setItem('eyesEverywhereState', JSON.stringify(state));
+  }
+
+    form.reset();
+    document.getElementById('ir-para-ocorrencias').innerText = 'Selecione aqui';
+    render(); // re-renderiza lista e mapa
+
+    alert('Ocorrência submetida com sucesso!');
+  });
+});
+</script>
+
+
+
+<!-- ===========================================================
+     BOTÃO “MEUS PONTOS” (inalterado)
+=========================================================== -->
+<script>
+document.getElementById('link-pontos').addEventListener('click', e => {
+  e.preventDefault();
+  const u = localStorage.getItem('utilizadorLogado');
+  if (u)  location.href = 'pontuacao.html';
+  else { localStorage.setItem('destinoPosLogin','pontuacao.html');
+         location.href = 'login.html'; }
+});
+</script>
+
+<!-- ===========================================================
+     LOGIN / LOGOUT (inalterado)
+=========================================================== -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const authBtn = document.getElementById('auth-btn');
+  const syncTxt = () => authBtn.textContent =
+      localStorage.getItem('utilizadorLogado') ? 'Logout' : 'Login';
+  syncTxt();
+
+  authBtn.addEventListener('click', e => {
+    e.preventDefault();
+    if (localStorage.getItem('utilizadorLogado')) {
+      localStorage.removeItem('utilizadorLogado');
+      localStorage.removeItem('id_token');
+      localStorage.removeItem('destinoPosLogin');
+      if (window.google?.accounts?.id) try{google.accounts.id.disableAutoSelect();}catch{}
+      location.reload();
+    } else {
+      localStorage.setItem('destinoPosLogin','index.html');
+      location.href = 'login.html';
+    }
+  });
+});
+</script>
+
+<!-- ===========================================================
+     GOOGLE CALLBACK (inalterado)
+=========================================================== -->
+<script>
+function handleCredentialResponse (r){
+  localStorage.setItem('id_token',r.credential);
+  location.href='recebe-login.html';
+}
+</script>
+<script>
+function atualizarIndicadores() {
+  const state = JSON.parse(localStorage.getItem('eyesEverywhereState') || '{}');
+
+  const ocorrencias = state.ocorrenciasLista || [];
+  const auditorias = state.listaAuditorias || [];
+
+  const totalOcorrencias = ocorrencias.length;
+  const ocorrenciasResolvidas = ocorrencias.filter(o => o.estado === "Resolvido").length;
+  const tempoMedioResposta = 1; // omitido ou calculado se quiser
+  const totalAuditorias = Array.isArray(auditorias) ? auditorias.length : 0;
+
+  // Guarda os indicadores no state (se quiser usar)
+  state.indicadores = {
+    totalOcorrencias,
+    ocorrenciasResolvidas,
+    tempoMedioResposta,
+    auditoriasRealizadas: totalAuditorias
+  };
+  localStorage.setItem('eyesEverywhereState', JSON.stringify(state));
+
+  // Atualiza os atributos data-purecounter-end (só assim o PureCounter anima)
+  const elTotal = document.getElementById('ocorrenciasRegistadas');
+  const elResolvidas = document.getElementById('ocorrenciasResolvidas');
+  const elTempo = document.getElementById('tempoResposta');
+  const elAuditorias = document.getElementById('auditoriasRealizadas');
+
+  if (elTotal) elTotal.setAttribute('data-purecounter-end', totalOcorrencias);
+  if (elResolvidas) elResolvidas.setAttribute('data-purecounter-end', ocorrenciasResolvidas);
+  if (elTempo) elTempo.setAttribute('data-purecounter-end', tempoMedioResposta);
+  if (elAuditorias) elAuditorias.setAttribute('data-purecounter-end', totalAuditorias);
+
+  // Re-inicializa o PureCounter para animar os novos valores
+  if (typeof PureCounter === "function") {
+    new PureCounter();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  atualizarIndicadores();
+
+  // Atualizar indicadores quando o estado é alterado (se tiver evento 'state-updated')
+  window.addEventListener('state-updated', () => {
+    atualizarIndicadores();
+  });
+});
+
+
+</script>
+
+
+<script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@srexi/purecounterjs/dist/purecounter_vanilla.js"></script>
+</body>
+</html>
+
+
+<!-- Biblioteca PureCounter.js -->
+<script src="https://cdn.jsdelivr.net/npm/@srexi/purecounterjs/dist/purecounter_vanilla.js"></script>
+
+</body>
+
+
+</html>

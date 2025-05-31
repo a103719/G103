@@ -1,0 +1,195 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f6ff;
+  color: #111;
+  overflow-x: hidden;
+}
+
+.app-container {
+  padding: 20px;
+  max-width: 430px;
+  margin: 0 auto;
+  padding-bottom: 90px; /* espaço para a barra inferior */
+}
+
+.profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.pontos-info, .recompensa-info {
+  text-align: center;
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.progresso-bolinhas {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 14px 0;
+}
+
+.bolinha {
+  width: 30px;
+  height: 12px;
+  background: #d6d8ff;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.bolinha.ativa {
+  background: #0A77BC;
+}
+
+/* NOVO: Estilo para a nova barra dinâmica */
+#barra-progresso {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 12px auto;
+  animation: aparecerBarra 0.5s ease-in-out forwards;
+}
+
+.circulo {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  animation: bolinhaSurge 0.4s ease forwards;
+}
+
+@keyframes bolinhaSurge {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes aparecerBarra {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  background-color: #eceeff;
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.card h2 {
+  font-size: 16px;
+  color: #0A77BC;
+  margin-bottom: 6px;
+}
+
+.card p {
+  font-size: 13px;
+  margin: 4px 0;
+}
+
+.card.animado {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.card.animado.delay1 {
+  animation-delay: 0.2s;
+}
+.card.animado.delay2 {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #ffffff;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 500;
+  color: #000;
+  padding: 6px 8px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+.nav-item img {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 2px;
+}
+.nav-item.active {
+  background-color: #d7daff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  color: #0A77BC;
+}
+
+/* Ícone de logout (fora da barra) */
+#logout-icon {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 26px;
+  color: #0A77BC;
+  z-index: 100;
+  transition: transform 0.2s ease;
+}
+#logout-icon:hover {
+  transform: scale(1.2);
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <link rel="icon" type="image/png" href="assets/LogoEyes.png">
+  <title>Consultar Pontos</title>
+  
+
+  <!-- Estilos principais -->
+  <link rel="stylesheet" href="css/pontos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Toastify (para mensagens toast como nas outras páginas) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+</head>
+
+<body>
+  <div class="app-container">
+    
+<div class="topo-voltar">
+  <button class="btn-voltar" onclick="history.back()">
+    <img src="https://img.icons8.com/ios-filled/20/ffffff/chevron-left.png" alt="Voltar"/>
+  </button>
+</div>
+
+
+    <h1 style="text-align: center;">Consultar Pontos</h1>
+
+    <!-- Gráfico -->
+    <div class="card animado">
+      <div class="grafico-container">
+        <svg class="donut" viewBox="0 0 36 36">
+          <circle class="donut-bg" cx="18" cy="18" r="15.9155"></circle>
+          <circle class="donut-fill" cx="18" cy="18" r="15.9155" stroke-dasharray="0 100"></circle>
+<text class="donut-text" x="18" y="16">20/100</text>
+<text class="donut-subtext" x="18" y="21">pontos</text>
+
+        </svg>
+        <div class="labels">
+          <span class="alcancados">Alcançados</span>
+          <span class="falta">Em falta</span>
+        </div>
+      </div>
+    </div>
+  <div class="proxima-recompensa">
+  🎯 <div>Troca disponível aos 100 pontos:</div>
+  <strong>10 Senhas UMINHO</strong>
+</div>
+
+
+
+<!-- Botão redimir -->
+<button id="btn-recompensas" class="btn-recompensas" onclick="confirmarRedirecionamento()">
+  ...
+</button>
+
+
+
+  <!-- Barra inferior -->
+  <div class="bottom-nav">
+    <a class="nav-item" href="inicial.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/home.png" alt="Início"/>
+      <span>Início</span>
+    </a>
+    <a class="nav-item" href="registo.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/plus-math.png" alt="Registar"/>
+      <span>Registar</span>
+    </a>
+    <a class="nav-item" href="historico.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/time-machine.png" alt="Histórico"/>
+      <span>Histórico</span>
+    </a>
+    <a class="nav-item active" href="pontos.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/star.png" alt="Pontos"/>
+      <span>Pontos</span>
+    </a>
+  </div>
+
+  <script type="module">
+    import { getDados } from './js/storage.js';
+
+    const email = localStorage.getItem("idUtilizador") || "Anónimo";
+    const estado = getDados();
+    const pontosPorUtilizador = estado.pontosUtilizadores || {};
+    const pontos = pontosPorUtilizador[email] || 0;
+    const meta = 100;
+
+    const percent = Math.min(100, Math.round((pontos / meta) * 100));
+    const dasharray = `${percent} ${100 - percent}`;
+
+    document.querySelector(".donut-fill").setAttribute("stroke-dasharray", dasharray);
+    document.querySelector(".donut-text").textContent = `${pontos}/${meta}`;
+    const botao = document.getElementById("btn-recompensas");
+if (pontos >= meta) {
+  botao.textContent = "🎁 Trocar Pontos";
+} else {
+  botao.textContent = "🔍 Ver Recompensas";
+}
+
+  </script>
+  <script>
+  function confirmarRedirecionamento() {
+    if (confirm("Vais ser redirecionado para o site oficial para trocar os teus pontos. Continuar?")) {
+      window.location.href = "../Front-office/Pontuacao.html";
+    }
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+  function confirmarRedirecionamento() {
+    Toastify({
+      text: "🔁 A redirecionar para o site para troca de pontos...",
+      duration: 3000,
+      gravity: "top",
+      position: "center",
+      backgroundColor: "#0A77BC",
+      stopOnFocus: false
+    }).showToast();
+
+    setTimeout(() => {
+      window.location.href = "../Front-office/Pontuacao.html";
+    }, 3100);
+  }
+</script>
+<script>
+  function confirmarRedirecionamento() {
+    const utilizador = localStorage.getItem("idUtilizador");
+    if (!utilizador) {
+      alert("Sessão expirada. Faz login novamente.");
+      return;
+    }
+
+    Toastify({
+      text: "🔁 A redirecionar para troca de pontos...",
+      duration: 3000,
+      gravity: "top",
+      position: "center",
+      backgroundColor: "#0A77BC",
+      stopOnFocus: false
+    }).showToast();
+
+    setTimeout(() => {
+      window.open("../Front-office/Pontuacao.html", "_blank");
+    }, 3100);
+  }
+</script>
+
+</body>
+</html>

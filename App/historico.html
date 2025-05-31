@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=390, height=844, user-scalable=no"/>
+  <link rel="icon" type="image/png" href="assets/LogoEyes.png">
+  <title>Histórico de Ocorrências</title>
+  <link href="css/registo.css" rel="stylesheet"/>
+  <link href="css/historico.css" rel="stylesheet"/>
+  <link href="css/inicial.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    .estado {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    .bolinha {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .pendente { background-color: red; }
+    .analise { background-color: gold; }
+    .resolvida { background-color: limegreen; }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; overflow: hidden; height: 100vh; width: 100vw; position: relative;">
+  <div class="bg-circle1"></div>
+  <div class="bg-circle2"></div>
+
+  <div class="app-container">
+    <button class="btn-back" onclick="history.back()">
+      <img src="https://img.icons8.com/ios-filled/24/ffffff/chevron-left.png" alt="Voltar"/>
+    </button>
+
+    <h1>Histórico de Ocorrências</h1>
+    <div id="lista-ocorrencias"></div>
+  </div>
+
+  <!-- Navegação inferior -->
+  <div class="bottom-nav">
+    <a class="nav-item" href="inicial.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/home.png" alt="Início"/>
+      <span>Início</span>
+    </a>
+    <a class="nav-item" href="registo.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/plus-math.png" alt="Registar"/>
+      <span>Registar</span>
+    </a>
+    <a class="nav-item active" href="historico.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/time-machine.png" alt="Histórico"/>
+      <span>Histórico</span>
+    </a>
+    <a class="nav-item" href="pontos.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/star.png" alt="Pontos"/>
+      <span>Pontos</span>
+    </a>
+  </div>
+
+  <script type="module" src="./js/historico.js"></script>
+</body>
+</html>

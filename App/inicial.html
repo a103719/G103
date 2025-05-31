@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=390, height=844, user-scalable=no">
+   <link rel="icon" type="image/png" href="assets/LogoEyes.png">
+  <title>Página Inicial</title>
+  
+  <link href="css/inicial.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body>
+  <!-- Ícone de logout -->
+  <i id="logout-icon" class="fas fa-sign-out-alt" aria-label="Logout"></i>
+
+  <div class="app-container">
+    <img class="profile-pic" id="user-photo" src="" alt="Foto de Perfil">
+    <h1>Olá, <span id="user-name">Utilizador</span>!</h1>
+    <p class="pontos-info">⭐ Tens <strong><span id="pontos-contador">0</span></strong>!</p>
+    <div id="barra-progresso" style="display: flex; gap: 8px; margin-top: 8px;"></div>
+
+    <!-- Cartões -->
+<div class="card animado">
+  <a class="nav-item" href="historico.html">
+    <h2>📈 As tuas ocorrências</h2>
+    <p>Última ocorrência: <strong id="ultima-tipo">—</strong></p>
+    <p><span id="pendentes-mes">0</span> ocorrência(s) pendente(s)</p>  
+
+  </a>
+</div>
+<div class="card animado delay1">
+  <a id="linkIndicadoresAuditorias" class="nav-item" href="#">
+    <h2>📊 Indicadores de Auditorias</h2>
+    <p>Veja os principais dados da auditoria: problemas detetados, duração, ações corretivas e impacto esperado.</p>
+  </a>
+</div>
+
+
+
+<div class="card animado delay2">
+   <a id="linkGestaoAuditorias" class="nav-item" href="#">
+    <h2>📝 Gestão de Ocorrências</h2>
+    <p>Registe o início e fim da auditoria, acompanhe o processo em tempo real, insira os dados relevantes e atribua os profissionais adequados a cada caso.</p>
+  </a>
+</div>
+
+
+  <!-- Navegação inferior -->
+  <div class="bottom-nav">
+    <a class="nav-item active" href="inicial.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/home.png" alt="Início"/>
+      <span>Início</span>
+    </a>
+    <a class="nav-item" href="registo.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/plus-math.png" alt="Registar"/>
+      <span>Registar</span>
+    </a>
+    <a class="nav-item" href="historico.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/time-machine.png" alt="Histórico"/>
+      <span>Histórico</span>
+    </a>
+    <a class="nav-item" href="pontos.html">
+      <img src="https://img.icons8.com/fluency-systems-filled/24/0A77BC/star.png" alt="Pontos"/>
+      <span>Pontos</span>
+    </a>
+  </div>
+
+  <!-- Script principal (agora no final para evitar erros de DOM) -->
+  <script type="module" src="js/inicial.js"></script>
+</body>
+</html>

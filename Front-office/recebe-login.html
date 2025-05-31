@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Recebido</title>
+</head>
+<body>
+  <h1>Login efetuado com sucesso!</h1>
+
+
+  localStorage.setItem("utilizadorLogado", "true");
+
+
+
+
+
+  <script>
+    // Recupera o token salvo anteriormente
+    const token = localStorage.getItem("id_token");
+
+    if (token) {
+      console.log("Token recebido:", token);
+      // Aqui podes enviar para o backend, validar, etc.
+    } else {
+      // Se não houver token, redireciona de volta
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+}
+
+.page-wrapper {
+  display: flex;
+}
+
+.left-sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  height: 100vh;
+}
+
+.logo-img {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.sidebar-nav {
+  margin-top: 30px;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-item {
+  margin-bottom: 10px;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 5px;
+}
+
+.sidebar-link.active,
+.sidebar-link:hover {
+  background-color: #e0f0ff;
+  color: #000;
+}
+
+.list-divider {
+  border-top: 1px solid #ccc;
+  margin: 15px 0;
+}
+
+.sidebar-heading {
+  font-size: 12px;
+  color: #999;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.body-wrapper {
+  flex: 1;
+  padding: 30px;
+}
+
+.topbar {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 12px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar .notificacao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.topbar .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar .user-info span {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.topbar .user-info img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.container-fluid .row > div > div {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+h6 {
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table th,
+table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.row.text-center .col {
+  padding: 10px 0;
+}
+
+strong {
+  font-size: 18px;
+  display: block;
+}

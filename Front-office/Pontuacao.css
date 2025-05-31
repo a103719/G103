@@ -1,0 +1,148 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+  padding: 20px;
+}
+
+header {
+  background-color: #10bc69;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.5rem;
+}
+
+.pontos {
+  font-size: 1.2rem;
+}
+
+main {
+  margin-top: 30px;
+}
+
+main h2 {
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.produto {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.produto img {
+  max-width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.produto h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.produto p {
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.produto button {
+  padding: 8px 12px;
+  background-color: #a59c9c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.produto button:hover {
+  background-color: #797272;
+}
+
+/* CSS para a mensagem de recompensa */
+.recompensa-mensagem {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50;  /* Cor verde para indicar sucesso */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  display: none;  /* Inicialmente invisível */
+  z-index: 9999;  /* Garantir que a mensagem esteja acima de outros elementos */
+}
+
+.recompensa-mensagem.visivel {
+  display: block;
+  animation: slideIn 0.5s ease-out;
+}
+
+.container-recompensas {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* espaço entre recompensas */
+  background-color: #ccffcc; /* verde claro */
+  padding: 20px;
+  flex-wrap: wrap; /* permite quebrar linha em telas pequenas */
+}
+
+.recompensa {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+  width: 250px;
+}
+
+.recompensa img {
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.recompensa button {
+  margin-top: 10px;
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+@keyframes slideIn {
+  from {
+    top: -50px;
+  }
+  to {
+    top: 20px;
+  }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link rel="icon" type="image/png" href="assets/LogoEyes.png">
+  <title>Login</title>
+  <link rel="stylesheet" href="css/login.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <div class="bg-circle1"></div>
+    <div class="bg-circle2"></div>
+
+    <img class="login-logo" src="assets/EYESeVERYWHERE.gif" alt="logo" />
+    <div class="login-title">LOGIN</div>
+    <div class="welcome-text">BEM-VINDO!!!</div>
+
+    <div class="form-area">
+      <input id="email" class="input" type="email" placeholder="Email" />
+      <input id="password" class="input" type="password" placeholder="Senha" />
+      <div class="forgot-password">Esqueci-me da senha</div>
+      <button class="btn-login" onclick="loginComEmail()">Entrar</button>
+      <div class="create-account">Criar uma conta nova</div>
+    </div>
+
+    <div class="social-section">
+      <p>ou continuar com</p>
+      <div id="real-google-button" class="google-btn-container"></div>
+    </div>
+  </div>
+
+  <script>
+    function mostrarToast(mensagem, tipo = "erro") {
+      const toast = document.createElement("div");
+      toast.className = `toast ${tipo}`;
+      toast.innerText = mensagem;
+
+      toast.style.position = "fixed";
+      toast.style.top = "20px";
+      toast.style.left = "50%";
+      toast.style.transform = "translateX(-50%)";
+      toast.style.backgroundColor = tipo === "erro" ? "#f44336" : "#4CAF50";
+      toast.style.color = "white";
+      toast.style.padding = "15px";
+      toast.style.borderRadius = "4px";
+      toast.style.zIndex = "1000";
+      toast.style.minWidth = "250px";
+      toast.style.textAlign = "center";
+      toast.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
+
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.5s";
+        setTimeout(() => {
+          if (document.body.contains(toast)) {
+            document.body.removeChild(toast);
+          }
+        }, 500);
+      }, 3000);
+    }
+
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "817811583457-h02j4qkv25luabcfrn05374hq0oh71n7.apps.googleusercontent.com",
+        callback: window.handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("real-google-button"),
+        {
+          theme: "outline",
+          size: "large",
+          shape: "pill",
+          width: 280
+        }
+      );
+    };
+  </script>
+
+  <script type="module">
+    import { loginComEmail, loginComGoogle } from './js/login.js';
+
+    window.loginComEmail = loginComEmail;
+    window.handleCredentialResponse = (response) => {
+      const data = jwt_decode(response.credential);
+      loginComGoogle(data);
+    };
+  </script>
+</body>
+</html>
