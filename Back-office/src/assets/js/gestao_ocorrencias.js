@@ -337,48 +337,54 @@ if (btnRecusar) {
   atualizarCheckboxesPeritos();
   
   (function sincronizarOcorrenciasNaStorage() {
-    const linhas = document.querySelectorAll("tbody tr");
-    const ocorrencias = [];
-  
-    linhas.forEach(tr => {
-      const designacao = tr.cells[0]?.textContent?.trim();
-      const utilizador = tr.cells[1]?.textContent.trim() || "—"; 
-      const badge      = tr.querySelector(".estado-ocorrencia");
-      const estado     = badge?.textContent?.trim();
-      const localizacaoTexto = tr.cells[2]?.textContent?.trim();
-      const coordenadasMatch = localizacaoTexto?.match(/(-?\d+\.\d+),\s*(-?\d+\.\d+)/);
-      const foto = tr.dataset.foto || "";
-      let latitude = null, longitude = null;
-  
-      if (coordenadasMatch) {
-        latitude  = parseFloat(coordenadasMatch[1]);
-        longitude = parseFloat(coordenadasMatch[2]);
-      }
-  
-      const seguranca = tr.getAttribute("data-seguranca") || "";
+  const linhas = document.querySelectorAll("tbody tr");
+  const ocorrencias = [];
 
-      if (designacao && estado) {
-        /* preserva timestamps se já existirem */
-        const listaPrev = JSON.parse(localStorage.getItem("ocorrenciasLista") || "[]");
-        const prev      = listaPrev.find(o => o.designacao === designacao);
+  linhas.forEach(tr => {
+    const designacao = tr.cells[0]?.textContent?.trim();
+    const utilizador = tr.cells[1]?.textContent?.trim() || "—"; 
+    const badge      = tr.querySelector(".estado-ocorrencia");
+    const estado     = badge?.textContent?.trim();
+    const localizacaoTexto = tr.cells[2]?.textContent?.trim();
+    const coordenadasMatch = localizacaoTexto?.match(/(-?\d+\.\d+),\s*(-?\d+\.\d+)/);
+    const foto = tr.dataset.foto || "";
+    let latitude = null, longitude = null;
 
-        ocorrencias.push({
-          designacao,
-          utilizador,
-          estado,
-          latitude,
-          longitude,
-          segurancas: seguranca,
-          foto,
-          descricao,
-          createdAt:       prev?.createdAt       || Date.now(),
-          firstResponseAt: prev?.firstResponseAt || null,
-          resolvedAt:      prev?.resolvedAt      || null
-        });
-      }
-    });
-  
-    localStorage.setItem("ocorrenciasLista", JSON.stringify(ocorrencias));
-  })();
+    if (coordenadasMatch) {
+      latitude  = parseFloat(coordenadasMatch[1]);
+      longitude = parseFloat(coordenadasMatch[2]);
+    }
+
+    // Só processa se já existir designação e estado
+    if (designacao && estado) {
+      // Pega a lista antiga (legado) para tentar resgatar timestamps e descrição
+      const listaPrev = JSON.parse(localStorage.getItem("ocorrenciasLista") || "[]");
+      const prev = listaPrev.find(o =>
+        o.designacao === designacao &&
+        o.utilizador === utilizador
+      );
+
+      ocorrencias.push({
+        designacao,
+        utilizador,
+        estado,
+        latitude,
+        longitude,
+        segurancas: tr.getAttribute("data-seguranca") || "",
+        foto,
+        // recupera a descrição que havia em `prev.descricao`, se existir:
+        descricao: prev?.descricao || "",
+        // agora sim, define createdAt corretamente:
+        createdAt:       prev?.createdAt       || Date.now(),
+        firstResponseAt: prev?.firstResponseAt || null,
+        resolvedAt:      prev?.resolvedAt      || null
+      });
+    }
+  });
+
+  // Finalmente grava a lista reconstruída
+  localStorage.setItem("ocorrenciasLista", JSON.stringify(ocorrencias));
+})();
+
   
 });
